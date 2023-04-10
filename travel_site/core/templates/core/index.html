@@ -17,7 +17,7 @@
         </h4>
       </div>
       <form class="booking-form">
-        <div class="booking-form-group">
+        <div class="booking-form-group booking-form-group--geo">
           <input
             type="text"
             id="destination"
@@ -26,25 +26,26 @@
             required
           />
         </div>
-        <div class="booking-form-group">
+        <div class="booking-form-group booking-form-group--calendar">
           <input
             type="date"
             id="checkin"
             name="checkin"
-            placeholder="Check-in date?"
+            placeholder="Check-in date"
             required
           />
         </div>
-        <div class="booking-form-group">
+        <div class="booking-form-group booking-form-group--calendar">
           <input
             type="date"
             id="checkout"
             name="checkout"
             placeholder="Check-out date"
             required
+            aria-required="true"
           />
         </div>
-        <div class="booking-form-group">
+        <div class="booking-form-group booking-form-group--guests">
           <input
             type="number"
             id="guests"
@@ -58,5 +59,17 @@
       </form>
     </div>
   </section>
+  <section class="covid-restrictions">
+    <div class="container">
+      <div class="danger">
+        <img src="{% static 'images/icons/danger.svg' %}" alt="danger logo" class="danger-logo">
+        <span class="danger-text">
+          Check the latest COVID-19 restrictions before you travel.
+          <a href="#" class="learn-more">Learn more</a></span
+        >
+      </div>
+    </div>
+  </section>
+  <section class="trip-inspiration"></section>
 </main>
 {% endblock %}
