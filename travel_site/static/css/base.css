@@ -1,0 +1,136 @@
+ *,
+*::before,
+*::after {
+  box-sizing: border-box;
+} 
+
+ @font-face {
+  font-family: "SF Pro Display";
+  font-weight: 400;
+  font-style: normal;
+  font-display: auto;
+  src: local("SF Pro Display"),
+    url("../fonts/SFProDisplay-Regular.woff2") format("woff2"),
+    url("../fonts/SFProDisplay-Regular.woff") format("woff");
+}
+@font-face {
+  font-family: "SF Pro Display";
+  font-weight: 500;
+  font-style: normal;
+  font-display: auto;
+  src: local("San Francisco"),
+    url("../fonts/Rubik-SemiBold.woff2") format("woff2"),
+    url("../fonts/Rubik-SemiBold.woff") format("woff");
+}
+
+@font-face {
+  font-family: "SF Pro Display";
+  font-weight: 600;
+  font-style: normal;
+  font-display: auto;
+  src: local("SF Pro Display"),
+    url("../fonts/SFProDisplay-Semibold.woff2") format("woff2"),
+    url("../fonts/SFProDisplay-Semibold.woff") format("woff");
+}
+@font-face {
+  font-family: "SF Pro Display";
+  font-weight: 700;
+  font-style: normal;
+  font-display: auto;
+  src: local("SF Pro Display"),
+    url("../fonts/SFProDisplay-Bold.woff2") format("woff2"),
+    url("../fonts/SFProDisplay-Bold.woff") format("woff");
+} 
+
+body {
+  font-family: "San Francisco", sans-serif;
+}
+
+a {
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 1220px;
+  padding: 0 10px;
+}
+
+.header {
+  min-height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo-link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 159px;
+  height: 24px;
+}
+
+.logo-image {
+  width: 24px;
+  height: 24px;
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+}
+
+.logo-link-text {
+  font-weight: 500;
+  font-style: normal;
+  font-size: 18px;
+  color: #1b1f2d;
+  padding: 1.5px 0px 1.5px 4px;
+  line-height: 21px;
+  letter-spacing: 0.02em;
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+}
+
+.menu-list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+}
+.menu-item {
+  padding-right: 48px;
+}
+
+.menu-link {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  letter-spacing: 0.02em;
+  color: #333333;
+}
+
+.register-button {
+  height: 40px;
+  padding: 10px 18px;
+  background: #ffffff;
+  border: 1px solid #2f80ed;
+  border-radius: 6px;
+  color: #2f80ed;
+}
+
+.signin-button {
+  height: 40px;
+  padding: 10px 18px;
+  color: #ffff;
+  background: #2f80ed;
+  border: 1px solid #2f80ed;
+  border-radius: 6px;
+}
+

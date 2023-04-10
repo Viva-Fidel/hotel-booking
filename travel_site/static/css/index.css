@@ -1,0 +1,73 @@
+input {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 140%;
+    letter-spacing: 0.02em;
+    color: #4f4f4f;
+    border: none;
+}
+
+.booking {
+  padding-top: 12px;
+}
+
+.booking_photo {
+  max-width: 1220px;
+}
+
+.booking-text-container {
+  position: relative;
+  text-align: center;
+}
+
+.booking-header {
+  position: absolute;
+  top: 190px;
+  bottom: 272px;
+  left: 315px;
+  right: 315px;
+  color: #fff;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 38px;
+  text-align: center;
+}
+
+.booking-text {
+  position: absolute;
+
+  top: 245px;
+  bottom: 196px;
+  left: 295px;
+  right: 295px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 140%;
+  text-align: center;
+  letter-spacing: 0.02em;
+  color: #fff;
+}
+
+.booking-form {
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  max-width: 1030px;
+  max-height: 64px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 37px rgba(0, 0, 0, 0.15);
+}
+
+.booking-form-group {
+  padding: 10px 11px;
+  background: #f2f2f2;
+  border-radius: 4px;
+}
+
+
+.booking-form-submit {
+  margin: 10px 12px;
+}

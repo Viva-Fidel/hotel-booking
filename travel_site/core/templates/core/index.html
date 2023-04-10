@@ -1,0 +1,62 @@
+{% extends 'core/base.html' %} {% load static %} {% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}" />
+
+<main class="main">
+  <section class="booking">
+    <div class="container">
+      <div class="booking-text-container">
+        <img
+          src="{% static 'images/site_photos/booking_page.jpg' %}"
+          alt="Main page photo"
+          class="booking_photo"
+        />
+        <h2 class="booking-header">Enjoy Your Dream Vacation</h2>
+        <h4 class="booking-text">
+          Plan and book our perfect trip with expert advice, travel tips,
+          destination information and inspiration from us
+        </h4>
+      </div>
+      <form class="booking-form">
+        <div class="booking-form-group">
+          <input
+            type="text"
+            id="destination"
+            name="destination"
+            placeholder="Where are you going?"
+            required
+          />
+        </div>
+        <div class="booking-form-group">
+          <input
+            type="date"
+            id="checkin"
+            name="checkin"
+            placeholder="Check-in date?"
+            required
+          />
+        </div>
+        <div class="booking-form-group">
+          <input
+            type="date"
+            id="checkout"
+            name="checkout"
+            placeholder="Check-out date"
+            required
+          />
+        </div>
+        <div class="booking-form-group">
+          <input
+            type="number"
+            id="guests"
+            name="guests"
+            min="1"
+            placeholder="Guests"
+            required
+          />
+        </div>
+        <button type="submit" class="booking-form-submit">Search</button>
+      </form>
+    </div>
+  </section>
+</main>
+{% endblock %}
