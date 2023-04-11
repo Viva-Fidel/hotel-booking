@@ -62,7 +62,11 @@
   <section class="covid-restrictions">
     <div class="container">
       <div class="danger">
-        <img src="{% static 'images/icons/danger.svg' %}" alt="danger logo" class="danger-logo">
+        <img
+          src="{% static 'images/icons/danger.svg' %}"
+          alt="danger logo"
+          class="danger-logo"
+        />
         <span class="danger-text">
           Check the latest COVID-19 restrictions before you travel.
           <a href="#" class="learn-more">Learn more</a></span
@@ -70,6 +74,61 @@
       </div>
     </div>
   </section>
-  <section class="trip-inspiration"></section>
+
+  <section class="countries-list">
+    <div class="container">
+      <h3 class="countries-list-header">Enjoy your dream vacation</h3>
+      <span class="countries-list-text"
+        >Plan and book our perfect trip with expert advice, travel tips,
+        destination information and inspiration from us</span
+      >
+      <div class="countries-list-destinations">
+        <!-- ul или ol -->
+        {% for destination in available_destinations %}
+        <div class="countries-list-destinations-box">
+          <img
+            src="{% static 'images/photos/destinations/australia.jpg' %}"
+            alt=""
+            class="countries-list-photo"
+          />
+          <div class="countries-list-destinations-info">
+            <a href="#" class="countries-list-destinations-info-name"
+              >{{ destination.country }}</a
+            >
+            <a href="" class="countries-list-destinations-info-amount"
+              >{{ destination.count }} properties</a
+            >
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <section class="blog">
+    <div class="container">
+      <h3 class="blog-header">Get inspiration for your next trip</h3>
+      <div class="blog-content">
+        {% for destination in available_destinations2 %}
+        <div class="blog-content-box">
+          <img
+            src="{% static 'images/photos/destinations/australia.jpg' %}"
+            alt=""
+            class="blog-content-photo"
+          />
+          <div class="card-content">
+            <h5 class="blog-header-content">
+              Sydeny’s 10 most fashionable 5 star hotels
+            </h5>
+            <p class="blog-text-content">
+              Browse the fastest growing tourism sector in the heart of
+              Australia tourism capital ....
+            </p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
 </main>
 {% endblock %}

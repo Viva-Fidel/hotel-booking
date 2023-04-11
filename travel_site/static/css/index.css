@@ -152,7 +152,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   line-height: 140%;
   letter-spacing: 0.02em;
   color: #333333;
-  margin-left:19px;
+  margin-left: 19px;
 }
 
 .danger a {
@@ -162,12 +162,124 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .danger-logo {
   width: 32px;
   height: 32px;
-  margin-left:24px;
-
+  margin-left: 24px;
 }
 
-/* .danger-logo {
-  width: 32px;
-  height: 32px;
-  padding-left:24px;
-} */
+.countries-list-header {
+  margin-top: 50px;
+  font-weight: 600;
+  font-size: 28px;
+  line-height: 33px;
+  color: #181818;
+  margin-block-end: 16px;
+}
+
+.countries-list-text {
+  display: block;
+  max-width: 610px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 140%;
+  letter-spacing: 0.02em;
+  color: #333333;
+}
+
+.countries-list-destinations {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.countries-list-destinations-box {
+  display: flex;
+  flex-direction: column;
+}
+.countries-list-destinations-box:not(:last-child) {
+  margin-right: 20px;
+}
+
+.countries-list-photo {
+  margin-top: 30px;
+  width: 295px;
+  height: 220px;
+  border-radius: 8px;
+}
+
+.countries-list-destinations-info {
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.countries-list-destinations-info-name {
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 24px;
+  color: #181818;
+}
+
+.countries-list-destinations-info-amount {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  letter-spacing: 0.02em;
+  color: #181818;
+}
+
+.blog-header {
+  margin-top: 60px;
+  font-weight: 600;
+  font-size: 28px;
+  line-height: 33px;
+  color: #181818;
+  margin-block-end: 10px;
+}
+
+.blog-content {
+  margin-top: 24px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.blog-content-box {
+  position: relative;
+  width: 400px;
+  height: 280px;
+}
+
+.blog-content-box:not(:last-child) {
+  margin-right: 20px;
+}
+
+.blog-content-photo {
+  width: 100%;
+  height: 100%;
+}
+
+.card-content {
+  color: #fff;
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  text-align: left;
+  bottom: 20px;
+  margin-block-start: 0px;
+}
+
+.blog-header-content {
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 24px;
+  color: #ffffff;
+  margin-block-end: 10px;
+}
+
+.blog-text-content {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 140%;
+  letter-spacing: 0.02em;
+  color: #ffffff;
+  margin-block-start: 0px;
+  margin-block-end: 0px;
+}
