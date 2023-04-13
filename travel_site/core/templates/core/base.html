@@ -5,13 +5,14 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon/favicon.ico' %}"/>
     <link
       rel="stylesheet"
       type="text/css"
       href="{% static 'css/normalize.css' %}"
     />
     <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}" />
-    <title>Travel time</title>
+    <title>my Dream Place</title>
   </head>
   <body>
     <div class="container">
@@ -20,30 +21,88 @@
           <img
             src="{% static '/images/logos/logo.svg' %}"
             class="logo-image"
-            alt="Site logo"
+            alt="Website logo"
           />
-          <span class="logo-link-text">my Dream Place </span>
+          <span class="logo-link-text">my Dream Place</span>
         </a>
-        <nav class="menu">
+        <nav class="header-menu">
           <ul class="menu-list">
-            <li class="menu-item"><a href="#" class="menu-link">Home</a></li>
+            <li class="menu-item"><a href="/" class="menu-link">Home</a></li>
             <li class="menu-item">
-              <a href="#" class="menu-link">Discover</a>
+              <a href="/discover" class="menu-link">Discover</a>
             </li>
             <li class="menu-item">
-              <a href="#" class="menu-link">Activities</a>
+              <a href="/activities" class="menu-link">Activities</a>
             </li>
-            <li class="menu-item"><a href="#" class="menu-link">About</a></li>
-            <li class="menu-item"><a href="#" class="menu-link">Contact</a></li>
+            <li class="menu-item">
+              <a href="/about" class="menu-link">About</a>
+            </li>
+            <li class="menu-item">
+              <a href="/contact" class="menu-link">Contact</a>
+            </li>
           </ul>
         </nav>
         <div class="header-button-container">
-          <button class="register-button">Register</button>
-          <button class="signin-button">Sign In</button>
+          <a href="/register" class="register-link"
+            ><button class="register-button">Register</button></a
+          >
+          <a href="/signin" class="signin-link"
+            ><button class="signin-button">Sign In</button></a
+            >
         </div>
       </header>
     </div>
 
     {% block content %} {% endblock %}
+
+    <footer>
+      <div class="container">
+        <div class="footer-top">
+          <img
+            src="{% static 'images/logos/footer_logo.jpg' %}"
+            alt=""
+            class="footer-photo"
+          />
+          <ul class="company">
+            <li>About</li>
+            <li>Jobs</li>
+            <li>Newsroom</li>
+            <li>Advertising</li>
+            <li>Contact us</li>
+          </ul>
+          <ul class="explore">
+            <li>Australia</li>
+            <li>New Zealand</li>
+            <li>United States of America (USA)</li>
+            <li>Greece</li>
+            <li>Maldives</li>
+            <li>Singapore</li>
+            <li>See more</li>
+          </ul>
+          <ul class="terms">
+            <li>Privacy Policy</li>
+            <li>Terms of use</li>
+            <li>Acessibility</li>
+            <li>Reward system policy</li>
+          </ul>
+          <ul class="help">
+            <li>Support</li>
+            <li>Cancel your bookings</li>
+            <li>Use Coupon</li>
+            <li>Refund Policies</li>
+            <li>International Travel Documents</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="copyright">
+          <img
+            src="{% static 'images/icons/copyright.svg' %}"
+            alt=""
+            class="copyright-icon"
+          /><span class="copyright-text">my Dream Place 2022</span>
+        </div>
+      </div>
+    </footer>
   </body>
 </html>

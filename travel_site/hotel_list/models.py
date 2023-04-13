@@ -6,7 +6,7 @@ import os
 
 def hotel_photo_path(instance, filename):
     # Generate upload path based on hotel name
-    return os.path.join('static/images/', instance.hotel_name, filename)
+    return os.path.join('static/images/hotels', instance.hotel_name, filename)
 
 
 class Hotel_list(models.Model):
