@@ -1,4 +1,5 @@
 from django.db import models
+from core.models import Countries
 import os
 
 # Create your models here.
@@ -11,8 +12,8 @@ def hotel_photo_path(instance, filename):
 
 class Hotel_list(models.Model):
     hotel_name = models.CharField(max_length=255, verbose_name="Hotel name")
-    hotel_country = models.CharField(
-        max_length=255, verbose_name="Hotel country")
+    hotel_country = models.ForeignKey(
+        Countries, on_delete=models.CASCADE, verbose_name="Hotel country")
     hotel_city = models.CharField(
         max_length=255, verbose_name="Hotel city")
     hotel_street = models.CharField(

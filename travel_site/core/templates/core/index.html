@@ -25,8 +25,11 @@
           destination information and inspiration from us
         </h4>
       </div>
-      <form class="booking-form" method="post" action="{% url 'search_hotels' %}">
-        {% csrf_token %}
+      <form
+        class="booking-form"
+        method="get"
+        action="{% url 'search_hotels' %}"
+      >
         <div
           class="booking-form-group booking-form-group--geo"
           id="booking-form-group--geo"
@@ -74,7 +77,7 @@
       </form>
     </div>
   </section>
-  <section class="covid-restrictions">
+  <section class="restrictions">
     <div class="container">
       <div class="danger">
         <img
@@ -84,7 +87,7 @@
         />
         <span class="danger-text">
           Check the latest COVID-19 restrictions before you travel.
-          <a href="#" class="learn-more">Learn more</a></span
+          <a href="/covid-19" class="learn-more">Learn more</a></span
         >
       </div>
     </div>
@@ -97,26 +100,28 @@
         >Plan and book our perfect trip with expert advice, travel tips,
         destination information and inspiration from us</span
       >
-      <div class="countries-list-destinations">
-        <!-- ul или ol -->
-        {% for destination in available_destinations %}
-        <div class="countries-list-destinations-box">
-          <img
-            src="{% static 'images/photos/destinations/australia.jpg' %}"
-            alt=""
-            class="countries-list-photo"
-          />
-          <div class="countries-list-destinations-info">
-            <a href="#" class="countries-list-destinations-info-name"
-              >{{ destination.country }}</a
-            >
-            <a href="" class="countries-list-destinations-info-amount"
-              >{{ destination.count }} properties</a
-            >
-          </div>
-        </div>
+      <ul class="countries-list-destinations">
+        {% for destination, destination_info in available_destinations.items %}
+        <li class="countries-list-destinations-box">
+          <a href="{{ destination | lower }}" class="countries-list-link">
+            <img src="{{ destination_info.country_photo.url }}"" alt="Country
+            photo" class="countries-list-photo" />
+            <div class="countries-list-destinations-info">
+              <span class="countries-list-destinations-info-name"
+                >{{ destination }}</span
+              >
+              <span class="countries-list-destinations-info-amount">
+                {% if destination_info.hotel_count == 1 %}
+                    {{ destination_info.hotel_count }} property
+                {% else %}
+                    {{ destination_info.hotel_count }} properties
+                {% endif %}
+            </span>
+            </div>
+          </a>
+        </li>
         {% endfor %}
-      </div>
+      </ul>
     </div>
   </section>
 
@@ -128,7 +133,7 @@
         <div class="blog-content-box">
           <img
             src="{{ blog.blog_photo.url }}"
-            alt=""
+            alt="Blog photo"
             class="blog-content-photo"
           />
           <div class="card-content">
@@ -146,10 +151,9 @@
   <section class="popular-hotels">
     <div class="container">
       <h3 class="popular-hotels-title">Popular hotels</h3>
-      <div class="popular-hotels-destinations">
-        <!-- ul или ol -->
+      <ul class="popular-hotels-destinations">
         {% for destination in available_destinations %}
-        <div class="popular-hotels-destinations-box">
+        <li class="popular-hotels-destinations-box">
           <img
             src="{% static 'images/photos/destinations/australia.jpg' %}"
             alt=""
@@ -163,9 +167,9 @@
               >{{ destination.count }} properties</a
             >
           </div>
-        </div>
+        </li>
         {% endfor %}
-      </div>
+      </ul>
     </div>
   </section>
 
@@ -194,10 +198,15 @@
     const checkInput = document.getElementById("checkin");
     const checkOut = document.getElementById("checkout");
 
+    // Calculate maxDate (today + 1 year)
+    const maxDate = new Date();
+    maxDate.setFullYear(maxDate.getFullYear() + 1);
+
     // Инициализация Flatpickr с опцией "altInput"
     flatpickr(checkOut, {
       altInput: checkOut,
       minDate: "today",
+      maxDate: maxDate,
       dateFormat: "d-m-Y",
       onChange: function (selectedDates, dateStr, instance) {
         instance.set(
