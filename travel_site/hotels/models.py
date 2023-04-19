@@ -12,8 +12,7 @@ def cover_hotel_photo_path(instance, filename):
 
 
 def hotel_general_photos_path(instance, filename):
-    return os.path.join('static/images/hotels', instance.hotel_list.hotel_name, 'general', filename)
-
+    return os.path.join('static/images/hotels', instance.hotel.hotel_name, 'general', filename)
 
 
 class Hotels(models.Model):
@@ -27,6 +26,38 @@ class Hotels(models.Model):
     hotel_zip_code = models.CharField(
         max_length=10, verbose_name="Hotel Zip code")
     hotel_description = models.TextField(verbose_name="Hotel overview")
+    hotel_cover_photo = models.ImageField(
+        upload_to=cover_hotel_photo_path, verbose_name="Hotel cover photo")
+    hotel_popularity = models.PositiveIntegerField(default=0)
+    hotel_rating = models.DecimalField(decimal_places=2, max_digits=5, default=0.00)
+    time_create = models.DateTimeField(
+        auto_now_add=True, verbose_name="Date of creation")
+    time_update = models.DateTimeField(auto_now=True, verbose_name="Updated")
+    is_published = models.BooleanField(
+        default=True, verbose_name="Is published")
+
+    def __str__(self):
+        return self.hotel_name
+
+    class Meta:
+        verbose_name = "Hotels"
+        verbose_name_plural = "Hotels"
+        ordering = ["hotel_name", "time_create"]
+
+
+class HotelsImage(models.Model):
+    hotel = models.ForeignKey(
+        Hotels, related_name='general_images', on_delete=models.CASCADE)
+    image = models.ImageField(
+        upload_to=hotel_general_photos_path, verbose_name="Hotel general photo")
+
+    class Meta:
+        verbose_name_plural = 'Hotels general photos'
+
+
+class HotelFacilities(models.Model):
+    facilities = models.ForeignKey(
+        Hotels, related_name='hotel_facilities', on_delete=models.CASCADE)
     hotel_has_free_wifi = models.BooleanField(
         default=False, verbose_name="Free wifi")
     hotel_has_air_conditioning = models.BooleanField(
@@ -62,26 +93,48 @@ class Hotels(models.Model):
         default=False, verbose_name="Airport shuttle")
     hotel_has_electric_vehicle_charging_station = models.BooleanField(
         default=False, verbose_name="Electric vehicle charging station")
-    hotel_cover_photo = models.ImageField(
-        upload_to=cover_hotel_photo_path, verbose_name="Hotel cover photo")
-    time_create = models.DateTimeField(
-        auto_now_add=True, verbose_name="Date of creation")
-    time_update = models.DateTimeField(auto_now=True, verbose_name="Updated")
-    is_published = models.BooleanField(
-        default=True, verbose_name="Is published")
+    hotel_has_free_cancellation = models.BooleanField(
+        default=False, verbose_name="Free cancellation")
+    hotel_has_beach_front = models.BooleanField(
+        default=False, verbose_name="Beach front")
+    hotel_has_jacuzzi = models.BooleanField(
+        default=False, verbose_name="Hot tub/jacuzzi")
+    hotel_has_without_credit_card = models.BooleanField(
+        default=False, verbose_name="Book without credit card")
+    hotel_has_no_prepayment = models.BooleanField(
+        default=False, verbose_name="No prepayment")
 
-    def __str__(self):
-        return self.hotel_name
 
-
-    class Meta:
-        verbose_name = "Hotels"
-        verbose_name_plural = "Hotels"
-        ordering = ["hotel_name", "time_create"]
-
-class HotelsImage(models.Model):
-    hotel = models.ForeignKey(Hotels, related_name='general_images', on_delete=models.CASCADE)
-    image = models.ImageField(upload_to=hotel_general_photos_path, verbose_name="Hotel general photo")
-
-    class Meta:
-        verbose_name_plural = 'Hotels general photos'
+class HotelActivities(models.Model):
+    activities = models.ForeignKey(
+        Hotels, related_name='hotel_activities', on_delete=models.CASCADE)
+    hotel_has_fishing = models.BooleanField(
+        default=False, verbose_name="Fishing")
+    hotel_has_hiking = models.BooleanField(
+        default=False, verbose_name="Hiking")
+    hotel_has_beach = models.BooleanField(
+        default=False, verbose_name="Beach")
+    hotel_has_cycling = models.BooleanField(
+        default=False, verbose_name="Cycling")
+    hotel_has_sauna = models.BooleanField(
+        default=False, verbose_name="Sauna")
+    hotel_has_night_lights = models.BooleanField(
+        default=False, verbose_name="Night lights")
+    hotel_has_tennis = models.BooleanField(
+        default=False, verbose_name="Tennis")
+    hotel_has_yoga = models.BooleanField(
+        default=False, verbose_name="Yoga")
+    hotel_has_scuba_diving = models.BooleanField(
+        default=False, verbose_name="Scuba diving")
+    hotel_has_rafting = models.BooleanField(
+        default=False, verbose_name="Rafting")
+    hotel_has_guided_nature_walks = models.BooleanField(
+        default=False, verbose_name="Guided nature walks")
+    hotel_has_skiing = models.BooleanField(
+        default=False, verbose_name="Skiing or snowboarding")
+    hotel_has_golfing = models.BooleanField(
+        default=False, verbose_name="Golfing")
+    hotel_has_surfing = models.BooleanField(
+        default=False, verbose_name="Surfing")
+    
+    
