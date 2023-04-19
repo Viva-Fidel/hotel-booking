@@ -5,7 +5,11 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon/favicon.ico' %}"/>
+    <link
+      rel="shortcut icon"
+      type="image/png"
+      href="{% static 'images/favicon/favicon.ico' %}"
+    />
     <link
       rel="stylesheet"
       type="text/css"
@@ -48,7 +52,7 @@
           >
           <a href="/signin" class="signin-link"
             ><button class="signin-button">Sign In</button></a
-            >
+          >
         </div>
       </header>
     </div>
@@ -64,11 +68,11 @@
             class="footer-photo"
           />
           <ul class="company">
-            <li>About</li>
-            <li>Jobs</li>
-            <li>Newsroom</li>
-            <li>Advertising</li>
-            <li>Contact us</li>
+            <li><a href="/about" class="">About</a></li>
+            <li><a href="/jobs" class="">Jobs</a></li>
+            <li><a href="/news" class="">Newsroom</a></li>
+            <li><a href="/ads" class="">Advertising</a></li>
+            <li><a href="/contact-us" class="">Contact us</a></li>
           </ul>
           <ul class="explore">
             <li>Australia</li>

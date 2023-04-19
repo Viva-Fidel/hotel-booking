@@ -111,12 +111,14 @@
                 >{{ destination }}</span
               >
               <span class="countries-list-destinations-info-amount">
-                {% if destination_info.hotel_count == 1 %}
-                    {{ destination_info.hotel_count }} property
-                {% else %}
-                    {{ destination_info.hotel_count }} properties
+                {% if destination_info.hotel_count == 1 %} 
+                {{destination_info.hotel_count }} 
+                property 
+                {% else %} 
+                {{destination_info.hotel_count }} 
+                properties
                 {% endif %}
-            </span>
+              </span>
             </div>
           </a>
         </li>
@@ -131,17 +133,19 @@
       <div class="blog-content">
         {% for blog in blog_info %}
         <div class="blog-content-box">
-          <img
-            src="{{ blog.blog_photo.url }}"
-            alt="Blog photo"
-            class="blog-content-photo"
-          />
-          <div class="card-content">
-            <h5 class="blog-header-content">{{ blog.blog_title }}</h5>
-            <p class="blog-text-content">
-              {{ blog.blog_text |truncatewords:12 }}
-            </p>
-          </div>
+          <a href="{{ blog.get_absolute_url }}" class="countries-list-link">
+            <img
+              src="{{ blog.blog_photo.url }}"
+              alt="Blog photo"
+              class="blog-content-photo"
+            />
+            <div class="card-content">
+              <h5 class="blog-header-content">{{ blog.blog_title }}</h5>
+              <p class="blog-text-content">
+                {{ blog.blog_text |truncatewords:12 }}
+              </p>
+            </div>
+          </a>
         </div>
         {% endfor %}
       </div>
@@ -151,9 +155,9 @@
   <section class="popular-hotels">
     <div class="container">
       <h3 class="popular-hotels-title">Popular hotels</h3>
-      <ul class="popular-hotels-destinations">
+      <div class="popular-hotels-destinations">
         {% for destination in available_destinations %}
-        <li class="popular-hotels-destinations-box">
+        <div class="popular-hotels-destinations-box">
           <img
             src="{% static 'images/photos/destinations/australia.jpg' %}"
             alt=""
@@ -167,9 +171,9 @@
               >{{ destination.count }} properties</a
             >
           </div>
-        </li>
+        </div>
         {% endfor %}
-      </ul>
+      </div>
     </div>
   </section>
 
