@@ -155,35 +155,37 @@
   <section class="popular-hotels">
     <div class="container">
       <h3 class="popular-hotels-title">Popular hotels</h3>
-      <div class="popular-hotels-destinations">
-        {% for destination in available_destinations %}
-        <div class="popular-hotels-destinations-box">
+      <ul class="popular-hotels-destinations">
+        {% for hotel in popular_hotels %}
+        <li class="popular-hotels-destinations-box">
           <img
-            src="{% static 'images/photos/destinations/australia.jpg' %}"
+            src="{{ hotel.hotel_cover_photo.url }}"
             alt=""
             class="popular-hotels-photo"
           />
           <div class="popular-hotels-destinations-info">
-            <a href="#" class="popular-hotels-destinations-info-name"
-              >{{ destination.country }}</a
+            <a href="#" class="popular-hotels-destinations-link">
+            <span class="popular-hotels-destinations-info-name"
+              >{{ hotel.hotel_name }}</span
             >
-            <a href="" class="popular-hotels-destinations-info-amount"
-              >{{ destination.count }} properties</a
-            >
+            <span class="popular-hotels-destinations-info-amount"
+              >10 rooms</span
+            ></a>
           </div>
-        </div>
+        </li>
         {% endfor %}
-      </div>
+      </ul>
     </div>
   </section>
 
   <section class="download-app-promo">
     <div class="container">
+      <a href="/" onclick="redirectToApp()">
       <img
         src="{% static 'images/photos/app/promo_app.jpg' %}"
         alt=""
         class="promo-app-photo"
-      />
+      /></a>
     </div>
   </section>
   <section class="motto">
@@ -195,6 +197,35 @@
       />
     </div>
   </section>
+
+
+  <script>
+    function redirectToApp() {
+        // Replace this URL with your mobile app link
+        var appUrl = '/';
+        var userAgent = navigator.userAgent.toLowerCase();
+    
+        // Check if the user agent is from an iOS device
+        if (userAgent.indexOf('iphone') !== -1 || userAgent.indexOf('ipad') !== -1) {
+            // Open the app in iOS using a custom URL scheme
+            window.location.href = 'https://apps.apple.com/ru/app/';
+        }
+        // Check if the user agent is from an Android device
+        else if (userAgent.indexOf('android') !== -1) {
+            // Open the app in Android using an intent URL
+            window.location.href = 'https://play.google.com/store/apps/';
+        }
+        // Check if the user agent is from a Windows device
+        else if (userAgent.indexOf('windows') !== -1) {
+            // Redirect to the app's website or app store page for Windows users
+            window.location.href = appUrl;
+        }
+        // Redirect to the app store if the app is not installed on other devices
+        else {
+            window.location.href = appUrl;
+        }
+    }
+    </script>
 
   <script src="{% static 'node_modules/flatpickr/dist/flatpickr.js' %}"></script>
   <script>

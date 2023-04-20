@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% load static %}
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link
+      rel="shortcut icon"
+      type="image/png"
+      href="{% static 'images/favicon/favicon.ico' %}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/normalize.css' %}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/registration.css' %}"
+    />
+    <title>my Dream Place Reisration</title>
+  </head>
+  <body>
+    <div class="container">
+      <header class="header">
+        <a href="/" class="logo-link">
+          <img
+            src="{% static '/images/logos/logo.svg' %}"
+            class="logo-image"
+            alt="Website logo"
+          />
+          <span class="logo-link-text">my Dream Place</span>
+        </a>
+      </header>
+      <main class="main">
+        <section class="registration-form">
+          <div class="registration-form-box">
+            <h3 class="registration-title">Register</h3>
+            <label class="email-text">Email address</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              class="email-input required"
+            />
+            <button type="submit" class="email-submit">
+              Continue with Email
+            </button>
+            <div class="email-options-wrapper">
+              <div class="horizontal-line"></div>
+              <span class="email-options-text"
+                >or use one of these options</span
+              >
+              <div class="horizontal-line"></div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>
