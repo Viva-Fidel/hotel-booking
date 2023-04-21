@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    {% load static %}
+    {% load static %} {% load socialaccount %}
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -56,6 +56,17 @@
               >
               <div class="horizontal-line"></div>
             </div>
+            <a href="{% provider_login_url 'google'%}">
+              <button type="button" class="login-with-google-btn">
+                Continue with Google
+              </button>
+            </a>
+            <a href="{% provider_login_url 'github'%}">
+              <button type="button" class="login-with-github-btn">
+                Continue with GitHub
+              </button>
+            </a>
+            <span class="have-an-account-text">Already have an account? <a href="/signin" class="sign-in-link">Sign in</a></span>
           </div>
         </section>
       </main>
