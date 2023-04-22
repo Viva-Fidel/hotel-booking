@@ -1,4 +1,8 @@
-{% extends 'core/base.html' %}
+{% extends 'base.html' %}
+
+{% block navigation %}
+        {% include 'partials/_navigation.html' %}
+        {% endblock %}
 
 {% block content %}
   <!-- <h1>Search results for "{{ destination }}"</h1>
@@ -15,3 +19,7 @@
   <p>Check-out date: {{ checkout }}</p>
   <p>Number of guests: {{ guests }}</p> -->
 {% endblock %}
+
+{% block footer %}
+    {% include 'partials/_footer.html' %}
+    {% endblock %}

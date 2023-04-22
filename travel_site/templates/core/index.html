@@ -1,4 +1,13 @@
-{% extends 'core/base.html' %} {% load static %} {% block content %}
+{% extends 'base.html' %} 
+{% load static %} 
+{% block title %} | Main{% endblock%} 
+
+{% block navigation %}
+        {% include 'partials/_navigation.html' %}
+        {% endblock %}
+
+{% block content %}
+
 <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}" />
 
 <link
@@ -14,11 +23,13 @@
   <section class="booking">
     <div class="container">
       <div class="booking-text-container">
+        {% if cover_photo %}
         <img
-          src="{% static 'images/site_photos/booking_page.jpg' %}"
+          src="{{ cover_photo.cover_photo.url }}"
           alt="Main page photo"
           class="booking_photo"
         />
+        {% endif %}
         <h2 class="booking-title">Enjoy Your Dream Vacation</h2>
         <h4 class="booking-text">
           Plan and book our perfect trip with expert advice, travel tips,
@@ -111,13 +122,9 @@
                 >{{ destination }}</span
               >
               <span class="countries-list-destinations-info-amount">
-                {% if destination_info.hotel_count == 1 %} 
-                {{destination_info.hotel_count }} 
-                property 
-                {% else %} 
-                {{destination_info.hotel_count }} 
-                properties
-                {% endif %}
+                {% if destination_info.hotel_count == 1 %}
+                {{destination_info.hotel_count }} property {% else %}
+                {{destination_info.hotel_count }} properties {% endif %}
               </span>
             </div>
           </a>
@@ -165,12 +172,13 @@
           />
           <div class="popular-hotels-destinations-info">
             <a href="#" class="popular-hotels-destinations-link">
-            <span class="popular-hotels-destinations-info-name"
-              >{{ hotel.hotel_name }}</span
+              <span class="popular-hotels-destinations-info-name"
+                >{{ hotel.hotel_name }}</span
+              >
+              <span class="popular-hotels-destinations-info-amount"
+                >10 rooms</span
+              ></a
             >
-            <span class="popular-hotels-destinations-info-amount"
-              >10 rooms</span
-            ></a>
           </div>
         </li>
         {% endfor %}
@@ -181,10 +189,10 @@
   <section class="download-app-promo">
     <div class="container">
       <a href="/" onclick="redirectToApp()">
-      <img
-        src="{% static 'images/photos/app/promo_app.jpg' %}"
-        alt=""
-        class="promo-app-photo"
+        <img
+          src="{% static 'images/photos/app/promo_app.jpg' %}"
+          alt=""
+          class="promo-app-photo"
       /></a>
     </div>
   </section>
@@ -198,34 +206,36 @@
     </div>
   </section>
 
-
   <script>
     function redirectToApp() {
-        // Replace this URL with your mobile app link
-        var appUrl = '/';
-        var userAgent = navigator.userAgent.toLowerCase();
-    
-        // Check if the user agent is from an iOS device
-        if (userAgent.indexOf('iphone') !== -1 || userAgent.indexOf('ipad') !== -1) {
-            // Open the app in iOS using a custom URL scheme
-            window.location.href = 'https://apps.apple.com/ru/app/';
-        }
-        // Check if the user agent is from an Android device
-        else if (userAgent.indexOf('android') !== -1) {
-            // Open the app in Android using an intent URL
-            window.location.href = 'https://play.google.com/store/apps/';
-        }
-        // Check if the user agent is from a Windows device
-        else if (userAgent.indexOf('windows') !== -1) {
-            // Redirect to the app's website or app store page for Windows users
-            window.location.href = appUrl;
-        }
-        // Redirect to the app store if the app is not installed on other devices
-        else {
-            window.location.href = appUrl;
-        }
+      // Replace this URL with your mobile app link
+      var appUrl = "/";
+      var userAgent = navigator.userAgent.toLowerCase();
+
+      // Check if the user agent is from an iOS device
+      if (
+        userAgent.indexOf("iphone") !== -1 ||
+        userAgent.indexOf("ipad") !== -1
+      ) {
+        // Open the app in iOS using a custom URL scheme
+        window.location.href = "https://apps.apple.com/ru/app/";
+      }
+      // Check if the user agent is from an Android device
+      else if (userAgent.indexOf("android") !== -1) {
+        // Open the app in Android using an intent URL
+        window.location.href = "https://play.google.com/store/apps/";
+      }
+      // Check if the user agent is from a Windows device
+      else if (userAgent.indexOf("windows") !== -1) {
+        // Redirect to the app's website or app store page for Windows users
+        window.location.href = appUrl;
+      }
+      // Redirect to the app store if the app is not installed on other devices
+      else {
+        window.location.href = appUrl;
+      }
     }
-    </script>
+  </script>
 
   <script src="{% static 'node_modules/flatpickr/dist/flatpickr.js' %}"></script>
   <script>
@@ -282,3 +292,7 @@
   </script>
 </main>
 {% endblock %}
+
+{% block footer %}
+    {% include 'partials/_footer.html' %}
+    {% endblock %}

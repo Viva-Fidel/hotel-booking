@@ -1,0 +1,51 @@
+{% extends 'accounts/authpage.html' %} {% load static %} {% load socialaccount
+%} {% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/signin.css' %}" />
+
+<section class="signin-form">
+  <div class="signin-form-box">
+    <h3 class="signin-title">Sign in</h3>
+    <label class="email-text">Email address</label>
+    <input type="email" id="email" name="email" class="email-input" required />
+    <label class="password-text">Password</label>
+    <!-- Include FontAwesome CSS file -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+
+    <input
+      type="password"
+      id="password"
+      name="password"
+      class="password-input"
+      required
+    />
+    <button type="button" id="toggle-password" class="toggle-password">
+      <i class="far fa-eye"></i>
+    </button>
+    <div class="checkbox-signin-restore">
+    <input type="checkbox" id="keep-signed-in" name="keep-signed-in" />
+    <label class="signin-checkbox-text" for="keep-signed-in">Keep me signed in</label>
+<a href="/restore" class="forgot-password">Forgot password?</a></div>
+</div>
+<button type="submit" class="email-submit">Continue with Email</button>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
+
+    <script>
+      const passwordInput = document.getElementById("password");
+      const togglePassword = document.getElementById("toggle-password");
+
+      togglePassword.addEventListener("click", function () {
+        const type =
+          passwordInput.getAttribute("type") === "password"
+            ? "text"
+            : "password";
+        passwordInput.setAttribute("type", type);
+        togglePassword.querySelector("i").classList.toggle("fa-eye-slash");
+      });
+    </script>
+    {% endblock %}
+  </div>
+</section>

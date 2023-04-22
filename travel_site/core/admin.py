@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.utils.html import format_html
 from django.db.models.functions import Substr
 from django.db.models import CharField
-from .models import Countries
+from .models import Countries, CoverPhoto
 
 
 class FirstLetterFilter(admin.SimpleListFilter):
@@ -33,3 +33,16 @@ class CountriesAdmin(admin.ModelAdmin):
         else:
             return "-"
     country_photo_preview.short_description = "Photo Preview"
+
+@admin.register(CoverPhoto)
+class CoverPhotoAdmin(admin.ModelAdmin):
+    def has_add_permission(self, request):
+        return CoverPhoto.objects.count() == 0
+
+    def has_delete_permission(self, request, obj=None):
+        return CoverPhoto.objects.count() == 1
+
+    def save_model(self, request, obj, form, change):
+        if change:
+            CoverPhoto.objects.all().delete()
+        super().save_model(request, obj, form, change)

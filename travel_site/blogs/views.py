@@ -6,4 +6,4 @@ from .models import Blogs
 def blog_detail(request, slug):
     blog = get_object_or_404(Blogs, slug=slug)
     context = {'blog': blog}
-    return render(request, 'blog/blog_detail.html', context)
+    return render(request, 'blogs/blog_detail.html', context)
