@@ -13,7 +13,7 @@ def registration(request):
             return redirect('home')
     else:
         form = MyUserCreationForm()
-    return render(request, 'accounts/registration.html', {'form': form})
+    return render(request, 'accounts/authentification.html', {'form': form})
 
 def signin(request):
     if request.method == 'POST':
@@ -29,4 +29,4 @@ def signin(request):
                 messages.error(request, 'Invalid email or password.')
     else:
         form = SignInForm()
-    return render(request, 'accounts/signin.html', {'form': form})
+    return render(request, 'accounts/authentification.html', {'form': form})

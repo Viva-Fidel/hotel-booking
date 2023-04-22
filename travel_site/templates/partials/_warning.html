@@ -1,0 +1,13 @@
+{% load static %} 
+<link rel="stylesheet" type="text/css" href="{% static 'css/_warning.css' %}" />
+<div class="danger">
+    <img
+      src="{% static 'images/icons/danger.svg' %}"
+      alt="danger logo"
+      class="danger-logo"
+    />
+    <span class="danger-text">
+      Check the latest COVID-19 restrictions before you travel.
+      <a href="/covid-19" class="learn-more">Learn more</a></span
+    >
+  </div>

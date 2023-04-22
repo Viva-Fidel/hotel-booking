@@ -90,17 +90,7 @@
   </section>
   <section class="restrictions">
     <div class="container">
-      <div class="danger">
-        <img
-          src="{% static 'images/icons/danger.svg' %}"
-          alt="danger logo"
-          class="danger-logo"
-        />
-        <span class="danger-text">
-          Check the latest COVID-19 restrictions before you travel.
-          <a href="/covid-19" class="learn-more">Learn more</a></span
-        >
-      </div>
+      {% include 'partials/_warning.html' %}
     </div>
   </section>
 

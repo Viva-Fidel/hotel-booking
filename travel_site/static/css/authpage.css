@@ -1,98 +1,114 @@
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-@font-face {
-  font-family: "SF Pro Display";
-  font-weight: 400;
-  font-style: normal;
-  font-display: auto;
-  src: local("SF Pro Display"),
-    url("../fonts/SFProDisplay-Regular.woff2") format("woff2"),
-    url("../fonts/SFProDisplay-Regular.woff") format("woff");
-}
-@font-face {
-  font-family: "SF Pro Display";
-  font-weight: 500;
-  font-style: normal;
-  font-display: auto;
-  src: local("SF Pro Display"),
-    url("../fonts/SFProDisplay-Medium.woff2") format("woff2"),
-    url("../fonts/SFProDisplay-Medium.woff") format("woff");
-}
-
-@font-face {
-  font-family: "SF Pro Display";
-  font-weight: 600;
-  font-style: normal;
-  font-display: auto;
-  src: local("SF Pro Display"),
-    url("../fonts/SFProDisplay-Semibold.woff2") format("woff2"),
-    url("../fonts/SFProDisplay-Semibold.woff") format("woff");
-}
-@font-face {
-  font-family: "SF Pro Display";
-  font-weight: 700;
-  font-style: normal;
-  font-display: auto;
-  src: local("SF Pro Display"),
-    url("../fonts/SFProDisplay-Bold.woff2") format("woff2"),
-    url("../fonts/SFProDisplay-Bold.woff") format("woff");
-}
-
-body {
-  font-family: "SF Pro Display", sans-serif;
-}
-
-a {
-  text-decoration: none;
-}
-
-ul {
-  list-style: none;
-}
-
-.container {
+.authentification-form-box {
+  display: flex;
+  flex-direction: column;
   margin: 0 auto;
-  max-width: 1260px;
-  padding: 0 10px;
-}
-
-.header {
-  min-height: 68px;
-  display: flex;
+  margin-top: 92px;
   align-items: center;
-  justify-content: space-between;
-  background: #ffffff;
+  position: relative;
 }
 
-.logo-link {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 24px;
+.authentification-title {
+  font-weight: 600;
+  font-size: 28px;
+  line-height: 33px;
+  text-align: center;
+  color: #181818;
+  margin-block-start: 0px;
+  margin-block-end: 0px;
 }
 
-.logo-image {
-  width: 24px;
-  height: 24px;
-  flex: none;
-  order: 1;
-  flex-grow: 0;
-}
-
-.logo-link-text {
+.email-text {
   font-weight: 500;
-  font-size: 18px;
-  color: #1b1f2d;
-  padding: 1.5px 0px 1.5px 4px;
-  line-height: 21px;
+  font-size: 14px;
+  line-height: 140%;
   letter-spacing: 0.02em;
-  flex: none;
-  order: 1;
-  flex-grow: 0;
+  color: #181818;
+  margin-top: 40px;
+  margin-right: 310px;
+}
+
+.email-input {
+  padding: 11px 12px 12px;
+  background: #f2f2f2;
+  border-radius: 4px;
+  width: 400px;
+  height: 44px;
+  border: none;
+  margin-top: 4px;
+  outline-color: #2f80ed;
+}
+
+.password-sigin-text {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 140%;
+  letter-spacing: 0.02em;
+  color: #181818;
+  margin-top: 20px;
+  margin-right: 336px;
+}
+
+.password-input {
+  padding: 11px 12px 12px;
+  background: #f2f2f2;
+  border-radius: 4px;
+  width: 400px;
+  height: 44px;
+  border: none;
+  margin-top: 4px;
+  outline-color: #2f80ed;
+}
+
+.checkbox-signin-restore {
+  display: flex;
+  margin-top: 20px;
+}
+
+.signin-checkbox-text {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.02em;
+  color: #4f4f4f;
+  margin-left: 8px;
+}
+
+.forgot-password {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  display: flex;
+  align-items: center;
+  text-align: right;
+  letter-spacing: 0.02em;
+  color: #2f80ed;
+  margin-left: 150px;
+}
+
+.email-submit {
+  width: 400px;
+  height: 44px;
+  left: 520px;
+  top: 330px;
+  background: #2f80ed;
+  border-radius: 6px;
+  padding: 12px 18px;
+  color: #ffffff;
+  border: none;
+  margin-top: 30px;
+  cursor: pointer;
+}
+
+.email-options-text {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  letter-spacing: 0.02em;
+  color: #4f4f4f;
+  margin-left: 16px;
+  margin-right: 16px;
 }
 
 .email-options-wrapper {
@@ -101,7 +117,6 @@ ul {
   justify-content: center;
   margin-top: 27px;
   width: 400px;
-  margin-left: 420px;
 }
 
 .horizontal-line {
@@ -111,7 +126,6 @@ ul {
 }
 
 .login-with-google-btn {
-  margin-left: 420px;
   margin-top: 30px;
   width: 400px;
   height: 44px;
@@ -146,7 +160,6 @@ ul {
 }
 
 .login-with-github-btn {
-  margin-left: 420px;
   margin-top: 12px;
   width: 400px;
   height: 44px;
@@ -188,3 +201,92 @@ ul {
   letter-spacing: 0.02em;
   color: #4f4f4f;
 }
+
+.password-creation-guide {
+  margin-top: 12px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 140%;
+  text-align: center;
+  letter-spacing: 0.02em;
+  color: #4f4f4f;
+}
+
+.password-form {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin: 0 auto;
+}
+
+.password-registration-text {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 140%;
+  letter-spacing: 0.02em;
+  color: #181818;
+  margin-top: 40px;
+  margin-right: 336px;
+}
+
+.confirm-password-registration-text {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 140%;
+  letter-spacing: 0.02em;
+  color: #181818;
+  margin-top: 20px;
+  margin-right: 285px;
+}
+
+.terms-text {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  letter-spacing: 0.02em;
+  color: #4f4f4f;
+  margin-top: 24px;
+}
+
+.terms-text a {
+  color: #2f80ed;
+}
+
+.check-inbox {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 140%;
+  text-align: center;
+  letter-spacing: 0.02em;
+  color: #4f4f4f;
+  margin-top: 12px;
+}
+
+.check-inbox b {
+  color: #333333;
+}
+
+.img-background {
+  box-sizing: border-box;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 280px;
+  height: 250px;
+  left: calc(50% - 280px / 2);
+  top: calc(50% - 250px / 2 - 200px);
+  background: rgba(254, 226, 101, 0.3);
+  border: 1px solid #000000;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.booking_photo {
+  max-width: 100%;
+  max-height: 100%;
+}
+

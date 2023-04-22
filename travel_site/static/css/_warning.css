@@ -1,0 +1,29 @@
+.danger {
+    margin-top: 82px;
+    max-width: 100%;
+    min-height: 72px;
+    background: #fcefca;
+    border-radius: 8px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+  }
+  
+  .danger-text {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 140%;
+    letter-spacing: 0.02em;
+    color: #333333;
+    margin-left: 19px;
+  }
+  
+  .danger a {
+    color: #2f80ed;
+  }
+  
+  .danger-logo {
+    width: 32px;
+    height: 32px;
+    margin-left: 24px;
+  }
