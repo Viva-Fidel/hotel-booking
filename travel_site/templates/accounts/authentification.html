@@ -12,21 +12,24 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/authpage.css' %}" />
 
 <section class="authentification-form">
-  <div class="authentification-form-box" id="form1">
+  <form class="authentification-form-box" id="registration-form">
     {% if request.path == '/register/' %}
     <h3 class="authentification-title">Register</h3>
     {% elif request.path == '/signin/' %}
     <h3 class="authentification-title">Sign In</h3>
     {% endif %}
-    <label class="email-text">Email address</label>
-    <input type="email" id="email" name="email" class="email-input" required />
-    {% if request.path == '/signin/' %}
-    <label class="password-sigin-text">Password</label>
+    <label class="top-form-text">Email address</label>
+    <input type="email" id="email" name="email" class="form-input" required />
+    {% if request.path == '/register/' %}
+    <button type="submit" class="email-submit" onclick="showForm2()">Continue with Email
+    </button>
+    {% elif request.path == '/signin/' %}
+    <label class="bottom-form-text">Password</label>
     <input
       type="password"
       id="password"
       name="password"
-      class="password-input"
+      class="form-input"
       required
     />
     <div class="checkbox-signin-restore">
@@ -34,12 +37,14 @@
       <label class="signin-checkbox-text" for="keep-signed-in"
         >Keep me signed in</label
       >
-      <a href="/restore" class="forgot-password" onclick="return false;">Forgot password?</a>
+      <a href="" class="forgot-password-link" onclick="return false;">Forgot password?</a>
     </div>
-    {% endif %}
-    <button type="submit" class="email-submit" onclick="showForm2()">
-      Continue with Email
+    <button type="submit" class="email-submit">Continue with Email
     </button>
+    
+    {% endif %}
+    
+      
     <div class="email-options-wrapper">
       <div class="horizontal-line"></div>
       <span class="email-options-text">or use one of these options</span>
@@ -62,20 +67,20 @@
       <a href="/signin" class="sign-in-link">Sign in</a>
       {% endif %}
     </span>
-  </div>
+  </form>
 
-  <div class="authentification-form-box" id="form2" style="display: none">
+  <div class="authentification-form-box" id="password-creation-form" style="display: none">
     <h3 class="authentification-title">Create Password</h3>
-    <span class="password-creation-guide">Use a minimum of 10 characters, including letters, <br> lowercase letters, and numbers.</span>
+    <p class="password-creation-guide">Use a minimum of 10 characters, including letters, <br> lowercase letters, and numbers.</p>
     <form class="password-form" method="post" action="{% url 'registration' %}">
       {% csrf_token %}
-      <label class="password-registration-text">Password</label>
-      <input type="password" name="password" class="password-input" required />
-      <label class="confirm-password-registration-text">Confirm Password</label>
+      <label class="top-form-text">Password</label>
+      <input type="password" name="password" class="form-input" required />
+      <label class="bottom-form-text">Confirm Password</label>
       <input
         type="password"
         name="confirm_password"
-        class="password-input"
+        class="form-input"
         required
       />
       <button type="submit" class="email-submit">Create account</button>
@@ -83,13 +88,13 @@
     </form>
   </div>
 
-  <div class="authentification-form-box" id="form3" style="display: none">
+  <div class="authentification-form-box" id="forgot-password-form" style="display: none">
     <h3 class="authentification-title">Forgot your password?</h3>
-    <span class="password-creation-guide">We’ll send you a link to reset it. Enter your email address <br> used for My Dream Place</span>
+    <p class="password-creation-guide">We’ll send you a link to reset it. Enter your email address used for My Dream Place.</p>
     <form class="password-form" method="post" action="{% url 'registration' %}">
       {% csrf_token %}
-      <label class="email-text">Your email address</label>
-    <input type="email" id="email" name="email" class="email-input" required />
+      <label class="top-form-text">Your email address</label>
+    <input type="email" id="email" name="email" class="form-input" required />
       <button type="submit" class="email-submit" id="reset-link-btn">
         Send Reset Link
       </button>
@@ -97,7 +102,7 @@
     </form>
   </div>
 
-  <div class="authentification-form-box" id="form4" style="display: none">
+  <div class="authentification-form-box" id="forgot-email-sent" style="display: none">
     <div class="img-background"><img
         src="{% static 'images/icons/restore_password.svg' %}"
         alt="Main page photo"
@@ -105,18 +110,18 @@
       /></div>
     
     <h3 class="authentification-title">Check your Inbox</h3>
-    <span class="check-inbox">We have just emailed you the instrustions and a reset <br> password link to <b>Sumail_john@gmail.com</b>. It might take a<br> few minutes to arrive</span>
+    <p class="check-check-inbox-text">We have just emailed you the instrustions and a reset <br> password link to <b>Sumail_john@gmail.com</b>. It might take a<br> few minutes to arrive</p>
     <button type="submit" class="email-submit" id="reset-link-btn">
-        Send Reset Link
+      Back to Sign in
       </button>
   </div>
 </section>
 
 <script>
-    const form1 = document.getElementById("form1");
-const form2 = document.getElementById("form2");
-const form3 = document.getElementById("form3");
-const form4 = document.getElementById("form4");
+    const form1 = document.getElementById("registration-form");
+const form2 = document.getElementById("password-creation-form");
+const form3 = document.getElementById("forgot-password-form");
+const form4 = document.getElementById("forgot-email-sent");
 
 function showForm2() {
   form1.style.display = "none";
@@ -197,7 +202,7 @@ function registerUser() {
     });
 }
 
-const forgotPasswordLink = document.querySelector(".forgot-password");
+const forgotPasswordLink = document.querySelector(".forgot-password-link");
 forgotPasswordLink.addEventListener("click", showForm3);
 
 const resetLinkBtn = document.querySelector("#reset-link-btn");
