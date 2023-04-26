@@ -13,18 +13,18 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/authpage.css' %}" />
 
 <section class="authentification-form">
-  {% csrf_token %}
-  <form class="authentification-form-box" id="registration-form" method="POST">
+  <div class="authentification-form-box" id="registration-form">
     {% if request.path == '/register/' %}
     <h3 class="authentification-title">Register</h3>
     {% elif request.path == '/signin/' %}
     <h3 class="authentification-title">Sign In</h3>
     {% endif %}
+    <form class="email-form" method="POST">
     <label class="top-form-text">Email address</label>
     {{ form.email | attr:"class:form-input" }} 
-    <div class="error-message">{{ form.email.errors.0 }}</div>
+    <div class="error-message" id="email-error-message">{{ form.email.errors.0 }}</div>
     {% if request.path == '/register/' %}
-     <button type="submit" class="email-submit">Continue with Email
+     <button type="button" class="email-submit"  id="continue-with-email-btn">Continue with Email
     </button> 
     <!-- <a class="email-submit">Continue with Email</a>
      -->
@@ -66,6 +66,7 @@
         Continue with GitHub
       </button>
     </a>
+  </form>
     <span class="have-an-account-text">
       Already have an account? {% if request.path == '/signin/' %}
       <a href="/register" class="sign-in-link">Register</a>
@@ -73,7 +74,8 @@
       <a href="/signin" class="sign-in-link">Sign in</a>
       {% endif %}
     </span>
-  </form>
+    
+  </div>
 
  <div class="authentification-form-box" id="password-creation-form">
     <h3 class="authentification-title">Create Password</h3>
@@ -81,18 +83,25 @@
     <form class="password-form" method="POST">
       {% csrf_token %}
       <label class="top-form-text">Password</label>
-      <input type="password" name="password" class="form-input" required /> 
+      <input type="password" name="password" class="form-input" id="id_password1" required />
+      <div class="error-message" id="password1-error-message">{{ form.email.errors.0 }}</div> 
       <label class="bottom-form-text">Confirm Password</label>
       <input
         type="password"
         name="confirm_password"
         class="form-input"
+        id="id_password2"
         required
       /> 
-      <button type="submit" class="email-submit">Create account</button>
+      <div class="error-message" id="password2-error-message">{{ form.email.errors.0 }}</div>
+      <button type="submit" class="email-submit" id="create-user-btn">Create account</button>
       <span class="terms-text">By creating an account, you agree with our <a href="" class="terms-link">Terms and Conditions</a> and <a href="" class="terms-link">Privacy Statement.</a></span>
     </form>
   </div>
+
+
+
+
   <div class="authentification-form-box" id="forgot-password-form" style="display: none">
     <h3 class="authentification-title">Forgot your password?</h3>
     <p class="password-creation-guide">We’ll send you a link to reset it. Enter your email address used for My Dream Place.</p>
@@ -128,31 +137,27 @@ $.ajaxSetup({
   headers: { "X-CSRFToken": '{{csrf_token}}' }
 });
 
-$('#registration-form').on('submit', function(event){
-    event.preventDefault();
-    console.log("form submitted!")  // sanity check
-    create_post();
-});
-
-function create_post() {
-    console.log("create post is working!") // sanity check
+function validate_email() {
     $.ajax({
-        url : " ", // the endpoint
-        type : "POST", // http method
-        data : { the_post : $('.form-input').val() }, // data sent with the post request
+        url : " ", 
+        type : "POST", 
+        data : { email : $('.form-input').val() }, 
 
         success : function(response) {
             if (response.success) {
-                console.log(response); // log the returned json to the console
-                console.log("success"); // another sanity check
+              var email = $('.form-input').val();
+                $('.authentification-form-box').hide();
+                $('#password-creation-form').show();
+
             } else {
                 var errors = response.errors;
-                $(".error-message").empty();
+                console.log(errors)
+                $("#email-error-message").empty();
                 for (var field in errors) {
                     if (errors.hasOwnProperty(field)) {
-                        var errorMessages = errors[field];
-                        for (var i = 0; i < errorMessages.length; i++) {
-                            $(".error-message").prepend( errorMessages[i]);
+                      var errorMessages = errors[field];
+                if (errorMessages.length > 0) {
+                            $("#email-error-message").prepend( errorMessages[0]);
                         }
                     }
                 }
@@ -161,136 +166,54 @@ function create_post() {
     });
 };
 
-// //  кнопка отправки email (register)
-// const registrationFrom = document.querySelector('#registration-form'); // форма регистрации
-// registrationFrom.addEventListener('submit',(e) =>{
-//   e.preventDefault();
 
+function create_user() {
+    var email = $('.form-input').val();
+    var password1 = $('#id_password1').val();
+    var password2 = $('#id_password2').val();
 
-
-// })
-
-
-// alexis.artamonov@gmail.com
-
-
-// const emailSubmitButton = document.querySelector('.email-submit');
-// const passwordCreationForm = document.querySelector('#password-creation-form'); // 
-// const registrationFrom = document.querySelector('#registration-form'); // форма регистрации
-// passwordCreationForm.style.display = 'none'
-// registrationFrom.addEventListener('submit', (e) => {
-// e.preventDefault();  
-// let userEmail = document.querySelector('.form-input').value;
-
-// // fetch('./tt.py')
-// // .then(data=> console.log(data))
-// fetch('tt.py', {
-
-// }).then(function(response) {
-//     console.log(response)
-// });
-// сбрасываем стандартное поведение браузера(refresh)
-// взять email введенный пользователем и отправить запрос
-// на файл для проверки есть ли user БД
-
-  // passwordCreationForm.style.display = 'flex';
-// });
-
-
-</script>
-
-<!-- <script>
-    const form1 = document.getElementById("registration-form");
-const form2 = document.getElementById("password-creation-form");
-const form3 = document.getElementById("forgot-password-form");
-const form4 = document.getElementById("forgot-email-sent");
-
-function showForm2() {
-  form1.style.display = "none";
-  form2.style.display = "flex";
-  form3.style.display = "none";
-  form4.style.display = "none";
-  window.history.pushState({ form: "form2" }, "", "");
-}
-
-function showForm1() {
-  form1.style.display = "flex";
-  form2.style.display = "none";
-  form3.style.display = "none";
-  form4.style.display = "none";
-  window.history.pushState({ form: "form1" }, "", "");
-}
-
-function showForm3() {
-  form1.style.display = "none";
-  form2.style.display = "none";
-  form3.style.display = "flex";
-  form4.style.display = "none";
-  window.history.pushState({ form: "form3" }, "", "");
-}
-
-function showForm4() {
-  form1.style.display = "none";
-  form2.style.display = "none";
-  form3.style.display = "none";
-  form4.style.display = "flex";
-  window.history.pushState({ form: "form4" }, "", "");
-}
-
-window.onpopstate = function (event) {
-  if (event.state && event.state.form === "form2") {
-    showForm2();
-  } else if (event.state && event.state.form === "form3") {
-    showForm3();
-  } else if (event.state && event.state.form === "form4") {
-    showForm4();
-  } else {
-    showForm1();
-  }
+    $.ajax({
+        url: " ",
+        type: "POST",
+        data: {
+            email: email,
+            password1: password1,
+            password2: password2
+        },
+        success: function(response) {
+            if (response.success) {
+                // Do something on success
+            } else {
+                var errors = response.errors;
+                console.log(errors)
+                $("#password1-error-message").empty();
+                $("#password2-error-message").empty();
+                for (var field in errors) {
+                    if (errors.hasOwnProperty(field)) {
+                      var errorMessages = errors[field];
+                if (errorMessages.length > 0) {
+                            $("#password1-error-message").prepend( errorMessages[0]);
+                            $("#password2-error-message").prepend( errorMessages[0]);
+                          }
+                    }
+                }
+            }
+        },
+    });
 };
 
-function registerUser() {
-  let email = document.getElementById("email").value;
-  let password = document.getElementById("password").value;
-  let confirmPassword = document.getElementById("confirm-password").value;
 
-  if (password !== confirmPassword) {
-    alert("Passwords do not match");
-    return;
-  }
+$('#continue-with-email-btn').on('click', function(event) {
+    event.preventDefault();
+    validate_email();
+});
 
-  fetch("/register/", {
-    method: "POST",
-    body: JSON.stringify({
-      email: email,
-      password: password,
-    }),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  })
-    .then((response) => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        throw new Error("Something went wrong");
-      }
-    })
-    .then((data) => {
-      // do something with data
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-    });
-}
+$('#create-user-btn').on('click', function(event) {
+    event.preventDefault();
+    create_user();
+});
 
-const forgotPasswordLink = document.querySelector(".forgot-password-link");
-forgotPasswordLink.addEventListener("click", showForm3);
-
-const resetLinkBtn = document.querySelector("#reset-link-btn");
-resetLinkBtn.addEventListener("click", showForm4);
-  </script> -->
-
+</script>
 
   
 {% endblock %}

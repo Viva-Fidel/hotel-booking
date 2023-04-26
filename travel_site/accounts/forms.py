@@ -2,7 +2,10 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.core.validators import EmailValidator
+from django.core.exceptions import ValidationError
 from .models import MyUser
+
+
 
 class UserCreationForm(UserCreationForm):
 
@@ -12,7 +15,6 @@ class UserCreationForm(UserCreationForm):
         validators=[EmailValidator()],
         required=True
     )
-
     password1 = forms.CharField(
           label='Password',
           widget=forms.PasswordInput,
@@ -30,9 +32,11 @@ class UserCreationForm(UserCreationForm):
             self.add_error('email', error_msg)
         return email
     
+    
     class Meta:
         model = User
         fields = ('email',)
+
 
 
 class EmailForm(forms.Form):
@@ -49,15 +53,5 @@ class EmailForm(forms.Form):
             self.add_error('email', error_msg)
         return email
 
-# class PasswordForm(forms.Form):
-#     password1 = forms.CharField(label='Password', widget=forms.PasswordInput())
-#     password2 = forms.CharField(label='Confirm password', widget=forms.PasswordInput())
-
-        
-        
-
-# class SignInForm(forms.Form):
-#     email = forms.EmailField(label='Email')
-#     password = forms.CharField(widget=forms.PasswordInput, label='Password')
 
 
