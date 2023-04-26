@@ -1,13 +1,14 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
+#from django.contrib.auth.models import User
+from .models import MyUser
 from django.core.validators import EmailValidator
 from django.core.exceptions import ValidationError
-from .models import MyUser
+# from .models import MyUser
 
 
 
-class UserCreationForm(UserCreationForm):
+class UserCreationForm(forms.Form):
 
     
     email = forms.EmailField(
@@ -27,15 +28,11 @@ class UserCreationForm(UserCreationForm):
 
     def clean_email(self):
         email = self.cleaned_data['email']
-        if User.objects.filter(email=email).exists():
+        if MyUser.objects.filter(email=email).exists():
             error_msg = "Email already exists"
             self.add_error('email', error_msg)
         return email
     
-    
-    class Meta:
-        model = User
-        fields = ('email',)
 
 
 
@@ -48,7 +45,7 @@ class EmailForm(forms.Form):
     
     def clean_email(self):
         email = self.cleaned_data['email']
-        if User.objects.filter(email=email).exists():
+        if MyUser.objects.filter(email=email).exists():
             error_msg = "Email already exists"
             self.add_error('email', error_msg)
         return email

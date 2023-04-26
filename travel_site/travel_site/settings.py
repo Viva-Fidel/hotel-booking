@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     'core',
     'hotels.apps.HotelsConfig',
     'blogs.apps.BlogsConfig',
-    'accounts'
+    'users'
 ]
 
 MIDDLEWARE = [
@@ -113,7 +113,7 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
      {
-       'NAME': 'accounts.validators.MyPasswordValidator',
+       'NAME': 'users.validators.MyPasswordValidator',
    },
 ]
 
@@ -165,11 +165,18 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
-SITE_ID = 2
+SITE_ID = 3
 
+
+
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 SOCIALACCOUNT_LOGIN_ON_GET = True
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_UNIQUE_EMAIL = True
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
-# AUTH_USER_MODEL = "accounts.MyUser"
+AUTH_USER_MODEL = "users.MyUser"

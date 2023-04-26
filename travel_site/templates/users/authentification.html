@@ -182,7 +182,7 @@ function create_user() {
         },
         success: function(response) {
             if (response.success) {
-                // Do something on success
+              window.location.replace("/");
             } else {
                 var errors = response.errors;
                 console.log(errors)
