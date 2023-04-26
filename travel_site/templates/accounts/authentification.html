@@ -1,6 +1,7 @@
 {% extends 'base.html' %} 
 {% load static %} 
 {% load socialaccount%} 
+{% load widget_tweaks %}
 {% block title %} 
 {% if request.path == '/register/' %}
  | Registration 
@@ -12,17 +13,22 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/authpage.css' %}" />
 
 <section class="authentification-form">
-  <form class="authentification-form-box" id="registration-form">
+  {% csrf_token %}
+  <form class="authentification-form-box" id="registration-form" method="POST">
     {% if request.path == '/register/' %}
     <h3 class="authentification-title">Register</h3>
     {% elif request.path == '/signin/' %}
     <h3 class="authentification-title">Sign In</h3>
     {% endif %}
     <label class="top-form-text">Email address</label>
-    <input type="email" id="email" name="email" class="form-input" required />
+    {{ form.email | attr:"class:form-input" }} 
+    <div class="error-message">{{ form.email.errors.0 }}</div>
     {% if request.path == '/register/' %}
-    <button type="submit" class="email-submit" onclick="showForm2()">Continue with Email
-    </button>
+     <button type="submit" class="email-submit">Continue with Email
+    </button> 
+    <!-- <a class="email-submit">Continue with Email</a>
+     -->
+
     {% elif request.path == '/signin/' %}
     <label class="bottom-form-text">Password</label>
     <input
@@ -69,25 +75,24 @@
     </span>
   </form>
 
-  <div class="authentification-form-box" id="password-creation-form" style="display: none">
+ <div class="authentification-form-box" id="password-creation-form">
     <h3 class="authentification-title">Create Password</h3>
-    <p class="password-creation-guide">Use a minimum of 10 characters, including letters, <br> lowercase letters, and numbers.</p>
-    <form class="password-form" method="post" action="{% url 'registration' %}">
+    <p class="password-creation-guide">Use a minimum of 10 characters, including letters, lowercase letters, and numbers.</p>
+    <form class="password-form" method="POST">
       {% csrf_token %}
       <label class="top-form-text">Password</label>
-      <input type="password" name="password" class="form-input" required />
+      <input type="password" name="password" class="form-input" required /> 
       <label class="bottom-form-text">Confirm Password</label>
       <input
         type="password"
         name="confirm_password"
         class="form-input"
         required
-      />
+      /> 
       <button type="submit" class="email-submit">Create account</button>
-      <span class="terms-text">By creating an account, you agree with our <a href="" class="terms-link">Terms and Conditions</a> <br> and <a href="" class="terms-link">Privacy Statement.</a></span>
+      <span class="terms-text">By creating an account, you agree with our <a href="" class="terms-link">Terms and Conditions</a> and <a href="" class="terms-link">Privacy Statement.</a></span>
     </form>
   </div>
-
   <div class="authentification-form-box" id="forgot-password-form" style="display: none">
     <h3 class="authentification-title">Forgot your password?</h3>
     <p class="password-creation-guide">We’ll send you a link to reset it. Enter your email address used for My Dream Place.</p>
@@ -98,9 +103,9 @@
       <button type="submit" class="email-submit" id="reset-link-btn">
         Send Reset Link
       </button>
-      <span class="terms-text">By creating an account, you agree with our <a href="" class="terms-link">Terms and Conditions</a> <br> and <a href="" class="terms-link">Privacy Statement.</a></span>
+      <span class="terms-text">By creating an account, you agree with our <a href="" class="terms-link">Terms and Conditions</a> and <a href="" class="terms-link">Privacy Statement</a>.</span>
     </form>
-  </div>
+  </div> 
 
   <div class="authentification-form-box" id="forgot-email-sent" style="display: none">
     <div class="img-background"><img
@@ -110,14 +115,91 @@
       /></div>
     
     <h3 class="authentification-title">Check your Inbox</h3>
-    <p class="check-check-inbox-text">We have just emailed you the instrustions and a reset <br> password link to <b>Sumail_john@gmail.com</b>. It might take a<br> few minutes to arrive</p>
+    <p class="check-check-inbox-text">We have just emailed you the instrustions and a reset password link to <b>Sumail_john@gmail.com</b>. It might take a few minutes to arrive</p>
     <button type="submit" class="email-submit" id="reset-link-btn">
       Back to Sign in
       </button>
   </div>
 </section>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script>
+$.ajaxSetup({
+  headers: { "X-CSRFToken": '{{csrf_token}}' }
+});
+
+$('#registration-form').on('submit', function(event){
+    event.preventDefault();
+    console.log("form submitted!")  // sanity check
+    create_post();
+});
+
+function create_post() {
+    console.log("create post is working!") // sanity check
+    $.ajax({
+        url : " ", // the endpoint
+        type : "POST", // http method
+        data : { the_post : $('.form-input').val() }, // data sent with the post request
+
+        success : function(response) {
+            if (response.success) {
+                console.log(response); // log the returned json to the console
+                console.log("success"); // another sanity check
+            } else {
+                var errors = response.errors;
+                $(".error-message").empty();
+                for (var field in errors) {
+                    if (errors.hasOwnProperty(field)) {
+                        var errorMessages = errors[field];
+                        for (var i = 0; i < errorMessages.length; i++) {
+                            $(".error-message").prepend( errorMessages[i]);
+                        }
+                    }
+                }
+            }
+        },
+    });
+};
+
+// //  кнопка отправки email (register)
+// const registrationFrom = document.querySelector('#registration-form'); // форма регистрации
+// registrationFrom.addEventListener('submit',(e) =>{
+//   e.preventDefault();
+
+
+
+// })
+
+
+// alexis.artamonov@gmail.com
+
+
+// const emailSubmitButton = document.querySelector('.email-submit');
+// const passwordCreationForm = document.querySelector('#password-creation-form'); // 
+// const registrationFrom = document.querySelector('#registration-form'); // форма регистрации
+// passwordCreationForm.style.display = 'none'
+// registrationFrom.addEventListener('submit', (e) => {
+// e.preventDefault();  
+// let userEmail = document.querySelector('.form-input').value;
+
+// // fetch('./tt.py')
+// // .then(data=> console.log(data))
+// fetch('tt.py', {
+
+// }).then(function(response) {
+//     console.log(response)
+// });
+// сбрасываем стандартное поведение браузера(refresh)
+// взять email введенный пользователем и отправить запрос
+// на файл для проверки есть ли user БД
+
+  // passwordCreationForm.style.display = 'flex';
+// });
+
+
+</script>
+
+<!-- <script>
     const form1 = document.getElementById("registration-form");
 const form2 = document.getElementById("password-creation-form");
 const form3 = document.getElementById("forgot-password-form");
@@ -207,9 +289,8 @@ forgotPasswordLink.addEventListener("click", showForm3);
 
 const resetLinkBtn = document.querySelector("#reset-link-btn");
 resetLinkBtn.addEventListener("click", showForm4);
-  </script>
+  </script> -->
 
-  
-  
+
   
 {% endblock %}

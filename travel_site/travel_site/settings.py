@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.github',
+    'widget_tweaks',
+    'formtools',
     'core',
     'hotels.apps.HotelsConfig',
     'blogs.apps.BlogsConfig',
@@ -163,3 +165,5 @@ SOCIALACCOUNT_LOGIN_ON_GET = True
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+
+# AUTH_USER_MODEL = "accounts.MyUser"
