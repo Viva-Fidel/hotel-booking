@@ -17,8 +17,13 @@ class MyPasswordValidator:
                 ("Password must contain at least one lowercase letter."),
                 code='password_no_lower',
             )
+        if not any(char.isupper() for char in password):
+            raise ValidationError(
+                ("Password must contain at least one uppercase letter."),
+                code='password_no_upper',
+            )
 
     def get_help_text(self):
         return (
-            "Your password must be at least 10 characters long, and contain both numbers and lowercase letters."
+            "Your password must be at least 10 characters long, and contain both numbers, lowercase and uppercase letters."
         )

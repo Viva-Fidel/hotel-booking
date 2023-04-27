@@ -1,9 +1,31 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 from django.http import JsonResponse
-from .forms import UserCreationForm, EmailForm
+from .forms import UserCreationForm, RegistrationEmailForm, SigninForm
 from .models import MyUser
 from django.contrib import messages
+
+def signin(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+
+        form = SigninForm({'email': email, "password": password})
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            password = form.cleaned_data['password']
+            user = authenticate(request, email=email, password=password)
+            if user is not None:
+                login(request, user)
+                return JsonResponse({'success': True})
+        # If the form is invalid, return a JSON response with the error messages
+        # return render(request, 'users/authentification.html', {'form': form, 'errors': form.errors})
+        print(form.errors)
+        return JsonResponse({'success': False, 'errors': form.errors})
+    else:
+        form = SigninForm()
+        return render(request, 'users/authentification.html', {'form': form})
+
 
 
 def registration(request):
@@ -14,7 +36,7 @@ def registration(request):
 
         # Check if only email is provided
         if email and not password1 and not password2:
-            form = EmailForm({'email': email})
+            form = RegistrationEmailForm({'email': email})
             if form.is_valid():
                 email = form.cleaned_data['email']
                 # Check if email already exists
@@ -36,7 +58,6 @@ def registration(request):
                 'password2': password2,
             })
 
-
             if form.is_valid():
                 user = MyUser.objects.create(email=email, password=password1)
                 user.set_password(password1)
@@ -47,5 +68,5 @@ def registration(request):
                 return JsonResponse({'success': False, 'errors': form.errors})
            
     # Return the registration form
-    form = EmailForm()
+    form = RegistrationEmailForm()
     return render(request, 'users/authentification.html', {'form': form})
