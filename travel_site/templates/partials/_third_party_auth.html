@@ -1,0 +1,17 @@
+{% load socialaccount %} 
+
+<div class="email-options-wrapper">
+    <div class="horizontal-line"></div>
+    <span class="email-options-text">or use one of these options</span>
+    <div class="horizontal-line"></div>
+  </div>
+  <a href="{% provider_login_url 'google'%}">
+    <button type="button" class="login-with-google-btn">
+      Continue with Google
+    </button>
+  </a>
+  <a href="{% provider_login_url 'github'%}">
+    <button type="button" class="login-with-github-btn">
+      Continue with GitHub
+    </button>
+  </a>

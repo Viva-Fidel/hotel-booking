@@ -6,8 +6,7 @@ from django.contrib.auth import authenticate
 from django.core.validators import EmailValidator
 from django.core.exceptions import ValidationError
 from .validators import MyPasswordValidator
-# from .models import MyUser
-
+from django.contrib.auth.forms import PasswordResetForm
 
 
 class UserCreationForm(forms.Form):
@@ -57,8 +56,21 @@ class UserCreationForm(forms.Form):
         return password2
 
 
-
 class RegistrationEmailForm(forms.Form):
+    email = forms.EmailField(
+        label='Email address',
+        validators=[EmailValidator()],
+        required=True,
+    )
+    
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        if MyUser.objects.filter(email=email).exists():
+            error_msg = "Email already exists"
+            raise forms.ValidationError(error_msg)
+        return email
+    
+class PasswordRestoreEmailForm(forms.Form):
     email = forms.EmailField(
         label='Email',
         validators=[EmailValidator()],
@@ -67,9 +79,9 @@ class RegistrationEmailForm(forms.Form):
     
     def clean_email(self):
         email = self.cleaned_data['email']
-        if MyUser.objects.filter(email=email).exists():
-            error_msg = "Email already exists"
-            self.add_error('email', error_msg)
+        if not MyUser.objects.filter(email=email).exists():
+            error_msg = "Looks like there isn't an account associated with this email address."
+            raise forms.ValidationError(error_msg)
         return email
     
 class SigninForm(forms.Form):
