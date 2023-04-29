@@ -13,21 +13,20 @@
 {% endif %} 
 {% endblock %} 
 {% block content %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+
 <link rel="stylesheet" type="text/css" href="{% static 'css/authpage.css' %}" />
 
 <section class="authentification">
   <div class="authentification-form-box" id="authentification-form">
     
     {% if request.path == '/register/' %}
-    <form class="authentification-form" method="POST">
+    <form class="email-creation-form" method="POST">
     <h3 class="authentification-title">{{ register_title }}</h3>
-      {% csrf_token %}
-      <label class="top-form-text">Email address</label>
+    
+    <label class="top-form-text">Email address</label>
     {{ form.email | attr:"class:form-input" }}
     <div class="error-message" id="email-error-message">{{ form.email.errors.0 }}</div> 
-    <button type="submit" class="submit-btn"  id="continue-with-email-btn">{{ button }}
+    <button type="submit" class="submit-btn"  id="continue-with-email-btn-registration">{{ button }}
     </button> 
     {% include 'partials/_third_party_auth.html' %}
     <span class="have-an-account-text">
@@ -43,7 +42,7 @@
       {% csrf_token %}
       <label class="top-form-text">Password</label>
       <input type="password" name="password" class="form-input" id="password1" required />
-      <div class="error-message" id="passwor1-error-message">{{ form.password.errors.0 }}</div> 
+      <div class="error-message" id="password1-error-message">{{ form.password.errors.0 }}</div> 
       <label class="bottom-form-text">Confirm Password</label>
       <input
         type="password"
@@ -52,105 +51,17 @@
         id="password2"
         required
       /> 
-      <div class="error-message" id="passwor2-error-message">{{ form.password.errors.0 }}</div>
+      <div class="error-message" id="password2-error-message">{{ form.password.errors.0 }}</div>
       <button type="submit" class="submit-btn" id="create-user-btn">Create account</button>
       <span class="terms-text">By creating an account, you agree with our <a href="" class="terms-link">Terms and Conditions</a> and <a href="" class="terms-link">Privacy Statement.</a></span>
     </form>
   </div>
 
-
-
-
-
-    <script>
-      $.ajaxSetup({
-        headers: { "X-CSRFToken": '{{csrf_token}}' }
-      });
-      
-      function validate_email() {
-          $.ajax({
-              url : " ", 
-              type : "POST", 
-              data : { email : $('.form-input').val() }, 
-      
-              success : function(response) {
-                  if (response.success) {
-                    var email = $('.form-input').val();
-                      $('.authentification-form').hide();
-                      $('.password-creation-form').show();
-      
-                  } else {
-                      var errors = response.errors;
-                      $("#email-error-message").empty();
-                      for (var field in errors) {
-                          if (errors.hasOwnProperty(field)) {
-                            var errorMessages = errors[field];
-                      if (errorMessages.length > 0) {
-                                  $("#email-error-message").prepend(errorMessages[0]);
-                              }
-                          }
-                      }
-                  }
-              },
-          });
-      };
-      
-      
-      function create_user() {
-          var email = $('.form-input').val();
-          var password1 = $('#password1').val();
-          var password2 = $('#password2').val();
-      
-          $.ajax({
-              url: " ",
-              type: "POST",
-              data: {
-                  email: email,
-                  password1: password1,
-                  password2: password2
-              },
-              success: function(response) {
-                  if (response.success) {
-                    window.location.replace("/");
-                  } else {
-                      var errors = response.errors;
-                      $("#passwor1-error-message").empty();
-                      $("#passwor2-error-message").empty();
-                      for (var field in errors) {
-                          if (errors.hasOwnProperty(field)) {
-                            var errorMessages = errors[field];
-                      if (errorMessages.length > 0) {
-                                  $("#passwor1-error-message").prepend( errorMessages[0]);
-                                  $("#passwor2-error-message").prepend( errorMessages[0]);
-                                }
-                          }
-                      }
-                  }
-              },
-          });
-      };
-      
-      
-      $('#continue-with-email-btn').on('click', function(event) {
-          event.preventDefault();
-          validate_email();
-      });
-      
-      $('#create-user-btn').on('click', function(event) {
-          event.preventDefault();
-          create_user();
-      });
-      
-      </script>
-
-
-    
-
-    
     
       {% elif request.path == '/signin/' %}
+      <form class="signin-form" method="POST">
     <h3 class="authentification-title">{{ title }}</h3>
-    <form class="email-form" method="POST">
+    
       <label class="top-form-text">Email address</label>
       {% csrf_token %}
     {{ form.email | attr:"class:form-input" }} 
@@ -158,12 +69,12 @@
     <label class="bottom-form-text">Password</label>
     <input
       type="password"
-      id="id_password3"
+      id="password"
       name="password"
       class="form-input"
       required
     />
-    <div class="error-message" id="email-error-message">{{ form.email.errors.0 }}</div>
+    <div class="error-message" id="password-error-message">{{ form.email.errors.0 }}</div>
     <div class="checkbox-signin-restore">
       <input type="checkbox" id="keep-signed-in" name="keep-signed-in" />
       <label class="signin-checkbox-text" for="keep-signed-in"
@@ -171,36 +82,17 @@
       >
       <a href="/password_reset/" class="forgot-password-link">Forgot password?</a>
     </div>
-    <button type="submit" class="email-submit" id="continue-with-email-btn-signin">Continue with Email
+    <button type="submit" class="submit-btn" id="continue-with-email-btn-signin">{{ button }}
     </button>
 
-    <div class="email-options-wrapper">
-      <div class="horizontal-line"></div>
-      <span class="email-options-text">or use one of these options</span>
-      <div class="horizontal-line"></div>
-    </div>
-    {% load socialaccount %} 
-    <a href="{% provider_login_url 'google'%}">
-      <button type="button" class="login-with-google-btn">
-        Continue with Google
-      </button>
-    </a>
-    <a href="{% provider_login_url 'github'%}">
-      <button type="button" class="login-with-github-btn">
-        Continue with GitHub
-      </button>
-    </a>
-  </form>
+    {% include 'partials/_third_party_auth.html' %}
+  
     <span class="have-an-account-text">
-      Already have an account? {% if request.path == '/signin/' %}
+      Already have an account? 
       <a href="/register" class="sign-in-link">Register</a>
-      {% elif request.path == '/register/' %}
-      <a href="/signin" class="sign-in-link">Sign in</a>
-      {% endif %}
     </span>
-    
+  </form>
 
-     
       {% elif request.path == '/password_reset/' %}
       <h3 class="authentification-title">{{ title }}</h3>
       <p class="password-creation-guide">We’ll send you a link to reset it. Enter your email address used for My Dream Place.</p>
@@ -209,42 +101,123 @@
         <label class="top-form-text">Your email address</label>
       <!-- <input type="email" id="email" name="email" class="form-input" required /> -->
       {{ form.email | attr:"class:form-input" }} 
-      <div class="error-message" id="email-error-message">{{ form.email.errors.0 }}</div>
-      <button type="submit" class="email-submit" id="reset-link-btn">
-          Send Reset Link
+      <div class="error-message" id="error-message">{{ form.email.errors.0 }}</div>
+      <button type="submit" class="submit-btn" id="reset-link-btn">
+        {{ button }}
         </button>
         <span class="terms-text">By creating an account, you agree with our <a href="" class="terms-link">Terms and Conditions</a> and <a href="" class="terms-link">Privacy Statement</a>.</span>
       </form>
+
+
     {% elif request.path == '/password_reset/done/' %}
-    <div class="authentification-form-box" id="forgot-email-sent">
+    
       <div class="img-background"><img
           src="{% static 'images/icons/restore_password.svg' %}"
           alt="Main page photo"
           class="booking_photo"
         /></div>
       
-      <h3 class="authentification-title">Check your Inbox</h3>
-      <p class="check-check-inbox-text">We have just emailed you the instrustions and a reset password link to <b>Sumail_john@gmail.com</b>. It might take a few minutes to arrive</p>
-      <button type="submit" class="email-submit" id="reset-link-btn">
-        Back to Sign in
-        </button>
-    </div>
-  
+      <h3 class="authentification-title">{{ title }}</h3>
+      <p class="check-check-inbox-text">We have just emailed you the instrustions and a reset password link to <b>{{ email }}</b>. It might take a few minutes to arrive</p>
+      <button type="button" class="submit-btn" id="reset-link-btn" onclick="window.location.href = '/signin/'">
+        {{ button }}
+    </button>
+    
   </div>
     {% endif %}
    
   
-
-  
   
 </section>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 
 
 {% if request.path == '/register/' %}
 
+<script>
+  $.ajaxSetup({
+    headers: { "X-CSRFToken": '{{csrf_token}}' }
+  });
+  
+  function validate_email() {
+      $.ajax({
+          url : " ", 
+          type : "POST", 
+          data : { email : $('.form-input').val() }, 
+  
+          success : function(response) {
+              if (response.success) {
+                var email = $('.form-input').val();
+                  $('.email-creation-form').hide();
+                  $('.password-creation-form').show();
+  
+              } else {
+                  var errors = response.errors;
+                  $("#email-error-message").empty();
+                  for (var field in errors) {
+                      if (errors.hasOwnProperty(field)) {
+                        var errorMessages = errors[field];
+                  if (errorMessages.length > 0) {
+                              $("#email-error-message").prepend(errorMessages[0]);
+                          }
+                      }
+                  }
+              }
+          },
+      });
+  };
+  
+  
+  function create_user() {
+      var email = $('.form-input').val();
+      var password1 = $('#password1').val();
+      var password2 = $('#password2').val();
+  
+      $.ajax({
+          url: " ",
+          type: "POST",
+          data: {
+              email: email,
+              password1: password1,
+              password2: password2
+          },
+          success: function(response) {
+              if (response.success) {
+                window.location.replace("/");
+              } else {
+                  var errors = response.errors;
+                  $("#password1-error-message").empty();
+                  $("#password2-error-message").empty();
+                  for (var field in errors) {
+                      if (errors.hasOwnProperty(field)) {
+                        var errorMessages = errors[field];
+                  if (errorMessages.length > 0) {
+                              $("#password1-error-message").prepend( errorMessages[0]);
+                              $("#password2-error-message").prepend( errorMessages[0]);
+                            }
+                      }
+                  }
+              }
+          },
+      });
+  };
+  
+  
+  $('#continue-with-email-btn-registration').on('click', function(event) {
+      event.preventDefault();
+      validate_email();
+  });
+  
+  $('#create-user-btn').on('click', function(event) {
+      event.preventDefault();
+      create_user();
+  });
+  
+  </script>
 
 {% elif request.path == '/signin/' %}
+
 
 <script>
   $.ajaxSetup({
@@ -254,7 +227,7 @@
   
   function signin_user() {
       var email = $('.form-input').val();
-      var password = $('#id_password3').val();
+      var password = $('#password').val();
       var keep_signed_in = $('#keep-signed-in').prop('checked');
 
       $.ajax({
@@ -267,7 +240,7 @@
           },
           success: function(response) {
               if (response.success) {
-                window.location.replace("http://127.0.0.1:8000/");
+                window.location.replace("/");
               } else {
                   var errors = response.errors;
                   $("#email-error-message").empty();
@@ -292,8 +265,8 @@
 </script>
 
 
-
 {% elif request.path == '/password_reset/' %}
+
 <script>
   $.ajaxSetup({
     headers: { "X-CSRFToken": '{{csrf_token}}' }
@@ -314,12 +287,12 @@
                 window.location.replace("/password_reset/done/");
               } else {
                   var errors = response.errors;
-                  $("#email-error-message").empty();
+                  $("#error-message").empty();
                   for (var field in errors) {
                       if (errors.hasOwnProperty(field)) {
                         var errorMessages = errors[field];
                   if (errorMessages.length > 0) {
-                    $("#email-error-message").prepend(errorMessages[0]);
+                    $("#error-message").prepend(errorMessages[0]);
                             }
                       }
                   }
@@ -334,6 +307,17 @@
       restore_password();
   });
 </script> 
+
+{% elif request.path == '/password_reset/done/' %}
+
+<script>
+  $(document).ready(function() {
+  setTimeout(function() {
+    window.location.href = '/signin/';
+  }, 30000); 
+});
+
+</script>
 
 
 {% endif %}

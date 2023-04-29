@@ -86,8 +86,5 @@ def link_to_local_user(sender, request, sociallogin, **kwargs):
         
     login(request, user, backend='allauth.account.auth_backends.AuthenticationBackend')
 
-    # Associate the social account with the user
-    sociallogin.connect(request, user)
-
     # Redirect to the home page
     return redirect('/')

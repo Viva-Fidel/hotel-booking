@@ -22,8 +22,3 @@ class MyPasswordValidator:
                 ("Password must contain at least one uppercase letter."),
                 code='password_no_upper',
             )
-
-    def get_help_text(self):
-        return (
-            "Your password must be at least 10 characters long, and contain both numbers, lowercase and uppercase letters."
-        )
