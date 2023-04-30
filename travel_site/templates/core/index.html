@@ -155,21 +155,22 @@
       <ul class="popular-hotels-destinations">
         {% for hotel in popular_hotels %}
         <li class="popular-hotels-destinations-box">
+          <a href="#" class="popular-hotels-destinations-link">
           <img
             src="{{ hotel.hotel_cover_photo.url }}"
             alt=""
             class="popular-hotels-photo"
           />
+          
           <div class="popular-hotels-destinations-info">
-            <a href="#" class="popular-hotels-destinations-link">
               <span class="popular-hotels-destinations-info-name"
                 >{{ hotel.hotel_name }}</span
               >
               <span class="popular-hotels-destinations-info-amount"
                 >10 rooms</span
-              ></a
-            >
+              >
           </div>
+          </a>
         </li>
         {% endfor %}
       </ul>

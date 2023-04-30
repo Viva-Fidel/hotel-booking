@@ -1,6 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+  {% block head %}
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -15,8 +16,9 @@
       type="text/css"
       href="{% static 'css/normalize.css' %}"
     />
-    <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}" />
     <title>my Dream Place{% block title %}{% endblock %}</title>
+    {% endblock %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}" />
   </head>
 
   <body>
@@ -27,13 +29,14 @@
             src="{% static '/images/logos/logo.svg' %}"
             class="logo-image"
             alt="Website logo"
+
           />
           <span class="logo-link-text">my Dream Place</span>
         </a>
         
         {% block navigation %}
         {% endblock %}
-        </div>
+        
       </header>
     </div>
 

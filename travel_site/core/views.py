@@ -75,6 +75,9 @@ def search_hotels(request):
 
     context = {
         'destination': destination,
+        'checkin': checkin,
+        'checkout': checkout,
+        'guests': guests,
     }
 
     return render(request, 'core/search_results.html', context)

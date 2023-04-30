@@ -1,11 +1,11 @@
 from django import forms
 from django.db import models
 from django.core.exceptions import ValidationError
+from django.core.validators import MinValueValidator, MaxValueValidator
 from core.models import Countries
 import os
 
 # Create your models here.
-
 
 def cover_hotel_photo_path(instance, filename):
     return os.path.join('static/images/hotels', instance.hotel_name, 'cover', filename)
@@ -137,4 +137,56 @@ class HotelActivities(models.Model):
     hotel_has_surfing = models.BooleanField(
         default=False, verbose_name="Surfing")
     
+
+class BedType(models.Model):
+    BED_TYPE_CHOICES = [
+        ('queen', 'Queen bed'),
+        ('sofa', 'Sofa bed'),
+        ('king', 'King bed'),
+        ('twin', 'Twin bed'),
+        ('full', 'Full bed'),
+    ]
+    beds = models.PositiveIntegerField(help_text='Number of beds in the room')
+    bed_types = models.CharField(choices=BED_TYPE_CHOICES, max_length=50, help_text='Types of beds in the room (comma-separated)')
+
+    def __str__(self):
+        return f"{self.bed_types} ({self.beds})"
+
+
+class RoomType(models.Model):
+    hotels = models.ForeignKey(
+        Hotels, related_name='hotel_rooms', on_delete=models.CASCADE, default=None)
+    name = models.CharField(max_length=50, help_text='Name of the room type')
+    description = models.TextField(help_text='Description of the room type', default=None)
+    price_per_night = models.DecimalField(max_digits=8, decimal_places=2, help_text='Price per night of the room type', default=None)
+    photo_1 = models.ImageField(upload_to='room_types/', null=True, blank=True)
+    photo_2 = models.ImageField(upload_to='room_types/', null=True, blank=True)
+    photo_3 = models.ImageField(upload_to='room_types/', null=True, blank=True)
+    bed_types = models.ManyToManyField(BedType, help_text='Types and quantities of beds in the room')
+
+    def __str__(self):
+        return self.name
+
+class Room(models.Model):
+    room_number = models.CharField(max_length=50, help_text='Room number', default=None)
+    notes = models.TextField(help_text='Notes for the room', default=None)
+    room_type = models.ForeignKey(RoomType, on_delete=models.CASCADE)
+    available = models.BooleanField(default=True, help_text='Is the room currently available?')
     
+    class Meta:
+        unique_together = ['room_type', 'room_number']
+    
+    def __str__(self):
+        return f'{self.room_type} - {self.room_number}'
+
+class Booking(models.Model):
+    room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='bookings')
+    check_in_date = models.DateField()
+    check_out_date = models.DateField()
+    guest_count = models.PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(10)])
+    
+    class Meta:
+        unique_together = ['room', 'check_in_date', 'check_out_date']
+    
+    def __str__(self):
+        return f'{self.room} - {self.check_in_date} to {self.check_out_date}'

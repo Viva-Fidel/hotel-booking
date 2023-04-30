@@ -1,25 +1,220 @@
-{% extends 'base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>{% block head %} 
+        <!-- {% block title %} 
+        | Search results
+       {% endblock %}  -->
+       {% endblock %} 
+       <link rel="stylesheet" type="text/css" href="{% static 'css/search_results.css' %}" />
+    </head>
+    <body>
+        <div class="header-background">
+        <div class="container">
+          <header class="header">
+            <a href="/" class="logo-link">
+                <img src="{% static '/images/logos/alternative_logo.svg' %}" class="logo-image" alt="Website logo" />
+                <span class="logo-link-text">my Dream Place</span>
+              </a>
+              <nav class="header-menu">
+                <ul class="menu-list">
+                  <li class="menu-item"><a href="/" class="menu-link">Home</a></li>
+                  <li class="menu-item">
+                    <a href="/discover" class="menu-link">Discover</a>
+                  </li>
+                  <li class="menu-item">
+                    <a href="/activities" class="menu-link">Activities</a>
+                  </li>
+                  <li class="menu-item">
+                    <a href="/about" class="menu-link">About</a>
+                  </li>
+                  <li class="menu-item">
+                    <a href="/contact" class="menu-link">Contact</a>
+                  </li>
+                </ul>
+              </nav>
+              <div class="header-button-container">
+                <a href="/register" class="register-link"
+                  ><button class="register-button">Register</button></a
+                >
+                <a href="/signin" class="signin-link"
+                  ><button class="signin-button">Sign In</button></a
+                >
+            
+              </div>
+              <form
+        class="booking-form"
+        method="get"
+        action="{% url 'search_hotels' %}"
+      >
+        <div
+          class="booking-form-group booking-form-group--geo"
+          id="booking-form-group--geo"
+        >
+          <input
+            type="text"
+            class="booking-form-group__input"
+            id="destination"
+            name="destination"
+            placeholder="Where are you going?"
+            required
+          />
+          <ul class="autocomplete-result-list"></ul>
+        </div>
 
-{% block navigation %}
-        {% include 'partials/_navigation.html' %}
-        {% endblock %}
-
+        <div class="booking-form-group booking-form-group--calendar">
+          <input
+            type="text"
+            id="checkin"
+            name="checkin"
+            placeholder="Check-in date"
+            required
+          />
+        </div>
+        <div class="booking-form-group booking-form-group--calendar">
+          <input
+            type="text"
+            id="checkout"
+            name="checkout"
+            placeholder="Check-out date"
+            required
+          />
+        </div>
+        <div class="booking-form-group booking-form-group--guests">
+          <input
+            type="number"
+            id="guests"
+            name="guests"
+            min="1"
+            placeholder="Guests"
+            required
+          />
+        </div>
+        <button type="submit" class="booking-form-submit">Search</button>
+      </form>
+    
+          </header>
+        </div>
+    </div>
+        
 {% block content %}
-  <!-- <h1>Search results for "{{ destination }}"</h1>
+<main class="main">
+    <section class="results">
+      <div class="container">
+        <div class="content">
+            <div class="content_left">
+                <div class="filters">
+<div class="search-box">
+    <h4 class="search-box-title">Search by property name</h4>
+<input type="search" class="hotel-search" name="q">
 
-  <ul>
-  {% for hotel in hotels %}
-    <li>{{ hotel.name }} - {{ hotel.city }}, {{ hotel.country }}</li>
-  {% empty %}
-    <li>No results found.</li>
-  {% endfor %}
-  </ul>
+</div>
 
-  <p>Check-in date: {{ checkin }}</p>
-  <p>Check-out date: {{ checkout }}</p>
-  <p>Number of guests: {{ guests }}</p> -->
+                </div>
+
+            </div>
+            <div class="content_right">
+                <h3 class="search-results-title">Melbourne : 2,582 search results found</h3>
+                <div class="content_right-filter">
+                    <div class="allocation-type-filter">
+                        <button type="submit" class="filter-button filter-button--left">Our top picks</button>
+                        <button type="submit" class="filter-button">Hotel and apartments</button>
+                        <button type="submit" class="filter-button">Residence</bututon>
+                        <button type="submit" class="filter-button">Resort</button>
+                        <button type="submit" class="filter-button filter-button--right" id="right-corner">Shared Space</button>
+                    </div>
+                    <div class="sort-dropdown">
+                        <span>Sort by:</span>
+                        <select>
+                          <option value="recommended">Recommended</option>
+                          <option value="rating-high">Property rating (high to low)</option>
+                          <option value="rating-low">Property rating (low to high)</option>
+                          <option value="top-reviewed">Top reviewed</option>
+                        </select>
+                      </div>
+
+                </div>
+                <ul class="search-results">
+                    <li class="search-results-hotel">
+                        <img src="{% static 'images/hotels/Adriatic View Hotel/cover/hotel-3243724_960_720_o9fQvDM.jpg' %}" alt="" class="hotel-image">
+                        <div class="hotel-info">
+                            <div class="hotel-info-title">
+                            <h4 class="hotel-info-title-name">Lakeside Motel Warefront</h4>
+                            <div class="hotel-info-title-promo">Book now and receive 15% off</div>
+                        </div>
+                        <div class="hotel-info-rating">
+                        <div class="hotel-stars-info-rating">
+                        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                    </div>
+                    <p class="amount-of-reviews-text">4.5 (1200 Reviews)</p>
+                        </div>
+                        <div class="search-results-hotel-data">
+                        <div class="search-results-hotel-data-left">
+                        <p class="hotel-offer-title">Live a little and celbrate with champagne</p>
+                        <p class="hotel-offer-text">Reats include a glass of French champagne, parking and a late checkout. Gym included. Flexible cancellation applies</p>
+                        <button type="submit" class="see-aviability">See availability</button>
+                    </div>
+                    <div class="search-results-hotel-data-right">
+                        <div class="hotel-discount">5% off</div>
+                        <p class="rooms-text">1 room 2 days</p>
+                        <div class="price-box">
+                            <p class="discount-price">$150</p>
+                            <p class="full-price">$130</p>
+                        </div>
+                        <p class="taxes-text">Includes taxes and fees</p>
+                    </div>
+                </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+</div>
+</section>
+<section class="restrictions">
+    <div class="container">
+      {% include 'partials/_warning.html' %}
+    </div>
+  </section>
+</main>
+
+
+<h1>Search Results</h1>
+<p>Destination: {{ destination }}</p>
+<p>Check-in Date: {{ checkin_date }}</p>
+<p>Check-out Date: {{ checkout_date }}</p>
+<p>Guests: {{ guests }}</p>
+{% if search_results %}
+    <h2>Search Results:</h2>
+    <ul>
+        {% for result in search_results %}
+            <li>{{ result }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No search results found.</p>
+{% endif %}
 {% endblock %}
 
-{% block footer %}
+         
+        {% block footer %}
     {% include 'partials/_footer.html' %}
     {% endblock %}
+      </body>
+    </html>
+
+
+
+
+
+
+
+
+
+
+
+
