@@ -1,15 +1,14 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-  {% block head %}
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
-      rel="shortcut icon"
-      type="image/png"
-      href="{% static 'images/favicon/favicon.ico' %}"
+      rel="icon"
+      type="image/x-icon"
+      href="{% static 'images/core/favicon/favicon.ico' %}"
     />
     <link
       rel="stylesheet"
@@ -17,33 +16,34 @@
       href="{% static 'css/normalize.css' %}"
     />
     <title>my Dream Place{% block title %}{% endblock %}</title>
-    {% endblock %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/base.css' %}"
+    />
   </head>
 
   <body>
     <div class="container">
       <header class="header">
-        <a href="/" class="logo-link">
+        <a href="/" class="header__logo-link">
           <img
             src="{% static '/images/logos/logo.svg' %}"
-            class="logo-image"
+            class="header__logo-image"
             alt="Website logo"
-
           />
-          <span class="logo-link-text">my Dream Place</span>
+          <span class="header__logo-text">my Dream Place</span>
         </a>
-        
-        {% block navigation %}
+
+        {% block navigation %} 
         {% endblock %}
-        
       </header>
     </div>
 
-    {% block content %} {% endblock %}
-     
-    {% block footer %}
-    {% endblock %}
+    {% block content %} 
+    {% endblock %} 
     
+    {% block footer %} 
+    {% endblock %}
   </body>
 </html>

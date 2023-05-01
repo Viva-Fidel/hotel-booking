@@ -53,11 +53,6 @@ a {
 ul {
   list-style: none;
 }
-.header-background {
-  width: 100%;
-  height: 200px;
-  background: linear-gradient(180deg, #2969bf 0%, #144e9d 100%);
-}
 
 .container {
   margin: 0 auto;
@@ -73,14 +68,14 @@ ul {
   background: #ffffff;
 }
 
-.logo-link {
+.header__logo-link {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 24px;
 }
 
-.logo-image {
+.header__logo-image {
   width: 24px;
   height: 24px;
   flex: none;
@@ -88,7 +83,7 @@ ul {
   flex-grow: 0;
 }
 
-.logo-link-text {
+.header__logo-text {
   font-weight: 500;
   font-size: 18px;
   color: #1b1f2d;

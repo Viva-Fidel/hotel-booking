@@ -848,16 +848,4 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   color: #2f80ed;
   border: none;
   cursor: pointer;
-
-  /* background: #2f80ed;
-  border: 1px solid #2f80ed;
-  border-radius: 6px;
-  font-weight: 500;
-  font-size: 15px;
-  line-height: 20px;
-  letter-spacing: 0.02em;
-  color: #ffffff;
-  min-width: 148px;
-  padding: 5px;
-  cursor: pointer; */
 }

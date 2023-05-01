@@ -1,31 +1,80 @@
 {% load static %}
 <link
-      rel="stylesheet"
-      type="text/css"
-      href="{% static 'css/_navigation.css' %}"
-    />
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'css/partials/_navigation.css' %}"
+/>
 
 <nav class="header-menu">
-    <ul class="menu-list">
-      <li class="menu-item"><a href="/" class="menu-link">Home</a></li>
-      <li class="menu-item">
-        <a href="/discover" class="menu-link">Discover</a>
-      </li>
-      <li class="menu-item">
-        <a href="/activities" class="menu-link">Activities</a>
-      </li>
-      <li class="menu-item">
-        <a href="/about" class="menu-link">About</a>
-      </li>
-      <li class="menu-item">
-        <a href="/contact" class="menu-link">Contact</a>
-      </li>
-    </ul>
-  </nav>
-  <div class="header-button-container">
-    <a href="/register" class="register-link"
-      ><button class="register-button">Register</button></a
+  <ul class="header-menu__list">
+    <li class="header-menu__item">
+      <a href="/" class="header-menu__link">Home</a>
+    </li>
+    <li class="header-menu__item">
+      <a href="/discover" class="header-menu__link">Discover</a>
+    </li>
+    <li class="header-menu__item">
+      <a href="/activities" class="header-menu__link">Activities</a>
+    </li>
+    <li class="header-menu__item">
+      <a href="/about" class="header-menu__link">About</a>
+    </li>
+    <li class="header-menu__item">
+      <a href="/contact" class="header-menu__link">Contact</a>
+    </li>
+  </ul>
+</nav>
+{% if user.is_authenticated %}
+<div class="header-user-profile-container">
+  <img
+    src="{% static 'images/partials/icons/notification.png' %}"
+    alt="User notification"
+    class="header-user-profile-container__notifications-icon"
+  />
+  <div class="header-user-profile-container__user-avatar">
+    <img
+      src="{% static 'images/partials/user.jpg' %}"
+      class="header-user-profile-container_user-photo"
+      alt="User Image"
+      id="dropdown-trigger"
+    />
+  </div>
+  <div class="header-user-profile-container__dropdown-menu" id="dropdown-menu">
+    <a href="#" class="header-user-profile-container__dropdown-menu-item"
+      >Manage account</a
     >
-    <a href="/signin" class="signin-link"
-      ><button class="signin-button">Sign In</button></a
+    <a href="#" class="header-user-profile-container__dropdown-menu-item"
+      >My trips</a
     >
+    <a href="#" class="header-user-profile-container__dropdown-menu-item"
+      >Reward and wallet</a
+    >
+    <a href="#" class="header-user-profile-container__dropdown-menu-item"
+      >Sign out</a
+    >
+  </div>
+</div>
+{% else %}
+<div class="header-button-container">
+  <a href="/register" class="register-link"
+    ><button class="header-button-container__register-button">
+      Register
+    </button></a
+  >
+  <a href="/signin" class="signin-link"
+    ><button class="header-button-container__signin-button">Sign In</button></a
+  >
+</div>
+
+{% endif %}
+
+<script>
+const dropdownTrigger = document.getElementById("dropdown-trigger");
+const dropdownMenu = document.getElementById("dropdown-menu");
+
+dropdownTrigger.addEventListener("click", function() {
+  dropdownMenu.style.display === "flex"
+    ? (dropdownMenu.style.display = "none")
+    : (dropdownMenu.style.display = "flex");
+});
+</script>
