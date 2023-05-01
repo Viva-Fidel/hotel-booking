@@ -7,7 +7,8 @@
        {% endblock %}  -->
        {% endblock %} 
        <link rel="stylesheet" type="text/css" href="{% static 'css/search_results.css' %}" />
-    </head>
+       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      </head>
     <body>
         <div class="header-background">
         <div class="container">
@@ -109,6 +110,116 @@
 <input type="search" class="hotel-search" name="q">
 
 </div>
+<h4 class="filter-by-title">Filter by</h4>
+<div class="budget-per-day-filter">
+  <div class="budget-per-day-filter-title">Your budget per day</div>
+  <div class="budget-per-day-filter-choice"><div class="price-range">
+    <label>
+      <input type="checkbox" name="price-range" value="$0-$200" />
+      $0 - $200 <span class="count">200</span>
+    </label>
+    <label>
+      <input type="checkbox" name="price-range" value="$200-$500" />
+      $200 - $500 <span class="count">100</span>
+    </label>
+    <label>
+      <input type="checkbox" name="price-range" value="$500-$1000" />
+      $500 - $1,000 <span class="count">15</span>
+    </label>
+    <label>
+      <input type="checkbox" name="price-range" value="$1000-$2000" />
+      $1,000 - $2,000 <span class="count">12</span>
+    </label>
+    <label>
+      <input type="checkbox" name="price-range" value="$2000-$5000" />
+      $2,000 - $5,000 <span class="count">230</span>
+    </label>
+  </div>
+  
+  <div class="set-budget-switch">
+    <label for="set-budget">Set your own budget</label>
+    <label class="switch">
+      <input type="checkbox">
+      <span class="slider"></span>
+    </label>
+  </div>
+</div>
+</div>
+  <div class="filter-by-rating">
+    <div class="filter-by-rating-title">Rating</div>
+    <div class="filter-by-rating-choice">
+      <span class="filter-by-rating-choice-text">Show only ratings more than</span>
+      <div class="star-rating-filter">
+        <button type="button" class="star-rating-filter-button star-rating-filter-button--left">1<span class="fa fa-star checked"></span></button>
+        <button type="button" class="star-rating-filter-button">2<span class="fa fa-star checked"></span></button>
+        <button type="button" class="star-rating-filter-button">3<span class="fa fa-star checked"></span></bututon>
+        <button type="button" class="star-rating-filter-button">4<span class="fa fa-star checked"></span></button>
+        <button type="button" class="star-rating-filter-button star-rating-filter-button--right">5<span class="fa fa-star checked"></span></button>
+    </div>
+      </div>
+
+      <div class="budget-per-day-filter">
+        <div class="budget-per-day-filter-title">Popular Filters</div>
+        <div class="budget-per-day-filter-choice"><div class="price-range">
+          <label>
+            <input type="checkbox" name="price-range" value="Free cancellation" />
+            Free cancellation <span class="count">200</span>
+          </label>
+          <label>
+            <input type="checkbox" name="price-range" value="$200-$500" />
+            Spa <span class="count">100</span>
+          </label>
+          <label>
+            <input type="checkbox" name="price-range" value="$500-$1000" />
+            Beach front <span class="count">15</span>
+          </label>
+          <label>
+            <input type="checkbox" name="price-range" value="$1000-$2000" />
+            Hot tub/ jacuzzi <span class="count">12</span>
+          </label>
+          <label>
+            <input type="checkbox" name="price-range" value="$2000-$5000" />
+            Book without credit card <span class="count">230</span>
+          </label>
+        </div>
+      
+      </div>
+      </div>
+      <div class="budget-per-day-filter">
+        <div class="budget-per-day-filter-title">Activities</div>
+        <div class="budget-per-day-filter-choice"><div class="price-range">
+          <label>
+            <input type="checkbox" name="price-range" value="Free cancellation" />
+            Fishing <span class="count">200</span>
+          </label>
+          <label>
+            <input type="checkbox" name="price-range" value="$200-$500" />
+            Hiking <span class="count">100</span>
+          </label>
+          <label>
+            <input type="checkbox" name="price-range" value="$500-$1000" />
+            Beach <span class="count">15</span>
+          </label>
+          <label>
+            <input type="checkbox" name="price-range" value="$1000-$2000" />
+            Cycling <span class="count">12</span>
+          </label>
+          <label>
+            <input type="checkbox" name="price-range" value="$2000-$5000" />
+            Sauna <span class="count">230</span>
+          </label>
+          <label>
+            <input type="checkbox" name="price-range" value="$2000-$5000" />
+            Night lights <span class="count">230</span>
+          </label>
+        </div>
+      
+      </div>
+      </div>
+
+  </div>
+  
+
 
                 </div>
 
@@ -121,7 +232,7 @@
                         <button type="submit" class="filter-button">Hotel and apartments</button>
                         <button type="submit" class="filter-button">Residence</bututon>
                         <button type="submit" class="filter-button">Resort</button>
-                        <button type="submit" class="filter-button filter-button--right" id="right-corner">Shared Space</button>
+                        <button type="submit" class="filter-button filter-button--right">Shared Space</button>
                     </div>
                     <div class="sort-dropdown">
                         <span>Sort by:</span>
@@ -144,7 +255,6 @@
                         </div>
                         <div class="hotel-info-rating">
                         <div class="hotel-stars-info-rating">
-                        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
                         <span class="fa fa-star checked"></span>
                         <span class="fa fa-star checked"></span>
                         <span class="fa fa-star checked"></span>
@@ -171,6 +281,8 @@
                 </div>
                     </li>
                 </ul>
+                <div class="more-results-btn-box"><button type="button" class="more-results-btn">Load more results</button></div>
+                
             </div>
         </div>
 </div>
@@ -182,22 +294,6 @@
   </section>
 </main>
 
-
-<h1>Search Results</h1>
-<p>Destination: {{ destination }}</p>
-<p>Check-in Date: {{ checkin_date }}</p>
-<p>Check-out Date: {{ checkout_date }}</p>
-<p>Guests: {{ guests }}</p>
-{% if search_results %}
-    <h2>Search Results:</h2>
-    <ul>
-        {% for result in search_results %}
-            <li>{{ result }}</li>
-        {% endfor %}
-    </ul>
-{% else %}
-    <p>No search results found.</p>
-{% endif %}
 {% endblock %}
 
          

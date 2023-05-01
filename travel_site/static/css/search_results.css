@@ -257,21 +257,28 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 .content_left {
   border: 1px solid rgb(61, 83, 226);
-  flex: 0 0 25%;
+  flex: 0 0 24%;
 }
 .content_right {
   border: 1px solid rgb(219, 39, 222);
-  flex: 0 0 75%;
+  flex: 0 0 76%;
   /* padding-left: 15px; */
 }
 
 .filters {
   width: 295px;
+  margin-top: 20px;
   display: flex;
   flex-direction: column;
 }
+
+.filters:first-child {
+  margin-top: 0;
+}
+
 .search-box {
   height: 119px;
+  width: 100%;
   background: #f2f2f2;
   border-radius: 6px;
 }
@@ -289,8 +296,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .hotel-search {
-  margin-left: 18px;
-  margin-top: 16px;
+  padding: 11px 12px 12px;
+  margin: 16px 18px 20px 18px;
   width: 259px;
   height: 44px;
   background: #ffffff;
@@ -298,7 +305,229 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   border-radius: 4px;
 }
 
+.filter-by-title {
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 21px;
+  letter-spacing: 0.02em;
+  color: #333333;
+  margin: 20px 0px 20px 18px;
+}
+
+.budget-per-day-filter {
+  margin-top: 20px;
+  box-sizing: border-box;
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+}
+
+.budget-per-day-filter-title {
+  box-sizing: border-box;
+  padding: 18px;
+  gap: 10px;
+  height: 55px;
+  background: #f2f2f2;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px 6px 0px 0px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  letter-spacing: 0.01em;
+  color: #181818;
+}
+
+.budget-per-day-filter-choice {
+  padding-top: 18px;
+  box-sizing: border-box;
+  width: 295px;
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+}
+
+.price-range {
+  margin-bottom: 14px;
+}
+
+.price-range label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 5px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  letter-spacing: 0.02em;
+  color: #333333;
+}
+
+.price-range input[type="checkbox"] {
+  margin-right: 8px;
+  margin-left: 18px;
+  width: 20px;
+  height: 20px;
+}
+
+.price-range .count {
+  margin-left: auto;
+  padding-right: 20px;
+}
+
+.set-budget-switch {
+  margin: 20px 0px 24px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.set-budget-switch label {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  letter-spacing: 0.02em;
+  color: #4f4f4f;
+}
+
+.switch {
+  margin-right: 20px;
+  /* height: 20px;
+  width: 32px; */
+  --button-width: 3.5em;
+  --button-height: 2em;
+  --toggle-diameter: 1.5em;
+  --button-toggle-offset: calc(
+    (var(--button-height) - var(--toggle-diameter)) / 2
+  );
+  --toggle-shadow-offset: 10px;
+  --toggle-wider: 3em;
+  --color-grey: #cccccc;
+  --color-green: #4296f4;
+}
+
+.slider {
+  display: inline-block;
+  width: var(--button-width);
+  height: var(--button-height);
+  background-color: var(--color-grey);
+  border-radius: calc(var(--button-height) / 2);
+  position: relative;
+  transition: 0.3s all ease-in-out;
+}
+
+.slider::after {
+  content: "";
+  display: inline-block;
+  width: var(--toggle-diameter);
+  height: var(--toggle-diameter);
+  background-color: #fff;
+  border-radius: calc(var(--toggle-diameter) / 2);
+  position: absolute;
+  top: var(--button-toggle-offset);
+  transform: translateX(var(--button-toggle-offset));
+  box-shadow: var(--toggle-shadow-offset) 0
+    calc(var(--toggle-shadow-offset) * 4) rgba(0, 0, 0, 0.1);
+  transition: 0.3s all ease-in-out;
+}
+
+.switch input[type="checkbox"]:checked + .slider {
+  background-color: var(--color-green);
+}
+
+.switch input[type="checkbox"]:checked + .slider::after {
+  transform: translateX(
+    calc(
+      var(--button-width) - var(--toggle-diameter) - var(--button-toggle-offset)
+    )
+  );
+  box-shadow: calc(var(--toggle-shadow-offset) * -1) 0
+    calc(var(--toggle-shadow-offset) * 4) rgba(0, 0, 0, 0.1);
+}
+
+.switch input[type="checkbox"] {
+  display: none;
+}
+
+.switch input[type="checkbox"]:active + .slider::after {
+  width: var(--toggle-wider);
+}
+
+.switch input[type="checkbox"]:checked:active + .slider::after {
+  transform: translateX(
+    calc(
+      var(--button-width) - var(--toggle-wider) - var(--button-toggle-offset)
+    )
+  );
+}
+
+.filter-by-rating {
+  box-sizing: border-box;
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  margin-top: 20px;
+}
+
+.filter-by-rating-title {
+  box-sizing: border-box;
+  padding: 18px;
+  background: #f2f2f2;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px 6px 0px 0px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  letter-spacing: 0.01em;
+  color: #181818;
+}
+
+.filter-by-rating-choice {
+  margin-top: 20px;
+}
+
+.filter-by-rating-choice-text {
+  margin-top: 20px;
+  padding: 18px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  letter-spacing: 0.02em;
+  color: #4f4f4f;
+}
+
+.star-rating-filter {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 8px 0px 24px 18px;
+  margin-left: 18px;
+  margin-top: 8px;
+}
+
+.star-rating-filter-button {
+  width: 50px;
+  height: 46px;
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  cursor: pointer;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  letter-spacing: 0.02em;
+  color: #333333;
+}
+
+.star-rating-filter-button--left {
+  border-radius: 5px 0px 0px 5px;
+}
+
+.star-rating-filter-button--right {
+  border-radius: 0px 5px 5px 0px;
+}
+
 .search-results-title {
+  margin-block-start: 0px;
+  margin-block-end: 0px;
   font-style: normal;
   font-weight: 600;
   font-size: 24px;
@@ -600,4 +829,35 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   text-align: right;
   letter-spacing: 0.02em;
   color: #333333;
+}
+
+.more-results-btn-box {
+  text-align: center;
+}
+
+.more-results-btn {
+  padding: 10px 18px;
+  width: 156px;
+  height: 40px;
+  background: rgba(47, 128, 237, 0.1);
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.02em;
+  color: #2f80ed;
+  border: none;
+  cursor: pointer;
+
+  /* background: #2f80ed;
+  border: 1px solid #2f80ed;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: 0.02em;
+  color: #ffffff;
+  min-width: 148px;
+  padding: 5px;
+  cursor: pointer; */
 }
