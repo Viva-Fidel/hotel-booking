@@ -1,10 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.db.models import Count, Q
 from django.http import JsonResponse
 
 from .models import Countries, CoverPhoto
 from hotels.models import Hotels, HotelsImage
 from blogs.models import Blogs
+from django.contrib.auth import logout
 
 import random
 
@@ -48,6 +49,10 @@ def index(request):
                'cover_photo': cover_photo}
 
     return render(request, 'core/index.html', context)
+
+def logout_view(request):
+    logout(request)
+    return redirect('home')
 
 
 def search_address(request):

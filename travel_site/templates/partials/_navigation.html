@@ -11,16 +11,16 @@
       <a href="/" class="header-menu__link">Home</a>
     </li>
     <li class="header-menu__item">
-      <a href="/discover" class="header-menu__link">Discover</a>
+      <a href="/discover/" class="header-menu__link">Discover</a>
     </li>
     <li class="header-menu__item">
-      <a href="/activities" class="header-menu__link">Activities</a>
+      <a href="/activities/" class="header-menu__link">Activities</a>
     </li>
     <li class="header-menu__item">
-      <a href="/about" class="header-menu__link">About</a>
+      <a href="/about/" class="header-menu__link">About</a>
     </li>
     <li class="header-menu__item">
-      <a href="/contact" class="header-menu__link">Contact</a>
+      <a href="/contact/" class="header-menu__link">Contact</a>
     </li>
   </ul>
 </nav>
@@ -44,7 +44,7 @@
     >
       <div class="header-uer-profile-container__dropdown-menu-item-container">
         <a
-          href="#"
+          href="/account/"
           class="header-user-profile-container__dropdown-menu-item-link"
         >
           <img
@@ -60,7 +60,7 @@
       </div>
       <div class="header-uer-profile-container__dropdown-menu-item-container">
         <a
-          href="#"
+          href="/reservations/"
           class="header-user-profile-container__dropdown-menu-item-link"
         >
           <img
@@ -76,7 +76,7 @@
       </div>
       <div class="header-uer-profile-container__dropdown-menu-item-container">
         <a
-          href="#"
+          href="/rewards/"
           class="header-user-profile-container__dropdown-menu-item-link"
         >
           <img
@@ -92,7 +92,7 @@
       </div>
       <div class="header-uer-profile-container__dropdown-menu-item-container">
         <a
-          href="#"
+          href="{% url 'logout' %}"
           class="header-user-profile-container__dropdown-menu-item-link"
         >
           <img
@@ -124,17 +124,18 @@
 {% endif %}
 
 <script>
-const avatar = document.getElementById('dropdown-trigger');
-const dropdownMenu = document.getElementById('dropdown-menu');
+  const avatar = document.getElementById("dropdown-trigger");
+  const dropdownMenu = document.getElementById("dropdown-menu");
 
-avatar.addEventListener('click', function() {
-  dropdownMenu.classList.toggle('show');
-});
+  avatar.addEventListener("click", function () {
+    dropdownMenu.classList.toggle("show");
+  });
 
-document.addEventListener('click', function(event) {
-  const isClickInside = avatar.contains(event.target) || dropdownMenu.contains(event.target);
-  if (!isClickInside) {
-    dropdownMenu.classList.remove('show');
-  }
-});
+  document.addEventListener("click", function (event) {
+    const isClickInside =
+      avatar.contains(event.target) || dropdownMenu.contains(event.target);
+    if (!isClickInside) {
+      dropdownMenu.classList.remove("show");
+    }
+  });
 </script>
