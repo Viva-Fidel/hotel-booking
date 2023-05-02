@@ -20,20 +20,17 @@
 />
 
 <main class="main">
-  <section class="booking">
+  <section class="booking-search">
     <div class="container">
-      <div class="booking-text-container">
-        {% if cover_photo %}
+      <div class="booking-search__cover-photo-container">
         <img
-          src="{{ cover_photo.cover_photo.url }}"
-          alt="Main page photo"
-          class="booking_photo"
+          src="{{ cover.cover_photo.url }}"
+          alt="Cover photo"
+          class="booking-search__cover-photo"
         />
-        {% endif %}
-        <h2 class="booking-title">Enjoy Your Dream Vacation</h2>
-        <h4 class="booking-text">
-          Plan and book our perfect trip with expert advice, travel tips,
-          destination information and inspiration from us
+        <h2 class="booking-search__cover-photo-title">{{ cover.cover_title }}</h2>
+        <h4 class="booking-search__cover-photo-text">
+          {{ cover.cover_text }}
         </h4>
       </div>
       <form

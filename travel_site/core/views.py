@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.db.models import Count, Q
 from django.http import JsonResponse
 
-from .models import Countries, CoverPhoto
+from .models import Countries, Cover
 from hotels.models import Hotels, HotelsImage
 from blogs.models import Blogs
 from django.contrib.auth import logout
@@ -40,13 +40,13 @@ def index(request):
         popular_hotels_images[hotel.id] = HotelsImage.objects.filter(hotel=hotel)
     
 
-    cover_photo = CoverPhoto.objects.first()
+    cover = Cover.objects.first()
 
     context = {'available_destinations': available_destinations,
                'popular_hotels': popular_hotels,
                'popular_hotels_images': popular_hotels_images,
                'blog_info': blog_info,
-               'cover_photo': cover_photo}
+               'cover': cover}
 
     return render(request, 'core/index.html', context)
 

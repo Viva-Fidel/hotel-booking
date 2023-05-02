@@ -42,26 +42,26 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   width: 60px;
 }
 
-.booking {
+.booking-search {
   padding-top: 12px;
   position: relative;
 }
 
-.booking_photo {
-  max-width: 100%;
-  width: 100%;
-  border-radius: 10px;
-  background: linear-gradient(0deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3));
-}
-
-.booking-text-container {
+.booking-search__cover-photo-container {
   position: relative;
   text-align: center;
 }
 
-.booking-title {
+.booking-search__cover-photo {
+  max-width: 1240px;
+  max-height: 500px;
+  border-radius: 10px;
+  filter: brightness(70%);
+}
+
+.booking-search__cover-photo-title {
   position: absolute;
-  bottom: 272px;
+  bottom: 200px;
   left: 315px;
   right: 315px;
   color: #ffffff;
@@ -71,9 +71,9 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   text-align: center;
 }
 
-.booking-text {
+.booking-search__cover-photo-text {
   position: absolute;
-  bottom: 196px;
+  bottom: 130px;
   left: 295px;
   right: 295px;
   font-weight: 400;
@@ -355,4 +355,3 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   max-width: 1260px;
   padding: 0 10px;
 }
-
