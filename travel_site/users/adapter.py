@@ -1,3 +1,5 @@
+import requests
+
 from allauth.exceptions import ImmediateHttpResponse
 from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
 from allauth.socialaccount.signals import pre_social_login
@@ -6,47 +8,11 @@ from django.dispatch import receiver
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.contrib.auth import authenticate
+from django.core.files.base import ContentFile
+from django.core.files.storage import default_storage
 from .models import MyUser
 
 
-# class MySocialAccountAdapter(DefaultSocialAccountAdapter):
-#     def pre_social_login(self, request, sociallogin):
-#         # Check if the email address associated with the social account is already registered
-#         if sociallogin.email_addresses:
-#             # Get the email address from the social account
-#             email = sociallogin.email_addresses[0].email
-
-#             # Check if a user with the same email address already exists
-#             if MyUser.objects.filter(email=email).exists():
-#                 # Redirect to a custom URL if a user with the same email address already exists
-#                 return redirect('/')
-
-#         # Return None to continue with the default behavior
-#         return None
-
-
-# @receiver(pre_social_login)
-# def link_to_local_user(sender, request, sociallogin, **kwargs):
-#     email = sociallogin.account.extra_data['email']
-#     user = authenticate(request, email=email)
-#     if user:
-#         # Associate the existing local user with the social account
-#         sociallogin.connect(request, user)
-#     else:
-#         # Create a new local user and associate it with the social account
-#         data = {
-#             'email': email,
-#             'username': email.split('@')[0],  # Use the email prefix as the username
-#             'password': MyUser.objects.make_random_password(),  # Generate a random password
-#         }
-#         user = MyUser.objects.create_user(**data)
-#         user.is_active = True
-#         user.save()
-#         sociallogin.connect(request, user)
-
-#     # Log in the user
-#     login(request, user)
-#     raise ImmediateHttpResponse(redirect('/'))  # Redirect to the home page
 
 class MySocialAccountAdapter(DefaultSocialAccountAdapter):
     def pre_social_login(self, request, sociallogin):
@@ -58,7 +24,7 @@ class MySocialAccountAdapter(DefaultSocialAccountAdapter):
             # Check if a user with the same email address already exists
             if MyUser.objects.filter(email=email).exists():
                 # Redirect to a custom URL if a user with the same email address already exists
-                return redirect('/')
+                return redirect('home')
 
         # Return None to continue with the default behavior
         return None
@@ -73,12 +39,26 @@ def link_to_local_user(sender, request, sociallogin, **kwargs):
         # Try to get the user with the given email
         user = MyUser.objects.get(email=email)
     except MyUser.DoesNotExist:
+        avatar_url = sociallogin.account.extra_data.get('picture', '')
+        response = requests.get(avatar_url)
+        if response.status_code == 200:
+            file_name = f'user_avatar.jpg'
+            file_path = f'images/users/{email}/avatar/{file_name}'
+            file_content = ContentFile(response.content)
+
+            print(file_name)
+            print(file_path)
+            default_storage.save(file_path, file_content)
+
+
+
         # If the user does not exist, create a new one
         data = {
             'email': email,
             'password': MyUser.objects.make_random_password(),  # Generate a random password
             'first_name': sociallogin.account.extra_data.get('first_name', ''),
             'last_name': sociallogin.account.extra_data.get('last_name', ''),
+            'avatar': file_path,
             'is_active': True,
         }
         user = MyUser.objects.create_user(**data)
@@ -87,4 +67,4 @@ def link_to_local_user(sender, request, sociallogin, **kwargs):
     login(request, user, backend='allauth.account.auth_backends.AuthenticationBackend')
 
     # Redirect to the home page
-    return redirect('/')
+    return redirect('home')

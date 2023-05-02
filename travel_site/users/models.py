@@ -2,7 +2,12 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.contrib.auth.hashers import make_password
 
+import os
+
 # Create your models here.
+
+def avatar_path(instance, filename):
+    return os.path.join('images/users', instance.email, 'avatar', filename)
 
 class MyUserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
@@ -25,6 +30,7 @@ class MyUser(PermissionsMixin, AbstractBaseUser):
     email = models.EmailField(unique=True, max_length=255)
     first_name = models.CharField(max_length=150, blank=True)
     last_name = models.CharField(max_length=150, blank=True)
+    avatar = models.ImageField(upload_to=avatar_path, null=True, blank=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     last_login = models.DateTimeField(null=True, blank=True)
