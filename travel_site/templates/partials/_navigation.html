@@ -38,20 +38,75 @@
       alt="User Image"
       id="dropdown-trigger"
     />
-  </div>
-  <div class="header-user-profile-container__dropdown-menu" id="dropdown-menu">
-    <a href="#" class="header-user-profile-container__dropdown-menu-item"
-      >Manage account</a
+    <div
+      class="header-user-profile-container__dropdown-menu"
+      id="dropdown-menu"
     >
-    <a href="#" class="header-user-profile-container__dropdown-menu-item"
-      >My trips</a
-    >
-    <a href="#" class="header-user-profile-container__dropdown-menu-item"
-      >Reward and wallet</a
-    >
-    <a href="#" class="header-user-profile-container__dropdown-menu-item"
-      >Sign out</a
-    >
+      <div class="header-uer-profile-container__dropdown-menu-item-container">
+        <a
+          href="#"
+          class="header-user-profile-container__dropdown-menu-item-link"
+        >
+          <img
+            src="{% static 'images/partials/icons/account.svg' %}"
+            alt="Account icon"
+            class="header-user-profile-container__dropdown-menu-link-item-icon"
+          />
+          <span
+            class="header-user-profile-container__dropdown-menu-link-item-text"
+            >Manage account</span
+          >
+        </a>
+      </div>
+      <div class="header-uer-profile-container__dropdown-menu-item-container">
+        <a
+          href="#"
+          class="header-user-profile-container__dropdown-menu-item-link"
+        >
+          <img
+            src="{% static 'images/partials/icons/trips.svg' %}"
+            alt="Account icon"
+            class="header-user-profile-container__dropdown-menu-link-item-icon"
+          />
+          <span
+            class="header-user-profile-container__dropdown-menu-link-item-text"
+            >My trips</span
+          >
+        </a>
+      </div>
+      <div class="header-uer-profile-container__dropdown-menu-item-container">
+        <a
+          href="#"
+          class="header-user-profile-container__dropdown-menu-item-link"
+        >
+          <img
+            src="{% static 'images/partials/icons/wallet.svg' %}"
+            alt="Account icon"
+            class="header-user-profile-container__dropdown-menu-link-item-icon"
+          />
+          <span
+            class="header-user-profile-container__dropdown-menu-link-item-text"
+            >Reward and wallet</span
+          >
+        </a>
+      </div>
+      <div class="header-uer-profile-container__dropdown-menu-item-container">
+        <a
+          href="#"
+          class="header-user-profile-container__dropdown-menu-item-link"
+        >
+          <img
+            src="{% static 'images/partials/icons/signout.svg' %}"
+            alt="Account icon"
+            class="header-user-profile-container__dropdown-menu-link-item-icon"
+          />
+          <span
+            class="header-user-profile-container__dropdown-menu-link-item-text"
+            >Sign out</span
+          >
+        </a>
+      </div>
+    </div>
   </div>
 </div>
 {% else %}
@@ -69,12 +124,17 @@
 {% endif %}
 
 <script>
-const dropdownTrigger = document.getElementById("dropdown-trigger");
-const dropdownMenu = document.getElementById("dropdown-menu");
+const avatar = document.getElementById('dropdown-trigger');
+const dropdownMenu = document.getElementById('dropdown-menu');
 
-dropdownTrigger.addEventListener("click", function() {
-  dropdownMenu.style.display === "flex"
-    ? (dropdownMenu.style.display = "none")
-    : (dropdownMenu.style.display = "flex");
+avatar.addEventListener('click', function() {
+  dropdownMenu.classList.toggle('show');
+});
+
+document.addEventListener('click', function(event) {
+  const isClickInside = avatar.contains(event.target) || dropdownMenu.contains(event.target);
+  if (!isClickInside) {
+    dropdownMenu.classList.remove('show');
+  }
 });
 </script>
