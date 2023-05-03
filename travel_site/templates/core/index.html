@@ -34,17 +34,22 @@
         </h4>
       </div>
       <form
-        class="booking-form"
+        class="booking-search-form"
         method="get"
         action="{% url 'search_hotels' %}"
       >
         <div
-          class="booking-form-group booking-form-group--geo"
-          id="booking-form-group--geo"
+          class="booking-search-form__item"
+          id="booking-search-form__item-geo"
         >
+        <img
+        src="{% static 'images/core/icons/geo.svg' %}"
+        alt="Geolocation icon"
+        class="booking-search-form__item__icon"
+      />
           <input
             type="text"
-            class="booking-form-group__input"
+            class="booking-search-form__geo-input"
             id="destination"
             name="destination"
             placeholder="Where are you going?"
@@ -53,7 +58,12 @@
           <ul class="autocomplete-result-list"></ul>
         </div>
 
-        <div class="booking-form-group booking-form-group--calendar">
+        <div class="booking-search-form__item booking-search-form__item__calendar">
+          <img
+        src="{% static 'images/core/icons/calendar.svg' %}"
+        alt="Calendar icon"
+        class="booking-search-form__item__icon"
+      />
           <input
             type="text"
             id="checkin"
@@ -62,7 +72,12 @@
             required
           />
         </div>
-        <div class="booking-form-group booking-form-group--calendar">
+        <div class="booking-search-form__item">
+          <img
+        src="{% static 'images/core/icons/calendar.svg' %}"
+        alt="Calendar icon"
+        class="booking-search-form__item__icon"
+      />
           <input
             type="text"
             id="checkout"
@@ -71,17 +86,47 @@
             required
           />
         </div>
-        <div class="booking-form-group booking-form-group--guests">
-          <input
-            type="number"
-            id="guests"
-            name="guests"
-            min="1"
-            placeholder="Guests"
-            required
-          />
+        <div class="booking-search-form__item" onload="setGuests()">
+          <img
+        src="{% static 'images/core/icons/guests.svg' %}"
+        alt="Guests icon"
+        class="booking-search-form__item__icon"
+      />
+      <input
+      type="text"
+      id="guests"
+      name="guests"
+      placeholder="Guests & Rooms"
+      readonly
+    />
+          <div class="booking-search-form__drop-down-menu">
+            <div class="booking-search-form__drop-down-menu-item">
+              <span class="booking-search-form__drop-down-menu-label">Adults</span>
+              <div class="booking-search-form__drop-down-menu-choice_container">
+                <button type="button" class="booking-search-form__drop-down-menu-button-minus" onclick="changeCount('adults', 'minus')" disabled>-</button>
+                <span id="adults-count" class="booking-search-form__drop-down-menu-count" onchange="updateGuestsInput()">1</span>
+                <button type="button" class="booking-search-form__drop-down-menu-button-plus" onclick="changeCount('adults', 'plus')">+</button>
+              </div>
+            </div>
+            <div class="booking-search-form__drop-down-menu-item">
+              <span class="booking-search-form__drop-down-menu-label">Children</span>
+              <div class="booking-search-form__drop-down-menu-choice_container">
+                <button type="button" class="booking-search-form__drop-down-menu-button-minus" onclick="changeCount('children', 'minus')" disabled>-</button>
+                <span id="children-count" class="booking-search-form__drop-down-menu-count" onchange="updateGuestsInput()">0</span>
+                <button type="button" class="booking-search-form__drop-down-menu-button-plus" onclick="changeCount('children', 'plus')">+</button>
+              </div>
+            </div>
+            <div class="booking-search-form__drop-down-menu-item">
+              <span class="booking-search-form__drop-down-menu-label">Rooms</span>
+              <div class="booking-search-form__drop-down-menu-choice_container">
+                <button type="button" class="booking-search-form__drop-down-menu-button-minus" onclick="changeCount('rooms', 'minus')" disabled>-</button>
+                <span id="rooms-count" class="booking-search-form__drop-down-menu-count" onchange="updateGuestsInput()">1</span>
+                <button type="button" class="booking-search-form__drop-down-menu-button-plus" onclick="changeCount('rooms', 'plus')">+</button>
+              </div>
+            </div>
+          </div>
         </div>
-        <button type="submit" class="booking-form-submit">Search</button>
+        <button type="submit" class="booking-search-form__submit-button">Search</button>
       </form>
     </div>
   </section>
@@ -225,46 +270,107 @@
     }
   </script>
 
+  <script>
+function changeCount(type, operation) {
+  var countEl = document.getElementById(type + "-count");
+  var count = parseInt(countEl.innerHTML);
+  var minusButton = document.querySelector(`button.booking-search-form__drop-down-menu-button-minus[onclick="changeCount('${type}', 'minus')"]`);
+  var plusButton = document.querySelector(`button.booking-search-form__drop-down-menu-button-plus[onclick="changeCount('${type}', 'plus')"]`);
+  
+  if (operation === "minus") {
+    if (count > 0) {
+      count--;
+    }
+  } else if (operation === "plus") {
+    if (count < 30) {
+      count++;
+    }
+  }
+  
+  countEl.innerHTML = count;
+  setGuests();
+  
+  // Disable minus button if count is at its minimum value
+  if (type === "adults" && count === 1) {
+    minusButton.disabled = true;
+  } else if (type === "children" && count === 0) {
+    minusButton.disabled = true;
+  } else if (type === "rooms" && count === 1) {
+    minusButton.disabled = true;
+  } else {
+    minusButton.disabled = false;
+  }
+  
+  // Disable plus button if count is at its maximum value
+  if (count === 30) {
+    plusButton.disabled = true;
+  } else {
+    plusButton.disabled = false;
+  }
+}
+
+function setGuests() {
+
+  var adults = document.getElementById('adults-count').textContent;
+  var children = document.getElementById('children-count').textContent;
+  var rooms = document.getElementById('rooms-count').textContent;
+  var totalGuests = parseInt(adults) + parseInt(children);
+  var guestsLabel = (totalGuests === 1) ? ' guest' : ' guests';
+  var roomsLabel = (rooms === '1') ? ' room' : ' rooms';
+  document.getElementById('guests').value = totalGuests + guestsLabel + ' · ' + rooms + roomsLabel;
+
+}
+
+  </script>
+
   <script src="{% static 'node_modules/flatpickr/dist/flatpickr.js' %}"></script>
   <script>
-    // Get a reference to the trigger element
-    const checkInput = document.getElementById("checkin");
-    const checkOut = document.getElementById("checkout");
+  // Get a reference to the trigger elements
+  const checkIn = document.getElementById("checkin");
+  const checkOut = document.getElementById("checkout");
 
-    // Calculate maxDate (today + 1 year)
-    const maxDate = new Date();
-    maxDate.setFullYear(maxDate.getFullYear() + 1);
+  // Calculate maxDate (today + 1 year)
+  const maxDate = new Date();
+  maxDate.setFullYear(maxDate.getFullYear() + 1);
 
-    // Инициализация Flatpickr с опцией "altInput"
-    flatpickr(checkOut, {
-      altInput: checkOut,
-      minDate: "today",
-      maxDate: maxDate,
-      dateFormat: "d-m-Y",
-      onChange: function (selectedDates, dateStr, instance) {
-        instance.set(
-          "maxDate",
-          checkOut.value != "" ? checkOut.value : undefined
-        );
-      },
-    });
+  // Initialize Flatpickr with "altInput" option
+  flatpickr(checkOut, {
+    altInput: checkOut,
+    minDate: "today",
+    maxDate: maxDate,
+    dateFormat: "d-m-Y",
+    onClose: function(selectedDates, dateStr, instance) {
+      // If check-in date is after check-out date, reset check-in date
+      if (checkIn.value != "" && selectedDates[0] >= new Date(checkIn.value)) {
+        instance.clear();
+        checkIn._flatpickr.set("minDate", dateStr);
+      } else {
+        checkIn._flatpickr.set("minDate", "today");
+        checkIn._flatpickr.set("maxDate", dateStr);
+      }
+    }
+  });
 
-    flatpickr(checkInput, {
-      altInput: checkInput,
-      minDate: "today",
-      dateFormat: "d-m-Y",
-      onChange: function (selectedDates, dateStr, instance) {
-        instance.set(
-          "minDate",
-          checkInput.value != "" ? checkInput.value : undefined
-        );
-      },
-    });
+  flatpickr(checkIn, {
+    altInput: checkIn,
+    minDate: "today",
+    dateFormat: "d-m-Y",
+    onClose: function(selectedDates, dateStr, instance) {
+      // If check-out date is before check-in date, reset check-out date
+      if (checkOut.value != "" && selectedDates[0] >= new Date(checkOut.value)) {
+        instance.clear();
+        checkOut._flatpickr.set("minDate", dateStr);
+      } else {
+        checkOut._flatpickr.set("minDate", dateStr);
+        checkOut._flatpickr.set("maxDate", maxDate);
+      }
+    }
+  });
   </script>
 
   <script src="{% static 'node_modules/@trevoreyre/autocomplete-js/dist/autocomplete.min.js' %}"></script>
   <script>
-    new Autocomplete("#booking-form-group--geo", {
+    new Autocomplete("#booking-search-form__item-geo", {
       search: (input) => {
         const url = "/search/?address=" + input.trim();
         return new Promise((resolve) => {
