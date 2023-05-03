@@ -41,13 +41,17 @@ def link_to_local_user(sender, request, sociallogin, **kwargs):
     except MyUser.DoesNotExist:
         avatar_url = sociallogin.account.extra_data.get('picture', '')
         response = requests.get(avatar_url)
+        print(f'RESPONSE: {response}')
         if response.status_code == 200:
             file_name = f'user_avatar.jpg'
             file_path = f'images/users/{email}/avatar/{file_name}'
             file_content = ContentFile(response.content)
-
-            print(file_name)
-            print(file_path)
+            default_storage.save(file_path, file_content)
+        else:
+            default_user_image_path = 'images/users/default_user/avatar/user_avatar.png'
+            with open(default_user_image_path, 'rb') as f:
+                file_content = ContentFile(f.read())
+            file_path = f'images/users/{email}/avatar/default_avatar.png'
             default_storage.save(file_path, file_content)
 
 

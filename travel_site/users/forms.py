@@ -1,3 +1,6 @@
+import os
+import shutil
+
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import password_validation
@@ -73,6 +76,20 @@ class UserCreationForm(forms.Form):
             raise forms.ValidationError(e.message, code=e.code)
 
         return password2
+    
+    def save(self, commit=True):
+        user = MyUser.objects.create(email=self.cleaned_data['email'])
+        user.set_password(self.cleaned_data['password1'])
+        avatar_dir = os.path.join('media', 'images', 'users', user.email, 'avatar')
+        os.makedirs(avatar_dir, exist_ok=True)
+
+        default_avatar_path = os.path.join('media', 'images', 'users', 'default_user', 'avatar', 'user_avatar.png')
+        user_avatar_path = os.path.join(avatar_dir, 'default_avatar.png')
+        shutil.copyfile(default_avatar_path, user_avatar_path)
+        user.avatar = os.path.join('images', 'users', user.email, 'avatar', 'default_avatar.png')
+        if commit:
+            user.save()
+        return user
 
 
 class RegistrationEmailForm(forms.Form):

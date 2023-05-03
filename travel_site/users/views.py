@@ -139,9 +139,7 @@ def registration(request):
             })
 
             if form.is_valid():
-                user = MyUser.objects.create(email=email, password=password1)
-                user.set_password(password1)
-                user.save()
+                user = form.save()
                 login(
                     request, user, backend='allauth.account.auth_backends.AuthenticationBackend')
                 return JsonResponse({'success': True})
