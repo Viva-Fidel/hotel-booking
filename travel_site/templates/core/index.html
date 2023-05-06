@@ -99,7 +99,7 @@
       placeholder="Guests & Rooms"
       readonly
     />
-          <div class="booking-search-form__drop-down-menu">
+          <div class="booking-search-form__drop-down-menu" id="guests-input-container-dropdown-menu">
             <div class="booking-search-form__drop-down-menu-item">
               <span class="booking-search-form__drop-down-menu-label">Adults</span>
               <div class="booking-search-form__drop-down-menu-choice_container">
@@ -147,7 +147,7 @@
         {% for destination, destination_info in available_destinations.items %}
         <li class="countries-list-destinations-box">
           <a href="{{ destination | lower }}" class="countries-list-link">
-            <img src="{{ destination_info.country_photo.url }}"" alt="Country
+            <img src="{{ destination_info.county_photo.url }}" alt="County
             photo" class="countries-list-photo" />
             <div class="countries-list-destinations-info">
               <span class="countries-list-destinations-info-name"
@@ -155,8 +155,8 @@
               >
               <span class="countries-list-destinations-info-amount">
                 {% if destination_info.hotel_count == 1 %}
-                {{destination_info.hotel_count }} property {% else %}
-                {{destination_info.hotel_count }} properties {% endif %}
+                {{ destination_info.hotel_count }} property {% else %}
+                {{ destination_info.hotel_count }} properties {% endif %}
               </span>
             </div>
           </a>
@@ -238,6 +238,23 @@
       />
     </div>
   </section>
+
+  <script>
+    const guest = document.getElementById("guests");
+    const guestdropdownMenu = document.getElementById("guests-input-container-dropdown-menu");
+  
+    guest.addEventListener("click", function () {
+      guestdropdownMenu.classList.toggle("show");
+    });
+  
+    document.addEventListener("click", function (event) {
+      const isClickInside =
+      guest.contains(event.target) || guestdropdownMenu.contains(event.target);
+      if (!isClickInside) {
+        guestdropdownMenu.classList.remove("show");
+      }
+    });
+  </script>
 
   <script>
     function redirectToApp() {

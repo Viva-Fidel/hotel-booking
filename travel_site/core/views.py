@@ -2,10 +2,11 @@ from django.shortcuts import render, redirect
 from django.db.models import Count, Q
 from django.http import JsonResponse
 
-from .models import Countries, Cover
+from .models import Counties, Cover
 from hotels.models import Hotels, HotelsImage
 from blogs.models import Blogs
 from django.contrib.auth import logout
+from django.contrib.auth.decorators import user_passes_test
 
 import random
 
@@ -13,23 +14,23 @@ import random
 # Create your views here.
 
 def index(request):
-    available_countries = Hotels.objects.values_list(
-        'hotel_country__country_name', flat=True).distinct()
+    available_counties = Hotels.objects.values_list(
+        'hotel_county__county_name', flat=True).distinct()
 
-    selected_countries = random.sample(list(available_countries), 4)
+    selected_counties = random.sample(list(available_counties), 4)
 
     available_destinations = {}
 
-    for country_name in selected_countries:
+    for county_name in selected_counties:
 
-        country = Countries.objects.get(country_name=country_name)
+        county = Counties.objects.get(county_name=county_name)
 
-        hotel_count = Hotels.objects.filter(hotel_country=country).count()
+        hotel_count = Hotels.objects.filter(hotel_county=county).count()
 
-        country_photo = country.country_photo
+        county_photo = county.county_photo
 
-        available_destinations[country] = {
-            'hotel_count': hotel_count, 'country_photo': country_photo}
+        available_destinations[county] = {
+            'hotel_count': hotel_count, 'county_photo': county_photo}
 
     blog_info = Blogs.objects.filter(
         is_published=True).order_by('-time_create')[:3]
@@ -60,11 +61,11 @@ def search_address(request):
     payload = []
 
     if address:
-        real_addresses = Countries.objects.filter(
-            country_name__icontains=address)[:5]
+        real_addresses = Counties.objects.filter(
+            county_name__icontains=address)[:5]
 
         for real_address in real_addresses:
-            payload.append(real_address.country_name)
+            payload.append(real_address.county_name)
 
     return JsonResponse({'status': 200, 'data': payload})
 
@@ -75,7 +76,7 @@ def search_hotels(request):
     checkout = request.GET.get('checkout')
     guests = request.GET.get('guests')
 
-    query = Q(hotel_country__country_name__contains=destination)
+    query = Q(hotel_county__county_name__contains=destination)
     hotels = Hotels.objects.filter(query)
 
     context = {

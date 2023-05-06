@@ -6,18 +6,18 @@ from django.dispatch import receiver
 
 # Create your models here.
 
-class Countries(models.Model):
-    country_name = models.CharField(
-        max_length=255, verbose_name="Country name")
-    country_photo = models.ImageField(upload_to="static/images/country_photo")
+class Counties(models.Model):
+    county_name = models.CharField(
+        max_length=255, verbose_name="County name")
+    county_photo = models.ImageField(upload_to="images/core/county_photo")
 
     def __str__(self):
-        return self.country_name
+        return self.county_name
 
     class Meta:
-        verbose_name = "Country"
-        verbose_name_plural = "Countries"
-        ordering = ["country_name"]
+        verbose_name = "County"
+        verbose_name_plural = "Counties"
+        ordering = ["county_name"]
 
 class Cover(models.Model):
     cover_title = models.CharField(

@@ -2,7 +2,7 @@ from django import forms
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator, MaxValueValidator
-from core.models import Countries
+from core.models import Counties
 import os
 
 # Create your models here.
@@ -17,8 +17,8 @@ def hotel_general_photos_path(instance, filename):
 
 class Hotels(models.Model):
     hotel_name = models.CharField(max_length=255, verbose_name="Hotel name")
-    hotel_country = models.ForeignKey(
-        Countries, on_delete=models.CASCADE, verbose_name="Hotel country")
+    hotel_county = models.ForeignKey(
+        Counties, on_delete=models.CASCADE, verbose_name="Hotel county", default=None)
     hotel_city = models.CharField(
         max_length=255, verbose_name="Hotel city")
     hotel_street = models.CharField(
