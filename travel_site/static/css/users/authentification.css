@@ -128,16 +128,6 @@ form {
   margin-left: 150px;
 }
 
-.email-options-text {
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 18px;
-  letter-spacing: 0.02em;
-  color: #4f4f4f;
-  margin-left: 16px;
-  margin-right: 16px;
-}
-
 .authentification__have-an-account-text {
   margin-top: 60px;
   font-weight: 400;
@@ -148,7 +138,7 @@ form {
   color: #4f4f4f;
 }
 
-.authentification-form__terms-text {
+.authentification__terms-text {
   font-weight: 400;
   font-size: 14px;
   line-height: 18px;
@@ -157,7 +147,7 @@ form {
   margin-top: 24px;
 }
 
-.authentification-form__terms-text a {
+.authentification__terms-text a {
   color: #2f80ed;
 }
 
@@ -165,7 +155,7 @@ form {
   color: #333333;
 }
 
-.img-background {
+.password-reset-done__image-background {
   width: 280px;
   height: 250px;
   background: rgba(254, 226, 101, 0.3);
@@ -180,7 +170,7 @@ form {
   position: relative;
 }
 
-.booking_photo {
+.password-reset-done__image {
   max-width: 100%;
   max-height: 100%;
 }
