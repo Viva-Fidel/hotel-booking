@@ -218,26 +218,26 @@
         destination information and inspiration from us</span
       >
       <ul class="counties-list__destinations">
-        {% for destination, destination_info in available_destinations.items %}
+        {% for county, county_info in random_counties_list.items %}
         <li class="counties-list__destinations-container">
           <a
-            href="{{ destination | lower }}"
+            href="{{ county | lower }}"
             class="counties-list__destinations-link"
           >
             <img
-              src="{{ destination_info.county_photo.url }}"
+              src="{{ county_info.county_photo.url }}"
               alt="County
             photo"
               class="counties-list__destinations-photo"
             />
             <div class="counties-list__destinations-info">
               <span class="counties-list__destinations-info-name"
-                >{{ destination }}</span
+                >{{ county }}</span
               >
               <span class="counties-list__destinations-info-amount">
-                {% if destination_info.hotel_count == 1 %} 
-                {{destination_info.hotel_count }} property {% else %} 
-                {{destination_info.hotel_count }} properties {% endif %}
+                {% if county_info.hotel_count == 1 %} 
+                {{ county_info.hotel_count }} property {% else %} 
+                {{ county_info.hotel_count }} properties {% endif %}
               </span>
             </div>
           </a>

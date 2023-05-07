@@ -2,6 +2,7 @@
 {% load static %} 
 {% load widget_tweaks %}
 {% block title %} 
+<!-- Set page title depending on the page link -->
 {% if request.path == '/register/' %}
  | Registration 
 {% elif request.path == '/signin/' %}
@@ -14,7 +15,7 @@
 {% endblock %} 
 {% block content %}
 
-<link rel="stylesheet" type="text/css" href="{% static 'css/authpage.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/users/authentification.css' %}" />
 
 <section class="authentification">
   <div class="authentification-form-box" id="authentification-form">

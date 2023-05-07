@@ -337,8 +337,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   line-height: 24px;
   color: #ffffff;
   margin-block-end: 10px;
-  background-color: rgba(0, 0, 0, 0.5); /* add semi-transparent background */
-  padding: 10px; /* add padding to create space between text and background */
+  background-color: rgba(0, 0, 0, 0.5); 
+  padding: 10px;
 }
 
 .blog__posts-content-text {
@@ -350,8 +350,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   color: #ffffff;
   margin-block-start: 0px;
   margin-block-end: 0px;
-  background-color: rgba(0, 0, 0, 0.5); /* add semi-transparent background */
-  padding: 10px; /* add padding to create space between text and background */
+  background-color: rgba(0, 0, 0, 0.5); 
+  padding: 10px; 
 }
 
 .popular-hotels__title {
