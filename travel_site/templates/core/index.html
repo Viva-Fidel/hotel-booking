@@ -1,19 +1,28 @@
-{% extends 'base.html' %} 
-{% load static %} 
-{% block title %} | Book Hotels in Oregon{% endblock%} 
+{% extends 'base.html' %} {% load static %}
 
-{% block navigation %}
-{% include 'partials/_navigation.html' %}
-{% endblock %}
+<!-- Amending page title -->
+{% block title %} | Book Hotels in Oregon{% endblock%}
 
+<!-- Adding navigation block -->
+{% block navigation %} {% include 'partials/_navigation.html' %} {% endblock %}
+
+<!-- Adding main content -->
 {% block content %}
 
-<link rel="stylesheet" type="text/css" href="{% static 'css/core/index.css' %}" />
+<!-- Connectiong page CSS styles -->
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'css/core/index.css' %}"
+/>
 
+<!-- Connecting styles for autocomplete JS search script -->
 <link
   rel="stylesheet"
   href="{% static 'node_modules/@trevoreyre/autocomplete-js/dist/style.css' %}"
 />
+
+<!-- Connecting styles for JS calendar script -->
 <link
   rel="stylesheet"
   href="{% static 'node_modules/flatpickr/dist/flatpickr.min.css' %}"
@@ -28,10 +37,10 @@
           alt="Cover photo"
           class="booking-search__cover-photo"
         />
-        <h2 class="booking-search__cover-photo-title">{{ cover.cover_title }}</h2>
-        <h4 class="booking-search__cover-photo-text">
-          {{ cover.cover_text }}
-        </h4>
+        <h2 class="booking-search__cover-photo-title">
+          {{ cover.cover_title }}
+        </h2>
+        <h4 class="booking-search__cover-photo-text">{{ cover.cover_text }}</h4>
       </div>
       <form
         class="booking-search-form"
@@ -42,11 +51,11 @@
           class="booking-search-form__item"
           id="booking-search-form__item-geo"
         >
-        <img
-        src="{% static 'images/core/icons/geo.svg' %}"
-        alt="Geolocation icon"
-        class="booking-search-form__item__icon"
-      />
+          <img
+            src="{% static 'images/core/icons/geo.svg' %}"
+            alt="Geolocation icon"
+            class="booking-search-form__item__icon"
+          />
           <input
             type="text"
             class="booking-search-form__geo-input"
@@ -58,12 +67,14 @@
           <ul class="autocomplete-result-list"></ul>
         </div>
 
-        <div class="booking-search-form__item booking-search-form__item__calendar">
+        <div
+          class="booking-search-form__item booking-search-form__item__calendar"
+        >
           <img
-        src="{% static 'images/core/icons/calendar.svg' %}"
-        alt="Calendar icon"
-        class="booking-search-form__item__icon"
-      />
+            src="{% static 'images/core/icons/calendar.svg' %}"
+            alt="Calendar icon"
+            class="booking-search-form__item__icon"
+          />
           <input
             type="text"
             id="checkin"
@@ -74,10 +85,10 @@
         </div>
         <div class="booking-search-form__item">
           <img
-        src="{% static 'images/core/icons/calendar.svg' %}"
-        alt="Calendar icon"
-        class="booking-search-form__item__icon"
-      />
+            src="{% static 'images/core/icons/calendar.svg' %}"
+            alt="Calendar icon"
+            class="booking-search-form__item__icon"
+          />
           <input
             type="text"
             id="checkout"
@@ -88,75 +99,145 @@
         </div>
         <div class="booking-search-form__item" onload="setGuests()">
           <img
-        src="{% static 'images/core/icons/guests.svg' %}"
-        alt="Guests icon"
-        class="booking-search-form__item__icon"
-      />
-      <input
-      type="text"
-      id="guests"
-      name="guests"
-      placeholder="Guests & Rooms"
-      readonly
-    />
-          <div class="booking-search-form__drop-down-menu" id="guests-input-container-dropdown-menu">
+            src="{% static 'images/core/icons/guests.svg' %}"
+            alt="Guests icon"
+            class="booking-search-form__item__icon"
+          />
+          <input
+            type="text"
+            id="guests"
+            name="guests"
+            placeholder="Guests & Rooms"
+            readonly
+          />
+          <div
+            class="booking-search-form__drop-down-menu"
+            id="guests-input-container-dropdown-menu"
+          >
             <div class="booking-search-form__drop-down-menu-item">
-              <span class="booking-search-form__drop-down-menu-label">Adults</span>
+              <span class="booking-search-form__drop-down-menu-label"
+                >Adults</span
+              >
               <div class="booking-search-form__drop-down-menu-choice_container">
-                <button type="button" class="booking-search-form__drop-down-menu-button-minus" onclick="changeCount('adults', 'minus')" disabled>-</button>
-                <span id="adults-count" class="booking-search-form__drop-down-menu-count" onchange="updateGuestsInput()">1</span>
-                <button type="button" class="booking-search-form__drop-down-menu-button-plus" onclick="changeCount('adults', 'plus')">+</button>
+                <button
+                  type="button"
+                  class="booking-search-form__drop-down-menu-button-minus"
+                  onclick="changeCount('adults', 'minus')"
+                  disabled
+                >
+                  -
+                </button>
+                <span
+                  id="adults-count"
+                  class="booking-search-form__drop-down-menu-count"
+                  onchange="updateGuestsInput()"
+                  >1</span
+                >
+                <button
+                  type="button"
+                  class="booking-search-form__drop-down-menu-button-plus"
+                  onclick="changeCount('adults', 'plus')"
+                >
+                  +
+                </button>
               </div>
             </div>
             <div class="booking-search-form__drop-down-menu-item">
-              <span class="booking-search-form__drop-down-menu-label">Children</span>
+              <span class="booking-search-form__drop-down-menu-label"
+                >Children</span
+              >
               <div class="booking-search-form__drop-down-menu-choice_container">
-                <button type="button" class="booking-search-form__drop-down-menu-button-minus" onclick="changeCount('children', 'minus')" disabled>-</button>
-                <span id="children-count" class="booking-search-form__drop-down-menu-count" onchange="updateGuestsInput()">0</span>
-                <button type="button" class="booking-search-form__drop-down-menu-button-plus" onclick="changeCount('children', 'plus')">+</button>
+                <button
+                  type="button"
+                  class="booking-search-form__drop-down-menu-button-minus"
+                  onclick="changeCount('children', 'minus')"
+                  disabled
+                >
+                  -
+                </button>
+                <span
+                  id="children-count"
+                  class="booking-search-form__drop-down-menu-count"
+                  onchange="updateGuestsInput()"
+                  >0</span
+                >
+                <button
+                  type="button"
+                  class="booking-search-form__drop-down-menu-button-plus"
+                  onclick="changeCount('children', 'plus')"
+                >
+                  +
+                </button>
               </div>
             </div>
             <div class="booking-search-form__drop-down-menu-item">
-              <span class="booking-search-form__drop-down-menu-label">Rooms</span>
+              <span class="booking-search-form__drop-down-menu-label"
+                >Rooms</span
+              >
               <div class="booking-search-form__drop-down-menu-choice_container">
-                <button type="button" class="booking-search-form__drop-down-menu-button-minus" onclick="changeCount('rooms', 'minus')" disabled>-</button>
-                <span id="rooms-count" class="booking-search-form__drop-down-menu-count" onchange="updateGuestsInput()">1</span>
-                <button type="button" class="booking-search-form__drop-down-menu-button-plus" onclick="changeCount('rooms', 'plus')">+</button>
+                <button
+                  type="button"
+                  class="booking-search-form__drop-down-menu-button-minus"
+                  onclick="changeCount('rooms', 'minus')"
+                  disabled
+                >
+                  -
+                </button>
+                <span
+                  id="rooms-count"
+                  class="booking-search-form__drop-down-menu-count"
+                  onchange="updateGuestsInput()"
+                  >1</span
+                >
+                <button
+                  type="button"
+                  class="booking-search-form__drop-down-menu-button-plus"
+                  onclick="changeCount('rooms', 'plus')"
+                >
+                  +
+                </button>
               </div>
             </div>
           </div>
         </div>
-        <button type="submit" class="booking-search-form__submit-button">Search</button>
+        <button type="submit" class="booking-search-form__submit-button">
+          Search
+        </button>
       </form>
     </div>
   </section>
   <section class="restrictions">
-    <div class="container">
-      {% include 'partials/_warning.html' %}
-    </div>
+    <div class="container">{% include 'partials/_warning.html' %}</div>
   </section>
 
-  <section class="countries-list">
+  <section class="counties-list">
     <div class="container">
-      <h3 class="countries-list-header">Enjoy your dream vacation</h3>
-      <span class="countries-list-text"
+      <h3 class="counties-list__title">Enjoy your dream vacation</h3>
+      <span class="counties-list__text"
         >Plan and book our perfect trip with expert advice, travel tips,
         destination information and inspiration from us</span
       >
-      <ul class="countries-list-destinations">
+      <ul class="counties-list__destinations">
         {% for destination, destination_info in available_destinations.items %}
-        <li class="countries-list-destinations-box">
-          <a href="{{ destination | lower }}" class="countries-list-link">
-            <img src="{{ destination_info.county_photo.url }}" alt="County
-            photo" class="countries-list-photo" />
-            <div class="countries-list-destinations-info">
-              <span class="countries-list-destinations-info-name"
+        <li class="counties-list__destinations-container">
+          <a
+            href="{{ destination | lower }}"
+            class="counties-list__destinations-link"
+          >
+            <img
+              src="{{ destination_info.county_photo.url }}"
+              alt="County
+            photo"
+              class="counties-list__destinations-photo"
+            />
+            <div class="counties-list__destinations-info">
+              <span class="counties-list__destinations-info-name"
                 >{{ destination }}</span
               >
-              <span class="countries-list-destinations-info-amount">
-                {% if destination_info.hotel_count == 1 %}
-                {{ destination_info.hotel_count }} property {% else %}
-                {{ destination_info.hotel_count }} properties {% endif %}
+              <span class="counties-list__destinations-info-amount">
+                {% if destination_info.hotel_count == 1 %} 
+                {{destination_info.hotel_count }} property {% else %} 
+                {{destination_info.hotel_count }} properties {% endif %}
               </span>
             </div>
           </a>
@@ -168,50 +249,49 @@
 
   <section class="blog">
     <div class="container">
-      <h3 class="blog-header">Get inspiration for your next trip</h3>
-      <div class="blog-content">
+      <h3 class="blog__title">Get inspiration for your next trip</h3>
+      <ul class="blog__posts">
         {% for blog in blog_info %}
-        <div class="blog-content-box">
-          <a href="{{ blog.get_absolute_url }}" class="countries-list-link">
+        <li class="blog__posts-item">
+          <a href="{{ blog.get_absolute_url }}" class="blog__posts-link">
             <img
               src="{{ blog.blog_photo.url }}"
               alt="Blog photo"
-              class="blog-content-photo"
+              class="blog__posts-photo"
             />
-            <div class="card-content">
-              <h5 class="blog-header-content">{{ blog.blog_title }}</h5>
-              <p class="blog-text-content">
+            <div class="blog__posts-content">
+              <h5 class="blog__posts-content-title">{{ blog.blog_title }}</h5>
+              <p class="blog__posts-content-text">
                 {{ blog.blog_text |truncatewords:12 }}
               </p>
             </div>
           </a>
-        </div>
+        </li>
         {% endfor %}
-      </div>
+      </ul>
     </div>
   </section>
 
   <section class="popular-hotels">
     <div class="container">
-      <h3 class="popular-hotels-title">Popular hotels</h3>
-      <ul class="popular-hotels-destinations">
+      <h3 class="popular-hotels__title">Popular hotels</h3>
+      <ul class="popular-hotels__destinations">
         {% for hotel in popular_hotels %}
-        <li class="popular-hotels-destinations-box">
-          <a href="#" class="popular-hotels-destinations-link">
-          <img
-            src="{{ hotel.hotel_cover_photo.url }}"
-            alt=""
-            class="popular-hotels-photo"
-          />
-          
-          <div class="popular-hotels-destinations-info">
-              <span class="popular-hotels-destinations-info-name"
+        <li class="popular-hotels__destinations-item">
+          <a href="#" class="popular-hotels__destinations-link">
+            <img
+              src="{{ hotel.hotel_cover_photo.url }}"
+              alt=""
+              class="popular-hotels__destinations-photo"
+            />
+            <div class="popular-hotels__destinations-info">
+              <span class="popular-hotels__destinations-info-name"
                 >{{ hotel.hotel_name }}</span
               >
-              <span class="popular-hotels-destinations-info-amount"
+              <span class="popular-hotels__destinations-info-amount"
                 >10 rooms</span
               >
-          </div>
+            </div>
           </a>
         </li>
         {% endfor %}
@@ -225,7 +305,7 @@
         <img
           src="{% static 'images/photos/app/promo_app.jpg' %}"
           alt=""
-          class="promo-app-photo"
+          class="download-app-promo__photo"
       /></a>
     </div>
   </section>
@@ -234,176 +314,219 @@
       <img
         src="{% static 'images/photos/motto/motto.jpg' %}"
         alt=""
-        class="motto-photo"
+        class="motto__photo"
       />
     </div>
   </section>
 
-  <script>
-    const guest = document.getElementById("guests");
-    const guestdropdownMenu = document.getElementById("guests-input-container-dropdown-menu");
-  
-    guest.addEventListener("click", function () {
-      guestdropdownMenu.classList.toggle("show");
-    });
-  
-    document.addEventListener("click", function (event) {
-      const isClickInside =
-      guest.contains(event.target) || guestdropdownMenu.contains(event.target);
-      if (!isClickInside) {
-        guestdropdownMenu.classList.remove("show");
-      }
-    });
-  </script>
-
-  <script>
-    function redirectToApp() {
-      // Replace this URL with your mobile app link
-      var appUrl = "/";
-      var userAgent = navigator.userAgent.toLowerCase();
-
-      // Check if the user agent is from an iOS device
-      if (
-        userAgent.indexOf("iphone") !== -1 ||
-        userAgent.indexOf("ipad") !== -1
-      ) {
-        // Open the app in iOS using a custom URL scheme
-        window.location.href = "https://apps.apple.com/ru/app/";
-      }
-      // Check if the user agent is from an Android device
-      else if (userAgent.indexOf("android") !== -1) {
-        // Open the app in Android using an intent URL
-        window.location.href = "https://play.google.com/store/apps/";
-      }
-      // Check if the user agent is from a Windows device
-      else if (userAgent.indexOf("windows") !== -1) {
-        // Redirect to the app's website or app store page for Windows users
-        window.location.href = appUrl;
-      }
-      // Redirect to the app store if the app is not installed on other devices
-      else {
-        window.location.href = appUrl;
-      }
-    }
-  </script>
-
-  <script>
-function changeCount(type, operation) {
-  var countEl = document.getElementById(type + "-count");
-  var count = parseInt(countEl.innerHTML);
-  var minusButton = document.querySelector(`button.booking-search-form__drop-down-menu-button-minus[onclick="changeCount('${type}', 'minus')"]`);
-  var plusButton = document.querySelector(`button.booking-search-form__drop-down-menu-button-plus[onclick="changeCount('${type}', 'plus')"]`);
-  
-  if (operation === "minus") {
-    if (count > 0) {
-      count--;
-    }
-  } else if (operation === "plus") {
-    if (count < 30) {
-      count++;
-    }
-  }
-  
-  countEl.innerHTML = count;
-  setGuests();
-  
-  // Disable minus button if count is at its minimum value
-  if (type === "adults" && count === 1) {
-    minusButton.disabled = true;
-  } else if (type === "children" && count === 0) {
-    minusButton.disabled = true;
-  } else if (type === "rooms" && count === 1) {
-    minusButton.disabled = true;
-  } else {
-    minusButton.disabled = false;
-  }
-  
-  // Disable plus button if count is at its maximum value
-  if (count === 30) {
-    plusButton.disabled = true;
-  } else {
-    plusButton.disabled = false;
-  }
-}
-
-function setGuests() {
-
-  var adults = document.getElementById('adults-count').textContent;
-  var children = document.getElementById('children-count').textContent;
-  var rooms = document.getElementById('rooms-count').textContent;
-  var totalGuests = parseInt(adults) + parseInt(children);
-  var guestsLabel = (totalGuests === 1) ? ' guest' : ' guests';
-  var roomsLabel = (rooms === '1') ? ' room' : ' rooms';
-  document.getElementById('guests').value = totalGuests + guestsLabel + ' · ' + rooms + roomsLabel;
-
-}
-
-  </script>
-
-  <script src="{% static 'node_modules/flatpickr/dist/flatpickr.js' %}"></script>
-  <script>
-  // Get a reference to the trigger elements
-  const checkIn = document.getElementById("checkin");
-  const checkOut = document.getElementById("checkout");
-
-  // Calculate maxDate (today + 1 year)
-  const maxDate = new Date();
-  maxDate.setFullYear(maxDate.getFullYear() + 1);
-
-  // Initialize Flatpickr with "altInput" option
-  flatpickr(checkOut, {
-    altInput: checkOut,
-    minDate: "today",
-    maxDate: maxDate,
-    dateFormat: "d-m-Y",
-    onClose: function(selectedDates, dateStr, instance) {
-      // If check-in date is after check-out date, reset check-in date
-      if (checkIn.value != "" && selectedDates[0] >= new Date(checkIn.value)) {
-        instance.clear();
-        checkIn._flatpickr.set("minDate", dateStr);
-      } else {
-        checkIn._flatpickr.set("minDate", "today");
-        checkIn._flatpickr.set("maxDate", dateStr);
-      }
-    }
-  });
-
-  flatpickr(checkIn, {
-    altInput: checkIn,
-    minDate: "today",
-    dateFormat: "d-m-Y",
-    onClose: function(selectedDates, dateStr, instance) {
-      // If check-out date is before check-in date, reset check-out date
-      if (checkOut.value != "" && selectedDates[0] >= new Date(checkOut.value)) {
-        instance.clear();
-        checkOut._flatpickr.set("minDate", dateStr);
-      } else {
-        checkOut._flatpickr.set("minDate", dateStr);
-        checkOut._flatpickr.set("maxDate", maxDate);
-      }
-    }
-  });
-  </script>
-
+  <!-- Autocomplete script to search destinations -->
   <script src="{% static 'node_modules/@trevoreyre/autocomplete-js/dist/autocomplete.min.js' %}"></script>
   <script>
     new Autocomplete("#booking-search-form__item-geo", {
+      // The search function takes user input and returns a Promise that resolves with an array of results
       search: (input) => {
         const url = "/search/?address=" + input.trim();
+        // Using fetch to send an HTTP request to the specified URL and return a Promise that resolves with the response
         return new Promise((resolve) => {
           fetch(url)
             .then((response) => response.json())
             .then((data) => {
-              console.log(data);
-              resolve(data.data);
+              resolve(data.data); // Resolving the Promise with the array of results from the response data
             });
         });
       },
     });
   </script>
+
+  <!-- Script to showing calendar to choose check in and check out dates -->
+  <script src="{% static 'node_modules/flatpickr/dist/flatpickr.js' %}"></script>
+  <script>
+    // Selecting the HTML elements for the check-in and check-out date inputs
+    const checkIn = document.getElementById("checkin");
+    const checkOut = document.getElementById("checkout");
+
+    // Setting the maximum date for the check-out input to one year from today
+    const maxDate = new Date();
+    maxDate.setFullYear(maxDate.getFullYear() + 1);
+
+    // Initializing Flatpickr for the check-out input with options for date formatting, minimum and maximum dates, and event handling
+    flatpickr(checkOut, {
+      altInput: checkOut, // Using an alternate input field for better accessibility
+      minDate: "today", // Setting the minimum date to today
+      maxDate: maxDate, // Setting the maximum date to one year from today
+      dateFormat: "d-m-Y", // Specifying the date format as day-month-year
+      onClose: function (selectedDates, dateStr, instance) {
+        // Handling the event when the user selects a check-out date
+        if (
+          checkIn.value != "" &&
+          selectedDates[0] >= new Date(checkIn.value)
+        ) {
+          // If a check-in date has already been selected and the selected check-out date is later than the check-in date,
+          // clear the check-out input and set the minimum date for the check-in input to the selected check-out date
+          instance.clear();
+          checkIn._flatpickr.set("minDate", dateStr);
+        } else {
+          // If no check-in date has been selected or the selected check-out date is earlier than the check-in date,
+          // set the minimum date for the check-in input to today and the maximum date for the check-out input to the maximum date allowed
+          checkIn._flatpickr.set("minDate", "today");
+          checkIn._flatpickr.set("maxDate", dateStr);
+        }
+      },
+    });
+
+    // Initializing Flatpickr for the check-in input with options for date formatting, minimum date, and event handling
+    flatpickr(checkIn, {
+      altInput: checkIn, // Using an alternate input field for better accessibility
+      minDate: "today", // Setting the minimum date to today
+      dateFormat: "d-m-Y", // Specifying the date format as day-month-year
+      onClose: function (selectedDates, dateStr, instance) {
+        // Handling the event when the user selects a check-in date
+        if (
+          checkOut.value != "" &&
+          selectedDates[0] >= new Date(checkOut.value)
+        ) {
+          // If a check-out date has already been selected and the selected check-in date is later than the check-out date,
+          // clear the check-in input and set the minimum date for the check-out input to the selected check-in date
+          instance.clear();
+          checkOut._flatpickr.set("minDate", dateStr);
+        } else {
+          // If no check-out date has been selected or the selected check-in date is earlier than the check-out date,
+          // set the minimum date for the check-out input to the selected check-in date and the maximum date for the check-out input to the maximum date allowed
+          checkOut._flatpickr.set("minDate", dateStr);
+          checkOut._flatpickr.set("maxDate", maxDate);
+        }
+      },
+    });
+  </script>
+
+  <!-- Script to show or hide drop down menu for choosing amount of guests -->
+  <script>
+    const guest = document.getElementById("guests"); // Get the element with the id "guests"
+    const guestdropdownMenu = document.getElementById(
+      "guests-input-container-dropdown-menu"
+    ); // Get the element with the id "guests-input-container-dropdown-menu"
+
+    guest.addEventListener("click", function () {
+      // Add a click event listener to the "guest" element
+      guestdropdownMenu.classList.toggle("show"); // Toggle the "show" class on the "guestdropdownMenu" element
+    });
+
+    document.addEventListener("click", function (event) {
+      // Add a click event listener to the document
+      const isClickInside =
+        guest.contains(event.target) ||
+        guestdropdownMenu.contains(event.target); // Check if the click event happened inside the "guest" element or the "guestdropdownMenu" element
+      if (!isClickInside) {
+        guestdropdownMenu.classList.remove("show"); // If the click event didn't happen inside either element, remove the "show" class from the "guestdropdownMenu" element
+      }
+    });
+  </script>
+
+  <!-- Script to choose guests amount -->
+  <script>
+    function changeCount(type, operation) {
+      // Get the HTML element of the count
+      var countEl = document.getElementById(type + "-count");
+      // Parse the current count as an integer
+      var count = parseInt(countEl.innerHTML);
+      // Get the minus and plus buttons for the current type
+      var minusButton = document.querySelector(
+        `button.booking-search-form__drop-down-menu-button-minus[onclick="changeCount('${type}', 'minus')"]`
+      );
+      var plusButton = document.querySelector(
+        `button.booking-search-form__drop-down-menu-button-plus[onclick="changeCount('${type}', 'plus')"]`
+      );
+
+      // Decrease the count if operation is minus and count is greater than zero
+      if (operation === "minus") {
+        if (count > 0) {
+          count--;
+        }
+      }
+      // Increase the count if operation is plus and count is less than 30
+      else if (operation === "plus") {
+        if (count < 30) {
+          count++;
+        }
+      }
+
+      // Update the count in the HTML element
+      countEl.innerHTML = count;
+      // Call the setGuests() function to update the guest count in the input field
+      setGuests();
+
+      // Disable the minus button if the count is at its minimum value
+      if (type === "adults" && count === 1) {
+        minusButton.disabled = true;
+      } else if (type === "children" && count === 0) {
+        minusButton.disabled = true;
+      } else if (type === "rooms" && count === 1) {
+        minusButton.disabled = true;
+      } else {
+        minusButton.disabled = false;
+      }
+
+      // Disable the plus button if the count is at its maximum value
+      if (count === 30) {
+        plusButton.disabled = true;
+      } else {
+        plusButton.disabled = false;
+      }
+    }
+
+    // Function to set the guest count in the input field
+    function setGuests() {
+      // Get the count of adults, children, and rooms
+      var adults = document.getElementById("adults-count").textContent;
+      var children = document.getElementById("children-count").textContent;
+      var rooms = document.getElementById("rooms-count").textContent;
+      // Calculate the total number of guests
+      var totalGuests = parseInt(adults) + parseInt(children);
+      // Set the label for guests depending on whether there is one guest or multiple guests
+      var guestsLabel = totalGuests === 1 ? " guest" : " guests";
+      // Set the label for rooms depending on whether there is one room or multiple rooms
+      var roomsLabel = rooms === "1" ? " room" : " rooms";
+      // Set the value of the input field with the guest count and room count labels
+      document.getElementById("guests").value =
+        totalGuests + guestsLabel + " · " + rooms + roomsLabel;
+    }
+  </script>
+
+  <!-- Script to redirect the user to the google play/appstore depending on the device when "download mobile app" photo is clicked -->
+  <script>
+    function redirectToApp() {
+      // Set default app URL
+      var appUrl = "/";
+
+      // Get user agent and convert to lower case
+      var userAgent = navigator.userAgent.toLowerCase();
+
+      // If user agent contains "iphone" or "ipad", redirect to App Store for iOS
+      if (
+        userAgent.indexOf("iphone") !== -1 ||
+        userAgent.indexOf("ipad") !== -1
+      ) {
+        window.location.href = "https://apps.apple.com/ru/app/";
+      }
+
+      // If user agent contains "android", redirect to Google Play Store for Android
+      else if (userAgent.indexOf("android") !== -1) {
+        window.location.href = "https://play.google.com/store/apps/";
+      }
+
+      // If user agent contains "windows", redirect to the default app URL
+      else if (userAgent.indexOf("windows") !== -1) {
+        window.location.href = appUrl;
+      }
+
+      // For all other user agents, redirect to the default app URL
+      else {
+        window.location.href = appUrl;
+      }
+    }
+  </script>
 </main>
 {% endblock %}
 
-{% block footer %}
-    {% include 'partials/_footer.html' %}
-    {% endblock %}
+<!-- Adding footer -->
+{% block footer %} {% include 'partials/_footer.html' %} {% endblock %}
