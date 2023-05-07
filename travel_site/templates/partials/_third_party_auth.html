@@ -1,17 +1,25 @@
-{% load socialaccount %} 
+{% load socialaccount %}
+{% load static %} 
 
-<div class="email-options-wrapper">
-    <div class="horizontal-line"></div>
-    <span class="email-options-text">or use one of these options</span>
-    <div class="horizontal-line"></div>
-  </div>
-  <a href="{% provider_login_url 'google'%}">
-    <button type="button" class="login-with-google-btn">
-      Continue with Google
-    </button>
-  </a>
-  <a href="{% provider_login_url 'github'%}">
-    <button type="button" class="login-with-github-btn">
-      Continue with GitHub
-    </button>
-  </a>
+<!-- Loading css style for the page -->
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'css/partials/_third_party_auth.css' %}"
+/>
+
+<div class="auth-options__wrapper">
+  <div class="auth-options__horizontal-line"></div>
+  <span class="auth-options__text">or use one of these options</span>
+  <div class="auth-options__horizontal-line"></div>
+</div>
+<a href="{% provider_login_url 'google'%}">
+  <button type="button" class="auth-options__login-with-google-button">
+    Continue with Google
+  </button>
+</a>
+<a href="{% provider_login_url 'github'%}">
+  <button type="button" class="auth-options__login-with-github-button">
+    Continue with GitHub
+  </button>
+</a>
