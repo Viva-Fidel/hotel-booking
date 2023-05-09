@@ -6,8 +6,10 @@ import os
 
 # Create your models here.
 
+
 def avatar_path(instance, filename):
     return os.path.join('images/users', instance.email, 'avatar', filename)
+
 
 class MyUserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
@@ -26,7 +28,6 @@ class MyUserManager(BaseUserManager):
 
 
 class MyUser(PermissionsMixin, AbstractBaseUser):
-    # username = None
     email = models.EmailField(unique=True, max_length=255)
     first_name = models.CharField(max_length=150, blank=True)
     last_name = models.CharField(max_length=150, blank=True)
@@ -43,6 +44,11 @@ class MyUser(PermissionsMixin, AbstractBaseUser):
 
     def set_password(self, raw_password):
         self.password = make_password(raw_password)
+
+    class Meta:
+        verbose_name = "User"
+        verbose_name_plural = "Users"
+        ordering = ["last_login"]
 
     def __str__(self):
         return self.email

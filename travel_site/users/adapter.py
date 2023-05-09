@@ -1,17 +1,13 @@
-import requests
-
-from allauth.exceptions import ImmediateHttpResponse
 from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
 from allauth.socialaccount.signals import pre_social_login
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import login
 from django.dispatch import receiver
 from django.shortcuts import redirect
-from django.urls import reverse
-from django.contrib.auth import authenticate
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
 from .models import MyUser
 
+import requests
 
 
 class MySocialAccountAdapter(DefaultSocialAccountAdapter):
@@ -54,8 +50,6 @@ def link_to_local_user(sender, request, sociallogin, **kwargs):
             file_path = f'images/users/{email}/avatar/default_avatar.png'
             default_storage.save(file_path, file_content)
 
-
-
         # If the user does not exist, create a new one
         data = {
             'email': email,
@@ -66,8 +60,7 @@ def link_to_local_user(sender, request, sociallogin, **kwargs):
             'is_active': True,
         }
         user = MyUser.objects.create_user(**data)
-        # Create a new local user and associate it with the social account
-        
+
     login(request, user, backend='allauth.account.auth_backends.AuthenticationBackend')
 
     # Redirect to the home page
