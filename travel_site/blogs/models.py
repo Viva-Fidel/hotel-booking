@@ -1,6 +1,10 @@
 from django.db import models
 from django.utils.text import slugify
 from django.urls import reverse
+from django.db.models.signals import pre_save, post_delete
+from django.dispatch import receiver
+
+import os
 
 # Create your models here.
 
@@ -8,7 +12,7 @@ from django.urls import reverse
 class Blogs(models.Model):
     blog_title = models.CharField(max_length=255, verbose_name="Title")
     blog_text = models.TextField(verbose_name="Text")
-    blog_photo = models.ImageField(upload_to="static/images/blog")
+    blog_photo = models.ImageField(upload_to="images/blogs")
     time_create = models.DateTimeField(
         auto_now_add=True, verbose_name="Date of creation")
     time_update = models.DateTimeField(auto_now=True, verbose_name="Updated")
@@ -32,3 +36,28 @@ class Blogs(models.Model):
         ordering = ["blog_title", "time_create"]
 
         
+# A signal to delete the previous blog photo when a new one is uploaded
+@receiver(pre_save, sender=Blogs)
+def delete_previous_blog_photo(sender, instance, **kwargs):
+    try:
+        # Get the old blog photo of the instance
+        old_blog_photo = sender.objects.get(pk=instance.pk).blog_photo
+    except sender.DoesNotExist:
+        # If the instance doesn't exist, do nothing
+        return
+
+    # Get the new blog photo of the instance
+    new_blog_photo = instance.blog_photo
+    # If the old and new blog photos are not the same, delete the old blog photo
+    if not old_blog_photo == new_blog_photo:
+        old_blog_photo.delete(save=False)
+
+
+# A signal to delete the file from the storage when a Blog instance is deleted
+@receiver(post_delete, sender=Blogs)
+def auto_delete_file_on_delete(instance, **kwargs):
+    if instance.blog_photo:
+        # Check if the file still exists in the storage
+        if os.path.isfile(instance.blog_photo.path):
+            # If the file exists, delete it from the storage
+            os.remove(instance.blog_photo.path)

@@ -213,6 +213,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   cursor: pointer;
 }
 
+.booking-search-form__submit-button:hover{
+  background: #2969BF;
+  border: 1px solid #2969BF;
+}
+
 .counties-list__title {
   margin-top: 50px;
   font-weight: 600;
