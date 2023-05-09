@@ -1,39 +1,145 @@
 {% load static %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
-    <head>{% block head %} 
-        <!-- {% block title %} 
-        | Search results
-       {% endblock %}  -->
-       {% endblock %} 
-       <link rel="stylesheet" type="text/css" href="{% static 'css/search_results.css' %}" />
-       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-      </head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="{% static 'images/core/favicon/favicon.ico' %}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/normalize.css' %}"
+    />
+    <title>my Dream Place | Search results</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/core/search_results.css' %}"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> 
+  </head>
+  
     <body>
-        <div class="header-background">
+      <header class="header">
         <div class="container">
-          <header class="header">
-            <a href="/" class="logo-link">
-                <img src="{% static '/images/logos/alternative_logo.svg' %}" class="logo-image" alt="Website logo" />
-                <span class="logo-link-text">my Dream Place</span>
+            <div class="header__background">
+
+
+            <a href="{% url 'home' %}" class="header__logo-link">
+                <img src="{% static 'images/logos/alternative_logo.svg' %}" class="header__logo-image" alt="Website logo" />
+                <span class="header__logo-text">my Dream Place</span>
               </a>
+
               <nav class="header-menu">
-                <ul class="menu-list">
-                  <li class="menu-item"><a href="/" class="menu-link">Home</a></li>
-                  <li class="menu-item">
-                    <a href="/discover" class="menu-link">Discover</a>
+                <ul class="header-menu__list">
+                  <li class="header-menu__item"><a href="{% url 'home' %}" class="header-menu__link">Home</a></li>
+                  <li class="header-menu__item">
+                    <a href="/discover" class="header-menu__link">Discover</a>
                   </li>
-                  <li class="menu-item">
-                    <a href="/activities" class="menu-link">Activities</a>
+                  <li class="header-menu__item">
+                    <a href="/activities" class="header-menu__link">Activities</a>
                   </li>
-                  <li class="menu-item">
-                    <a href="/about" class="menu-link">About</a>
+                  <li class="header-menu__item">
+                    <a href="/about" class="header-menu__link">About</a>
                   </li>
-                  <li class="menu-item">
-                    <a href="/contact" class="menu-link">Contact</a>
+                  <li class="header-menu__item">
+                    <a href="/contact" class="header-menu__link">Contact</a>
                   </li>
                 </ul>
               </nav>
+              {% if user.is_authenticated %}
+<div class="header-user-profile-container">
+  <img
+    src="{% static 'images/core/icons/notification.svg' %}"
+    alt="User notification"
+    class="header-user-profile-container__notifications-icon"
+  />
+  <div class="header-user-profile-container__user-avatar">
+    <img
+      src="{{ user.avatar.url }}"
+      class="header-user-profile-container_user-photo"
+      alt="User Image"
+      id="dropdown-trigger"
+    />
+    <div
+      class="header-user-profile-container__dropdown-menu"
+      id="dropdown-menu"
+    >
+      <div class="header-uer-profile-container__dropdown-menu-item-container">
+        <a
+          href="/account/"
+          class="header-user-profile-container__dropdown-menu-item-link"
+        >
+          <img
+            src="{% static 'images/partials/icons/account.svg' %}"
+            alt="Account icon"
+            class="header-user-profile-container__dropdown-menu-link-item-icon"
+          />
+          <span
+            class="header-user-profile-container__dropdown-menu-link-item-text"
+            >Manage account</span
+          >
+        </a>
+      </div>
+      <div class="header-uer-profile-container__dropdown-menu-item-container">
+        <a
+          href="/reservations/"
+          class="header-user-profile-container__dropdown-menu-item-link"
+        >
+          <img
+            src="{% static 'images/partials/icons/trips.svg' %}"
+            alt="Account icon"
+            class="header-user-profile-container__dropdown-menu-link-item-icon"
+          />
+          <span
+            class="header-user-profile-container__dropdown-menu-link-item-text"
+            >My trips</span
+          >
+        </a>
+      </div>
+      <div class="header-uer-profile-container__dropdown-menu-item-container">
+        <a
+          href="/rewards/"
+          class="header-user-profile-container__dropdown-menu-item-link"
+        >
+          <img
+            src="{% static 'images/partials/icons/wallet.svg' %}"
+            alt="Account icon"
+            class="header-user-profile-container__dropdown-menu-link-item-icon"
+          />
+          <span
+            class="header-user-profile-container__dropdown-menu-link-item-text"
+            >Reward and wallet</span
+          >
+        </a>
+      </div>
+      <div class="header-uer-profile-container__dropdown-menu-item-container">
+        <a
+          href="{% url 'logout' %}"
+          class="header-user-profile-container__dropdown-menu-item-link"
+        >
+          <img
+            src="{% static 'images/partials/icons/signout.svg' %}"
+            alt="Account icon"
+            class="header-user-profile-container__dropdown-menu-link-item-icon"
+          />
+          <span
+            class="header-user-profile-container__dropdown-menu-link-item-text"
+            >Sign out</span
+          >
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+{% else %}
+
               <div class="header-button-container">
                 <a href="/register" class="register-link"
                   ><button class="register-button">Register</button></a
@@ -43,61 +149,12 @@
                 >
             
               </div>
-              <form
-        class="booking-form"
-        method="get"
-        action="{% url 'search_hotels' %}"
-      >
-        <div
-          class="booking-form-group booking-form-group--geo"
-          id="booking-form-group--geo"
-        >
-          <input
-            type="text"
-            class="booking-form-group__input"
-            id="destination"
-            name="destination"
-            placeholder="Where are you going?"
-            required
-          />
-          <ul class="autocomplete-result-list"></ul>
-        </div>
-
-        <div class="booking-form-group booking-form-group--calendar">
-          <input
-            type="text"
-            id="checkin"
-            name="checkin"
-            placeholder="Check-in date"
-            required
-          />
-        </div>
-        <div class="booking-form-group booking-form-group--calendar">
-          <input
-            type="text"
-            id="checkout"
-            name="checkout"
-            placeholder="Check-out date"
-            required
-          />
-        </div>
-        <div class="booking-form-group booking-form-group--guests">
-          <input
-            type="number"
-            id="guests"
-            name="guests"
-            min="1"
-            placeholder="Guests"
-            required
-          />
-        </div>
-        <button type="submit" class="booking-form-submit">Search</button>
-      </form>
-    
-          </header>
+              {% endif %} 
+              {% include 'partials/_search_form.html' %}
         </div>
     </div>
-        
+
+  </header>  
 {% block content %}
 <main class="main">
     <section class="results">
@@ -152,7 +209,7 @@
       <div class="star-rating-filter">
         <button type="button" class="star-rating-filter-button star-rating-filter-button--left">1<span class="fa fa-star checked"></span></button>
         <button type="button" class="star-rating-filter-button">2<span class="fa fa-star checked"></span></button>
-        <button type="button" class="star-rating-filter-button">3<span class="fa fa-star checked"></span></bututon>
+        <button type="button" class="star-rating-filter-button">3<span class="fa fa-star checked"></span></button>
         <button type="button" class="star-rating-filter-button">4<span class="fa fa-star checked"></span></button>
         <button type="button" class="star-rating-filter-button star-rating-filter-button--right">5<span class="fa fa-star checked"></span></button>
     </div>
@@ -230,7 +287,7 @@
                     <div class="allocation-type-filter">
                         <button type="submit" class="filter-button filter-button--left">Our top picks</button>
                         <button type="submit" class="filter-button">Hotel and apartments</button>
-                        <button type="submit" class="filter-button">Residence</bututon>
+                        <button type="submit" class="filter-button">Residence</button>
                         <button type="submit" class="filter-button">Resort</button>
                         <button type="submit" class="filter-button filter-button--right">Shared Space</button>
                     </div>
@@ -306,7 +363,31 @@
 
 
 
-
+    {% if user.is_authenticated %}
+    <!-- Script to activate drop down menu when user clicks on the avatar -->
+    <script>
+      // Get the avatar and dropdown menu elements by their IDs
+      const avatar = document.getElementById("dropdown-trigger");
+      const dropdownMenu = document.getElementById("dropdown-menu");
+    
+      // Add a click event listener to the avatar element
+      avatar.addEventListener("click", function () {
+        // Toggle the "show" class on the dropdown menu element to show or hide it
+        dropdownMenu.classList.toggle("show");
+      });
+    
+      // Add a click event listener to the document object
+      document.addEventListener("click", function (event) {
+        // Check if the click event occurred inside the avatar or dropdown menu elements
+        const isClickInside =
+          avatar.contains(event.target) || dropdownMenu.contains(event.target);
+        // If the click event occurred outside of the avatar or dropdown menu elements, hide the dropdown menu
+        if (!isClickInside) {
+          dropdownMenu.classList.remove("show");
+        }
+      });
+    </script>
+    {% endif %}
 
 
 
