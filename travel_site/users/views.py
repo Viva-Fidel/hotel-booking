@@ -6,6 +6,7 @@ from django.utils.encoding import force_bytes
 from django.core.mail import send_mail
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.urls import reverse
+from django.template.loader import render_to_string
 from .forms import UserCreationForm, RegistrationEmailForm, SigninForm, PasswordRestoreEmailForm, PassowrdCheckForm
 from .models import MyUser
 
@@ -84,13 +85,21 @@ def password_reset(request):
             restore_url = reverse('password_reset_confirm', kwargs={
                                   'uidb64': uidb64, 'token': token})
             restore_url = request.build_absolute_uri(restore_url)
+            
+            subject = 'Password reset'
+            template_name = 'users/password_reset_email.html'
+            context = {'restore_url': restore_url}
+            from_email = 'alexi.artamonov@yandex.ru'
+            recipient_list = [email]
+            html_message = render_to_string(template_name, context)
 
             # Send a password reset email to the user
             send_mail(
-                'Password reset',
-                f'Please click on the following link to reset your password: {restore_url}',
-                'alexi.artamonov@yandex.ru',
-                [email],
+                subject=subject,
+                message='',
+                html_message=html_message,
+                from_email=from_email,
+                recipient_list=recipient_list,
                 fail_silently=False,
             )
 
