@@ -1,5 +1,4 @@
-{% load static %}
-{% load static %}
+{% load static %} {% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -22,376 +21,352 @@
       type="text/css"
       href="{% static 'css/core/search_results.css' %}"
     />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    <!-- <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    /> -->
   </head>
-  
-    <body>
-      <header class="header">
-        <div class="container">
-            <div class="header__background">
 
-
-            <a href="{% url 'home' %}" class="header__logo-link">
-                <img src="{% static 'images/logos/alternative_logo.svg' %}" class="header__logo-image" alt="Website logo" />
-                <span class="header__logo-text">my Dream Place</span>
-              </a>
-
-              <nav class="header-menu">
-                <ul class="header-menu__list">
-                  <li class="header-menu__item"><a href="{% url 'home' %}" class="header-menu__link">Home</a></li>
-                  <li class="header-menu__item">
-                    <a href="/discover" class="header-menu__link">Discover</a>
-                  </li>
-                  <li class="header-menu__item">
-                    <a href="/activities" class="header-menu__link">Activities</a>
-                  </li>
-                  <li class="header-menu__item">
-                    <a href="/about" class="header-menu__link">About</a>
-                  </li>
-                  <li class="header-menu__item">
-                    <a href="/contact" class="header-menu__link">Contact</a>
-                  </li>
-                </ul>
-              </nav>
-              {% if user.is_authenticated %}
-<div class="header-user-profile-container">
-  <img
-    src="{% static 'images/core/icons/notification.svg' %}"
-    alt="User notification"
-    class="header-user-profile-container__notifications-icon"
-  />
-  <div class="header-user-profile-container__user-avatar">
-    <img
-      src="{{ user.avatar.url }}"
-      class="header-user-profile-container_user-photo"
-      alt="User Image"
-      id="dropdown-trigger"
-    />
-    <div
-      class="header-user-profile-container__dropdown-menu"
-      id="dropdown-menu"
-    >
-      <div class="header-uer-profile-container__dropdown-menu-item-container">
-        <a
-          href="/account/"
-          class="header-user-profile-container__dropdown-menu-item-link"
-        >
-          <img
-            src="{% static 'images/partials/icons/account.svg' %}"
-            alt="Account icon"
-            class="header-user-profile-container__dropdown-menu-link-item-icon"
-          />
-          <span
-            class="header-user-profile-container__dropdown-menu-link-item-text"
-            >Manage account</span
-          >
-        </a>
-      </div>
-      <div class="header-uer-profile-container__dropdown-menu-item-container">
-        <a
-          href="/reservations/"
-          class="header-user-profile-container__dropdown-menu-item-link"
-        >
-          <img
-            src="{% static 'images/partials/icons/trips.svg' %}"
-            alt="Account icon"
-            class="header-user-profile-container__dropdown-menu-link-item-icon"
-          />
-          <span
-            class="header-user-profile-container__dropdown-menu-link-item-text"
-            >My trips</span
-          >
-        </a>
-      </div>
-      <div class="header-uer-profile-container__dropdown-menu-item-container">
-        <a
-          href="/rewards/"
-          class="header-user-profile-container__dropdown-menu-item-link"
-        >
-          <img
-            src="{% static 'images/partials/icons/wallet.svg' %}"
-            alt="Account icon"
-            class="header-user-profile-container__dropdown-menu-link-item-icon"
-          />
-          <span
-            class="header-user-profile-container__dropdown-menu-link-item-text"
-            >Reward and wallet</span
-          >
-        </a>
-      </div>
-      <div class="header-uer-profile-container__dropdown-menu-item-container">
-        <a
-          href="{% url 'logout' %}"
-          class="header-user-profile-container__dropdown-menu-item-link"
-        >
-          <img
-            src="{% static 'images/partials/icons/signout.svg' %}"
-            alt="Account icon"
-            class="header-user-profile-container__dropdown-menu-link-item-icon"
-          />
-          <span
-            class="header-user-profile-container__dropdown-menu-link-item-text"
-            >Sign out</span
-          >
-        </a>
-      </div>
-    </div>
-  </div>
-</div>
-{% else %}
-
-              <div class="header-button-container">
-                <a href="/register" class="register-link"
-                  ><button class="register-button">Register</button></a
-                >
-                <a href="/signin" class="signin-link"
-                  ><button class="signin-button">Sign In</button></a
-                >
-            
-              </div>
-              {% endif %} 
-              {% include 'partials/_search_form.html' %}
-        </div>
-    </div>
-
-  </header>  
-{% block content %}
-<main class="main">
-    <section class="results">
+  <body>
+    <header class="header">
       <div class="container">
-        <div class="content">
-            <div class="content_left">
-                <div class="filters">
-<div class="search-box">
-    <h4 class="search-box-title">Search by property name</h4>
-<input type="search" class="hotel-search" name="q">
+        <div class="header__background">
+          <a href="{% url 'home' %}" class="header__logo-link">
+            <img
+              src="{% static 'images/logos/alternative_logo.svg' %}"
+              class="header__logo-image"
+              alt="Website logo"
+            />
+            <span class="header__logo-text">my Dream Place</span>
+          </a>
 
-</div>
-<h4 class="filter-by-title">Filter by</h4>
-<div class="budget-per-day-filter">
-  <div class="budget-per-day-filter-title">Your budget per day</div>
-  <div class="budget-per-day-filter-choice"><div class="price-range">
-    <label>
-      <input type="checkbox" name="price-range" value="$0-$200" />
-      $0 - $200 <span class="count">200</span>
-    </label>
-    <label>
-      <input type="checkbox" name="price-range" value="$200-$500" />
-      $200 - $500 <span class="count">100</span>
-    </label>
-    <label>
-      <input type="checkbox" name="price-range" value="$500-$1000" />
-      $500 - $1,000 <span class="count">15</span>
-    </label>
-    <label>
-      <input type="checkbox" name="price-range" value="$1000-$2000" />
-      $1,000 - $2,000 <span class="count">12</span>
-    </label>
-    <label>
-      <input type="checkbox" name="price-range" value="$2000-$5000" />
-      $2,000 - $5,000 <span class="count">230</span>
-    </label>
-  </div>
-  
-  <div class="set-budget-switch">
-    <label for="set-budget">Set your own budget</label>
-    <label class="switch">
-      <input type="checkbox">
-      <span class="slider"></span>
-    </label>
-  </div>
-</div>
-</div>
-  <div class="filter-by-rating">
-    <div class="filter-by-rating-title">Rating</div>
-    <div class="filter-by-rating-choice">
-      <span class="filter-by-rating-choice-text">Show only ratings more than</span>
-      <div class="star-rating-filter">
-        <button type="button" class="star-rating-filter-button star-rating-filter-button--left">1<span class="fa fa-star checked"></span></button>
-        <button type="button" class="star-rating-filter-button">2<span class="fa fa-star checked"></span></button>
-        <button type="button" class="star-rating-filter-button">3<span class="fa fa-star checked"></span></button>
-        <button type="button" class="star-rating-filter-button">4<span class="fa fa-star checked"></span></button>
-        <button type="button" class="star-rating-filter-button star-rating-filter-button--right">5<span class="fa fa-star checked"></span></button>
-    </div>
-      </div>
-
-      <div class="budget-per-day-filter">
-        <div class="budget-per-day-filter-title">Popular Filters</div>
-        <div class="budget-per-day-filter-choice"><div class="price-range">
-          <label>
-            <input type="checkbox" name="price-range" value="Free cancellation" />
-            Free cancellation <span class="count">200</span>
-          </label>
-          <label>
-            <input type="checkbox" name="price-range" value="$200-$500" />
-            Spa <span class="count">100</span>
-          </label>
-          <label>
-            <input type="checkbox" name="price-range" value="$500-$1000" />
-            Beach front <span class="count">15</span>
-          </label>
-          <label>
-            <input type="checkbox" name="price-range" value="$1000-$2000" />
-            Hot tub/ jacuzzi <span class="count">12</span>
-          </label>
-          <label>
-            <input type="checkbox" name="price-range" value="$2000-$5000" />
-            Book without credit card <span class="count">230</span>
-          </label>
-        </div>
-      
-      </div>
-      </div>
-      <div class="budget-per-day-filter">
-        <div class="budget-per-day-filter-title">Activities</div>
-        <div class="budget-per-day-filter-choice"><div class="price-range">
-          <label>
-            <input type="checkbox" name="price-range" value="Free cancellation" />
-            Fishing <span class="count">200</span>
-          </label>
-          <label>
-            <input type="checkbox" name="price-range" value="$200-$500" />
-            Hiking <span class="count">100</span>
-          </label>
-          <label>
-            <input type="checkbox" name="price-range" value="$500-$1000" />
-            Beach <span class="count">15</span>
-          </label>
-          <label>
-            <input type="checkbox" name="price-range" value="$1000-$2000" />
-            Cycling <span class="count">12</span>
-          </label>
-          <label>
-            <input type="checkbox" name="price-range" value="$2000-$5000" />
-            Sauna <span class="count">230</span>
-          </label>
-          <label>
-            <input type="checkbox" name="price-range" value="$2000-$5000" />
-            Night lights <span class="count">230</span>
-          </label>
-        </div>
-      
-      </div>
-      </div>
-
-  </div>
-  
-
-
+          <nav class="header-menu">
+            <ul class="header-menu__list">
+              <li class="header-menu__item">
+                <a href="{% url 'home' %}" class="header-menu__link">Home</a>
+              </li>
+              <li class="header-menu__item">
+                <a href="/discover" class="header-menu__link">Discover</a>
+              </li>
+              <li class="header-menu__item">
+                <a href="/activities" class="header-menu__link">Activities</a>
+              </li>
+              <li class="header-menu__item">
+                <a href="/about" class="header-menu__link">About</a>
+              </li>
+              <li class="header-menu__item">
+                <a href="/contact" class="header-menu__link">Contact</a>
+              </li>
+            </ul>
+          </nav>
+          {% if user.is_authenticated %}
+          <div class="header-user-profile-container">
+            <img
+              src="{% static 'images/core/icons/notification.svg' %}"
+              alt="User notification"
+              class="header-user-profile-container__notifications-icon"
+            />
+            <div class="header-user-profile-container__user-avatar">
+              <img
+                src="{{ user.avatar.url }}"
+                class="header-user-profile-container_user-photo"
+                alt="User Image"
+                id="dropdown-trigger"
+              />
+              <div
+                class="header-user-profile-container__dropdown-menu"
+                id="dropdown-menu"
+              >
+                <div
+                  class="header-uer-profile-container__dropdown-menu-item-container"
+                >
+                  <a
+                    href="/account/"
+                    class="header-user-profile-container__dropdown-menu-item-link"
+                  >
+                    <img
+                      src="{% static 'images/partials/icons/account.svg' %}"
+                      alt="Account icon"
+                      class="header-user-profile-container__dropdown-menu-link-item-icon"
+                    />
+                    <span
+                      class="header-user-profile-container__dropdown-menu-link-item-text"
+                      >Manage account</span
+                    >
+                  </a>
                 </div>
-
+                <div
+                  class="header-uer-profile-container__dropdown-menu-item-container"
+                >
+                  <a
+                    href="/reservations/"
+                    class="header-user-profile-container__dropdown-menu-item-link"
+                  >
+                    <img
+                      src="{% static 'images/partials/icons/trips.svg' %}"
+                      alt="Account icon"
+                      class="header-user-profile-container__dropdown-menu-link-item-icon"
+                    />
+                    <span
+                      class="header-user-profile-container__dropdown-menu-link-item-text"
+                      >My trips</span
+                    >
+                  </a>
+                </div>
+                <div
+                  class="header-uer-profile-container__dropdown-menu-item-container"
+                >
+                  <a
+                    href="/rewards/"
+                    class="header-user-profile-container__dropdown-menu-item-link"
+                  >
+                    <img
+                      src="{% static 'images/partials/icons/wallet.svg' %}"
+                      alt="Account icon"
+                      class="header-user-profile-container__dropdown-menu-link-item-icon"
+                    />
+                    <span
+                      class="header-user-profile-container__dropdown-menu-link-item-text"
+                      >Reward and wallet</span
+                    >
+                  </a>
+                </div>
+                <div
+                  class="header-uer-profile-container__dropdown-menu-item-container"
+                >
+                  <a
+                    href="{% url 'logout' %}"
+                    class="header-user-profile-container__dropdown-menu-item-link"
+                  >
+                    <img
+                      src="{% static 'images/partials/icons/signout.svg' %}"
+                      alt="Account icon"
+                      class="header-user-profile-container__dropdown-menu-link-item-icon"
+                    />
+                    <span
+                      class="header-user-profile-container__dropdown-menu-link-item-text"
+                      >Sign out</span
+                    >
+                  </a>
+                </div>
+              </div>
             </div>
-            <div class="content_right">
-                <h3 class="search-results-title">Melbourne : 2,582 search results found</h3>
-                <div class="content_right-filter">
-                    <div class="allocation-type-filter">
-                        <button type="submit" class="filter-button filter-button--left">Our top picks</button>
-                        <button type="submit" class="filter-button">Hotel and apartments</button>
-                        <button type="submit" class="filter-button">Residence</button>
-                        <button type="submit" class="filter-button">Resort</button>
-                        <button type="submit" class="filter-button filter-button--right">Shared Space</button>
-                    </div>
-                    <div class="sort-dropdown">
-                        <span>Sort by:</span>
-                        <select>
-                          <option value="recommended">Recommended</option>
-                          <option value="rating-high">Property rating (high to low)</option>
-                          <option value="rating-low">Property rating (low to high)</option>
-                          <option value="top-reviewed">Top reviewed</option>
-                        </select>
-                      </div>
+          </div>
+          {% else %}
 
-                </div>
-                <ul class="search-results">
-                    <li class="search-results-hotel">
-                        <img src="{% static 'images/hotels/Adriatic View Hotel/cover/hotel-3243724_960_720_o9fQvDM.jpg' %}" alt="" class="hotel-image">
-                        <div class="hotel-info">
-                            <div class="hotel-info-title">
-                            <h4 class="hotel-info-title-name">Lakeside Motel Warefront</h4>
-                            <div class="hotel-info-title-promo">Book now and receive 15% off</div>
-                        </div>
-                        <div class="hotel-info-rating">
-                        <div class="hotel-stars-info-rating">
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
-                    </div>
-                    <p class="amount-of-reviews-text">4.5 (1200 Reviews)</p>
-                        </div>
-                        <div class="search-results-hotel-data">
-                        <div class="search-results-hotel-data-left">
-                        <p class="hotel-offer-title">Live a little and celbrate with champagne</p>
-                        <p class="hotel-offer-text">Reats include a glass of French champagne, parking and a late checkout. Gym included. Flexible cancellation applies</p>
-                        <button type="submit" class="see-aviability">See availability</button>
-                    </div>
-                    <div class="search-results-hotel-data-right">
-                        <div class="hotel-discount">5% off</div>
-                        <p class="rooms-text">1 room 2 days</p>
-                        <div class="price-box">
-                            <p class="discount-price">$150</p>
-                            <p class="full-price">$130</p>
-                        </div>
-                        <p class="taxes-text">Includes taxes and fees</p>
-                    </div>
-                </div>
-                    </li>
-                </ul>
-                <div class="more-results-btn-box"><button type="button" class="more-results-btn">Load more results</button></div>
-                
-            </div>
+          <div class="header-button-container">
+            <a href="/register" class="register-link"
+              ><button class="register-button">Register</button></a
+            >
+            <a href="/signin" class="signin-link"
+              ><button class="signin-button">Sign In</button></a
+            >
+          </div>
+          {% endif %} {% include 'partials/_search_form.html' %}
         </div>
-</div>
-</section>
-<section class="restrictions">
-    <div class="container">
-      {% include 'partials/_warning.html' %}
-    </div>
-  </section>
-</main>
+      </div>
+    </header>
+    {% block content %}
+    <main class="main">
+      <section class="search-results">
+        <div class="container">
+          <div class="page-content">
+            <div class="page-content__left-side">
+              <div class="page-content__filters-container">
+                <div
+                  class="page-content__filters-search-container"
+                  id="page-content__filters-search-geo"
+                >
+                  <h4 class="page-content__filters-search-title">
+                    <b>Search by property name</b>
+                  </h4>
+                  <img
+                    src="{% static 'images/core/icons/search.svg' %}"
+                    alt="Guests icon"
+                    class="page-content__filters-search-icon"
+                  />
+                  <input
+                    type="text"
+                    class="page-content__filters-search-input"
+                    placeholder="e.g. Multnomah County"
+                    name="q"
+                  />
+                  <ul class="autocomplete-result-list"></ul>
+                </div>
+              </div>
+              <h4 class="page-content__filter-by-title">Filter by</h4>
+              <div class="page-content__budget-per-day-filter-container">
+                <div class="page-content__budget-per-day-filter-title">
+                  <b>Your budget per day</b>
+                </div>
+                <div
+                  class="page-content__budget-per-day-filter-choice-container"
+                >
+                  <div class="page-content__budget-per-day-filter-price-range">
+                    {% for price in price_ranges %}
+                    <label>
+                      <input
+                        type="checkbox"
+                        name="price-range"
+                        value="{{ price.value }}"
+                      />
+                      {{ price.label }}
+                      <span>{{ price.count }}</span>
+                    </label>
+                    {% endfor %}
+                  </div>
+                  <!-- <div
+                    class="page-content__budget-per-day-filter-set-budget-switch-container"
+                  >
+                    <label for="set-budget">Set your own budget</label>
+                    <label
+                      class="page-content__budget-per-day-filter-set-budget-switch"
+                    >
+                      <input type="checkbox" />
+                      <span
+                        class="page-content__budget-per-day-filter-set-budget-switch-slider"
+                      ></span>
+                    </label>
+                  </div> -->
+                </div>
+              </div>
+              <div class="page-content__filter-by-rating-container">
+                <div class="page-content__filter-by-rating-container-title">
+                  Rating
+                </div>
+                <div class="page-content__filter-by-rating-choice-container">
+                  <span class="page-content__filter-by-rating-choice-text"
+                    >Show only ratings more than</span
+                  >
+                  <div
+                    class="page-content__filter-by-rating-choice-stars-container"
+                  >
+                    <button
+                      type="button"
+                      class="page-content__filter-by-rating-choice-stars-button page-content__filter-by-rating-choice-stars-button-left"
+                    >
+                      1
+                      <img
+                        src="{% static 'images/core/icons/star.png' %}"
+                        alt="Star icon"
+                        class="page-content__filter-by-rating-choice-stars-button-star-icon"
+                      />
+                    </button>
+                    <button
+                      type="button"
+                      class="page-content__filter-by-rating-choice-stars-button"
+                    >
+                      2<img
+                        src="{% static 'images/core/icons/star.png' %}"
+                        alt="Star icon"
+                        class="page-content__filter-by-rating-choice-stars-button-star-icon"
+                      />
+                    </button>
+                    <button
+                      type="button"
+                      class="page-content__filter-by-rating-choice-stars-button"
+                    >
+                      3<img
+                        src="{% static 'images/core/icons/star.png' %}"
+                        alt="Star icon"
+                        class="page-content__filter-by-rating-choice-stars-button-star-icon"
+                      />
+                    </button>
+                    <button
+                      type="button"
+                      class="page-content__filter-by-rating-choice-stars-button"
+                    >
+                      4<img
+                        src="{% static 'images/core/icons/star.png' %}"
+                        alt="Star icon"
+                        class="page-content__filter-by-rating-choice-stars-button-star-icon"
+                      />
+                    </button>
+                    <button
+                      type="button"
+                      class="page-content__filter-by-rating-choice-stars-button page-content__filter-by-rating-choice-stars-button-right"
+                    >
+                      5<img
+                        src="{% static 'images/core/icons/star.png' %}"
+                        alt="Star icon"
+                        class="page-content__filter-by-rating-choice-stars-button-star-icon"
+                      />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-{% endblock %}
+      <section class="restrictions">
+        <div class="container">{% include 'partials/_warning.html' %}</div>
+      </section>
+    </main>
 
-         
-        {% block footer %}
-    {% include 'partials/_footer.html' %}
-    {% endblock %}
-      </body>
-    </html>
+    {% endblock %} {% block footer %} {% include 'partials/_footer.html' %}
+    {%endblock %}
+  </body>
+</html>
 
+{% if user.is_authenticated %}
+<!-- Script to activate drop down menu when user clicks on the avatar -->
+<script>
+  // Get the avatar and dropdown menu elements by their IDs
+  const avatar = document.getElementById("dropdown-trigger");
+  const dropdownMenu = document.getElementById("dropdown-menu");
 
+  // Add a click event listener to the avatar element
+  avatar.addEventListener("click", function () {
+    // Toggle the "show" class on the dropdown menu element to show or hide it
+    dropdownMenu.classList.toggle("show");
+  });
 
+  // Add a click event listener to the document object
+  document.addEventListener("click", function (event) {
+    // Check if the click event occurred inside the avatar or dropdown menu elements
+    const isClickInside =
+      avatar.contains(event.target) || dropdownMenu.contains(event.target);
+    // If the click event occurred outside of the avatar or dropdown menu elements, hide the dropdown menu
+    if (!isClickInside) {
+      dropdownMenu.classList.remove("show");
+    }
+  });
+</script>
+{% endif %}
 
-    {% if user.is_authenticated %}
-    <!-- Script to activate drop down menu when user clicks on the avatar -->
-    <script>
-      // Get the avatar and dropdown menu elements by their IDs
-      const avatar = document.getElementById("dropdown-trigger");
-      const dropdownMenu = document.getElementById("dropdown-menu");
-    
-      // Add a click event listener to the avatar element
-      avatar.addEventListener("click", function () {
-        // Toggle the "show" class on the dropdown menu element to show or hide it
-        dropdownMenu.classList.toggle("show");
+<script src="{% static 'node_modules/@trevoreyre/autocomplete-js/dist/autocomplete.min.js' %}"></script>
+<script>
+  new Autocomplete("#page-content__filters-search-geo", {
+    // The search function takes user input and returns a Promise that resolves with an array of results
+    search: (input) => {
+      const url = "/search/?address=" + input.trim();
+      // Using fetch to send an HTTP request to the specified URL and return a Promise that resolves with the response
+      return new Promise((resolve) => {
+        fetch(url)
+          .then((response) => response.json())
+          .then((data) => {
+            resolve(data.data); // Resolving the Promise with the array of results from the response data
+          });
       });
-    
-      // Add a click event listener to the document object
-      document.addEventListener("click", function (event) {
-        // Check if the click event occurred inside the avatar or dropdown menu elements
-        const isClickInside =
-          avatar.contains(event.target) || dropdownMenu.contains(event.target);
-        // If the click event occurred outside of the avatar or dropdown menu elements, hide the dropdown menu
-        if (!isClickInside) {
-          dropdownMenu.classList.remove("show");
-        }
+    },
+  });
+</script>
+
+<script>
+const buttons = document.querySelectorAll('.page-content__filter-by-rating-choice-stars-button');
+
+buttons.forEach(button => {
+  button.addEventListener('click', () => {
+    if (button.classList.contains('selected')) {
+      button.classList.remove('selected');
+    } else {
+      buttons.forEach(otherButton => {
+        otherButton.classList.remove('selected');
       });
-    </script>
-    {% endif %}
-
-
-
-
-
-
-
+      button.classList.add('selected');
+    }
+  });
+});
+</script>

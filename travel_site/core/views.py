@@ -105,6 +105,13 @@ def search_hotels(request):
     # Create a Q object for searching hotels by destination
     query = Q(hotel_county__county_name__contains=destination)
 
+    price_ranges = [{'value': '$0-$50', 'label': '$0 - $50', 'count': 200},
+                    {'value': '$50-$100', 'label': '$50 - $100', 'count': 100},
+                    {'value': '$100-$150', 'label': '$100 - $150', 'count': 15},
+                    {'value': '$150-$200', 'label': '$150 - $200', 'count': 12},
+                    {'value': '$200+', 'label': '$200+', 'count': 230},]
+
+
     # Filter hotels by destination
     hotels = Hotels.objects.filter(query)
 
@@ -114,7 +121,9 @@ def search_hotels(request):
         'checkin': checkin,
         'checkout': checkout,
         'guests': guests,
+        'price_ranges': price_ranges,
     }
 
     # Render the search results page with context
     return render(request, 'core/search_results.html', context)
+

@@ -10,8 +10,8 @@
   font-style: normal;
   font-display: auto;
   src: local("SF Pro Display"),
-    url("../fonts/SFProDisplay-Regular.woff2") format("woff2"),
-    url("../fonts/SFProDisplay-Regular.woff") format("woff");
+    url("../../fonts/SFProDisplay-Regular.woff2") format("woff2"),
+    url("../../fonts/SFProDisplay-Regular.woff") format("woff");
 }
 @font-face {
   font-family: "SF Pro Display";
@@ -19,8 +19,8 @@
   font-style: normal;
   font-display: auto;
   src: local("SF Pro Display"),
-    url("../fonts/SFProDisplay-Medium.woff2") format("woff2"),
-    url("../fonts/SFProDisplay-Medium.woff") format("woff");
+    url("../../fonts/SFProDisplay-Medium.woff2") format("woff2"),
+    url("../../fonts/SFProDisplay-Medium.woff") format("woff");
 }
 
 @font-face {
@@ -29,8 +29,8 @@
   font-style: normal;
   font-display: auto;
   src: local("SF Pro Display"),
-    url("../fonts/SFProDisplay-Semibold.woff2") format("woff2"),
-    url("../fonts/SFProDisplay-Semibold.woff") format("woff");
+    url("../../fonts/SFProDisplay-Semibold.woff2") format("woff2"),
+    url("../../fonts/SFProDisplay-Semibold.woff") format("woff");
 }
 @font-face {
   font-family: "SF Pro Display";
@@ -38,8 +38,8 @@
   font-style: normal;
   font-display: auto;
   src: local("SF Pro Display"),
-    url("../fonts/SFProDisplay-Bold.woff2") format("woff2"),
-    url("../fonts/SFProDisplay-Bold.woff") format("woff");
+    url("../../fonts/SFProDisplay-Bold.woff2") format("woff2"),
+    url("../../fonts/SFProDisplay-Bold.woff") format("woff");
 }
 
 body {
@@ -66,7 +66,6 @@ input {
   padding: 12px 0 10px 40px;
   border-radius: 4px;
 }
-
 
 input[type="date"]::before {
   content: attr(placeholder);
@@ -264,40 +263,37 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   transform: translate(50%, 260%);
 }
 
-.content {
+.page-content {
   margin-top: 104px;
-  border: 1px solid rgb(91, 229, 41);
   display: flex;
 }
-.content_left {
-  border: 1px solid rgb(61, 83, 226);
+.page-content__left-side {
   flex: 0 0 24%;
 }
-.content_right {
-  border: 1px solid rgb(219, 39, 222);
+.page-content__right-side {
   flex: 0 0 76%;
-  /* padding-left: 15px; */
 }
 
-.filters {
+.page-content__filters-container {
   width: 295px;
   margin-top: 20px;
   display: flex;
   flex-direction: column;
 }
 
-.filters:first-child {
+.page-content__filters-container {
   margin-top: 0;
 }
 
-.search-box {
+.page-content__filters-search-container {
   height: 119px;
   width: 100%;
   background: #f2f2f2;
   border-radius: 6px;
+  position: relative;
 }
 
-.search-box-title {
+.page-content__filters-search-title {
   margin-block-start: 0px;
   margin-block-end: 0px;
   margin-left: 18px;
@@ -309,7 +305,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   color: #181818;
 }
 
-.hotel-search {
+.page-content__filters-search-input {
   padding: 11px 12px 12px;
   margin: 16px 18px 20px 18px;
   width: 259px;
@@ -317,9 +313,19 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   background: #ffffff;
   border: 1px solid #e0e0e0;
   border-radius: 4px;
+  padding-left: 42px;
 }
 
-.filter-by-title {
+.page-content__filters-search-icon {
+  position: absolute;
+  left: 29px;
+  top: 50%;
+  transform: translateY(42%);
+  width: 20px;
+  height: 20px;
+}
+
+.page-content__filter-by-title {
   font-weight: 600;
   font-size: 18px;
   line-height: 21px;
@@ -328,7 +334,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   margin: 20px 0px 20px 18px;
 }
 
-.budget-per-day-filter {
+.page-content__budget-per-day-filter-container {
   margin-top: 20px;
   box-sizing: border-box;
   background: #ffffff;
@@ -336,7 +342,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   border-radius: 6px;
 }
 
-.budget-per-day-filter-title {
+.page-content__budget-per-day-filter-title {
   box-sizing: border-box;
   padding: 18px;
   gap: 10px;
@@ -351,7 +357,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   color: #181818;
 }
 
-.budget-per-day-filter-choice {
+.page-content__budget-per-day-filter-choice-container {
   padding-top: 18px;
   box-sizing: border-box;
   width: 295px;
@@ -360,11 +366,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   border-radius: 6px;
 }
 
-.price-range {
+.page-content__budget-per-day-filter-price-range {
   margin-bottom: 14px;
 }
 
-.price-range label {
+.page-content__budget-per-day-filter-price-range label {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -376,26 +382,26 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   color: #333333;
 }
 
-.price-range input[type="checkbox"] {
+.page-content__budget-per-day-filter-price-range input[type="checkbox"] {
   margin-right: 8px;
   margin-left: 18px;
   width: 20px;
   height: 20px;
 }
 
-.price-range .count {
+.page-content__budget-per-day-filter-price-range span {
   margin-left: auto;
   padding-right: 20px;
 }
 
-.set-budget-switch {
+.page-content__budget-per-day-filter-set-budget-switch-container {
   margin: 20px 0px 24px 18px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.set-budget-switch label {
+.page-content__budget-per-day-filter-set-budget-switch-container label {
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;
@@ -403,10 +409,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   color: #4f4f4f;
 }
 
-.switch {
+.page-content__budget-per-day-filter-set-budget-switch {
   margin-right: 20px;
-  /* height: 20px;
-  width: 32px; */
   --button-width: 3.5em;
   --button-height: 2em;
   --toggle-diameter: 1.5em;
@@ -419,7 +423,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   --color-green: #4296f4;
 }
 
-.slider {
+.page-content__budget-per-day-filter-set-budget-switch-slider {
   display: inline-block;
   width: var(--button-width);
   height: var(--button-height);
@@ -429,7 +433,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   transition: 0.3s all ease-in-out;
 }
 
-.slider::after {
+.page-content__budget-per-day-filter-set-budget-switch-slider::after {
   content: "";
   display: inline-block;
   width: var(--toggle-diameter);
@@ -444,11 +448,15 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   transition: 0.3s all ease-in-out;
 }
 
-.switch input[type="checkbox"]:checked + .slider {
+.page-content__budget-per-day-filter-set-budget-switch
+  input[type="checkbox"]:checked
+  + .page-content__budget-per-day-filter-set-budget-switch-slider {
   background-color: var(--color-green);
 }
 
-.switch input[type="checkbox"]:checked + .slider::after {
+.page-content__budget-per-day-filter-set-budget-switch
+  input[type="checkbox"]:checked
+  + .page-content__budget-per-day-filter-set-budget-switch-slider::after {
   transform: translateX(
     calc(
       var(--button-width) - var(--toggle-diameter) - var(--button-toggle-offset)
@@ -458,15 +466,19 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     calc(var(--toggle-shadow-offset) * 4) rgba(0, 0, 0, 0.1);
 }
 
-.switch input[type="checkbox"] {
+.page-content__budget-per-day-filter-set-budget-switch input[type="checkbox"] {
   display: none;
 }
 
-.switch input[type="checkbox"]:active + .slider::after {
+.page-content__budget-per-day-filter-set-budget-switch
+  input[type="checkbox"]:active
+  + .page-content__budget-per-day-filter-set-budget-switch-slider::after {
   width: var(--toggle-wider);
 }
 
-.switch input[type="checkbox"]:checked:active + .slider::after {
+.page-content__budget-per-day-filter-set-budget-switch
+  input[type="checkbox"]:checked:active
+  + .page-content__budget-per-day-filter-set-budget-switch-slider::after {
   transform: translateX(
     calc(
       var(--button-width) - var(--toggle-wider) - var(--button-toggle-offset)
@@ -474,7 +486,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   );
 }
 
-.filter-by-rating {
+.page-content__filter-by-rating-container {
   box-sizing: border-box;
   background: #ffffff;
   border: 1px solid #e0e0e0;
@@ -482,7 +494,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   margin-top: 20px;
 }
 
-.filter-by-rating-title {
+.page-content__filter-by-rating-container-title {
   box-sizing: border-box;
   padding: 18px;
   background: #f2f2f2;
@@ -495,11 +507,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   color: #181818;
 }
 
-.filter-by-rating-choice {
+.page-content__filter-by-rating-choice-container {
   margin-top: 20px;
 }
 
-.filter-by-rating-choice-text {
+.page-content__filter-by-rating-choice-text {
   margin-top: 20px;
   padding: 18px;
   font-weight: 400;
@@ -509,7 +521,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   color: #4f4f4f;
 }
 
-.star-rating-filter {
+.page-content__filter-by-rating-choice-stars-container {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -518,7 +530,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   margin-top: 8px;
 }
 
-.star-rating-filter-button {
+.page-content__filter-by-rating-choice-stars-button {
   width: 50px;
   height: 46px;
   background: #ffffff;
@@ -529,13 +541,27 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   line-height: 19px;
   letter-spacing: 0.02em;
   color: #333333;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  background-color: white;
 }
 
-.star-rating-filter-button--left {
+.page-content__filter-by-rating-choice-stars-button.selected {
+  background: #F2F2F2;
+}
+
+
+.page-content__filter-by-rating-choice-stars-button-star-icon {
+  width: 18px;
+  height: 18px;
+}
+
+.page-content__filter-by-rating-choice-stars-button-left {
   border-radius: 5px 0px 0px 5px;
 }
 
-.star-rating-filter-button--right {
+.page-content__filter-by-rating-choice-stars-button-right {
   border-radius: 0px 5px 5px 0px;
 }
 
