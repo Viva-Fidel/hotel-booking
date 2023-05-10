@@ -174,20 +174,20 @@
             <div class="page-content__left-side">
               <div class="page-content__filters-container">
                 <div
-                  class="page-content__filters-search-container"
-                  id="page-content__filters-search-geo"
+                  class="page-content__filter-search-container"
+                  id="page-content__filter-search-geo"
                 >
-                  <h4 class="page-content__filters-search-title">
+                  <h4 class="page-content__filter-search-title">
                     <b>Search by property name</b>
                   </h4>
                   <img
                     src="{% static 'images/core/icons/search.svg' %}"
                     alt="Guests icon"
-                    class="page-content__filters-search-icon"
+                    class="page-content__filter-search-icon"
                   />
                   <input
                     type="text"
-                    class="page-content__filters-search-input"
+                    class="page-content__filter-search-input"
                     placeholder="e.g. Multnomah County"
                     name="q"
                   />
@@ -195,26 +195,22 @@
                 </div>
               </div>
               <h4 class="page-content__filter-by-title">Filter by</h4>
-              <div class="page-content__budget-per-day-filter-container">
-                <div class="page-content__budget-per-day-filter-title">
+              <div class="page-content__filter-container">
+                <div class="page-content__filter-container-title">
                   <b>Your budget per day</b>
                 </div>
-                <div
-                  class="page-content__budget-per-day-filter-choice-container"
-                >
-                  <div class="page-content__budget-per-day-filter-price-range">
-                    {% for price in price_ranges %}
-                    <label>
-                      <input
-                        type="checkbox"
-                        name="price-range"
-                        value="{{ price.value }}"
-                      />
-                      {{ price.label }}
-                      <span>{{ price.count }}</span>
-                    </label>
-                    {% endfor %}
-                  </div>
+                <ul class="page-content__filter-choice-list">
+                  {% for price in price_ranges %}
+                  <li>
+                    <input
+                      type="checkbox"
+                      name="price-range"
+                      value="{{ price.value }}"
+                    />
+                    {{ price.label }}
+                    <span>{{ price.count }}</span>
+                  </li>
+                  {% endfor %}
                   <!-- <div
                     class="page-content__budget-per-day-filter-set-budget-switch-container"
                   >
@@ -228,14 +224,12 @@
                       ></span>
                     </label>
                   </div> -->
-                </div>
+                </ul>
               </div>
-              <div class="page-content__filter-by-rating-container">
-                <div class="page-content__filter-by-rating-container-title">
-                  Rating
-                </div>
-                <div class="page-content__filter-by-rating-choice-container">
-                  <span class="page-content__filter-by-rating-choice-text"
+              <div class="page-content__filter-container">
+                <div class="page-content__filter-container-title">Rating</div>
+                <div class="page-content__filter-choice-list">
+                  <span class="page-content__filter-container-text"
                     >Show only ratings more than</span
                   >
                   <div
@@ -295,6 +289,42 @@
                   </div>
                 </div>
               </div>
+              <div class="page-content__filter-container">
+                <div class="page-content__filter-container-title">
+                  Popular Filters
+                </div>
+                <div class="page-content__filter-choice-list">
+                  {% for popular_filter in popular_filters %}
+                  <li>
+                    <input
+                      type="checkbox"
+                      name="price-range"
+                      value="{{ popular_filter.value }}"
+                    />
+                    {{ popular_filter.label }}
+                    <span>{{ popular_filter.count }}</span>
+                  </li>
+                  {% endfor %}
+                </div>
+              </div>
+              <div class="page-content__filter-container">
+                <div class="page-content__filter-container-title">
+                  Activities
+                </div>
+                <ul class="page-content__filter-choice-list">
+                  {% for activity in activities %}
+                  <li>
+                    <input
+                      type="checkbox"
+                      name="price-range"
+                      value="{{ activity.value }}"
+                    />
+                    {{ activity.label }}
+                    <span>{{ activity.count }}</span>
+                  </li>
+                  {% endfor %}
+                </ul>
+              </div>
             </div>
           </div>
         </div>
@@ -338,7 +368,7 @@
 
 <script src="{% static 'node_modules/@trevoreyre/autocomplete-js/dist/autocomplete.min.js' %}"></script>
 <script>
-  new Autocomplete("#page-content__filters-search-geo", {
+  new Autocomplete("#page-content__filter-search-geo", {
     // The search function takes user input and returns a Promise that resolves with an array of results
     search: (input) => {
       const url = "/search/?address=" + input.trim();
@@ -355,18 +385,20 @@
 </script>
 
 <script>
-const buttons = document.querySelectorAll('.page-content__filter-by-rating-choice-stars-button');
+  const buttons = document.querySelectorAll(
+    ".page-content__filter-by-rating-choice-stars-button"
+  );
 
-buttons.forEach(button => {
-  button.addEventListener('click', () => {
-    if (button.classList.contains('selected')) {
-      button.classList.remove('selected');
-    } else {
-      buttons.forEach(otherButton => {
-        otherButton.classList.remove('selected');
-      });
-      button.classList.add('selected');
-    }
+  buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+      if (button.classList.contains("selected")) {
+        button.classList.remove("selected");
+      } else {
+        buttons.forEach((otherButton) => {
+          otherButton.classList.remove("selected");
+        });
+        button.classList.add("selected");
+      }
+    });
   });
-});
 </script>

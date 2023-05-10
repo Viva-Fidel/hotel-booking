@@ -279,13 +279,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   margin-top: 20px;
   display: flex;
   flex-direction: column;
-}
-
-.page-content__filters-container {
   margin-top: 0;
 }
 
-.page-content__filters-search-container {
+.page-content__filter-search-container {
   height: 119px;
   width: 100%;
   background: #f2f2f2;
@@ -293,7 +290,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   position: relative;
 }
 
-.page-content__filters-search-title {
+.page-content__filter-search-title {
   margin-block-start: 0px;
   margin-block-end: 0px;
   margin-left: 18px;
@@ -305,7 +302,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   color: #181818;
 }
 
-.page-content__filters-search-input {
+.page-content__filter-search-input {
   padding: 11px 12px 12px;
   margin: 16px 18px 20px 18px;
   width: 259px;
@@ -316,7 +313,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   padding-left: 42px;
 }
 
-.page-content__filters-search-icon {
+.page-content__filter-search-icon {
   position: absolute;
   left: 29px;
   top: 50%;
@@ -334,7 +331,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   margin: 20px 0px 20px 18px;
 }
 
-.page-content__budget-per-day-filter-container {
+.page-content__filter-container {
   margin-top: 20px;
   box-sizing: border-box;
   background: #ffffff;
@@ -342,7 +339,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   border-radius: 6px;
 }
 
-.page-content__budget-per-day-filter-title {
+.page-content__filter-container-title {
   box-sizing: border-box;
   padding: 18px;
   gap: 10px;
@@ -357,20 +354,13 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   color: #181818;
 }
 
-.page-content__budget-per-day-filter-choice-container {
-  padding-top: 18px;
-  box-sizing: border-box;
-  width: 295px;
-  background: #ffffff;
-  border: 1px solid #e0e0e0;
-  border-radius: 6px;
-}
-
-.page-content__budget-per-day-filter-price-range {
+.page-content__filter-choice-list {
+  margin-top: 20px;
   margin-bottom: 14px;
+  padding-inline-start: 0px;
 }
 
-.page-content__budget-per-day-filter-price-range label {
+.page-content__filter-choice-list li {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -382,14 +372,14 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   color: #333333;
 }
 
-.page-content__budget-per-day-filter-price-range input[type="checkbox"] {
+.page-content__filter-choice-list input[type="checkbox"] {
   margin-right: 8px;
   margin-left: 18px;
   width: 20px;
   height: 20px;
 }
 
-.page-content__budget-per-day-filter-price-range span {
+.page-content__filter-choice-list span {
   margin-left: auto;
   padding-right: 20px;
 }
@@ -486,32 +476,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   );
 }
 
-.page-content__filter-by-rating-container {
-  box-sizing: border-box;
-  background: #ffffff;
-  border: 1px solid #e0e0e0;
-  border-radius: 6px;
-  margin-top: 20px;
-}
-
-.page-content__filter-by-rating-container-title {
-  box-sizing: border-box;
-  padding: 18px;
-  background: #f2f2f2;
-  border: 1px solid #e0e0e0;
-  border-radius: 6px 6px 0px 0px;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 19px;
-  letter-spacing: 0.01em;
-  color: #181818;
-}
-
-.page-content__filter-by-rating-choice-container {
-  margin-top: 20px;
-}
-
-.page-content__filter-by-rating-choice-text {
+.page-content__filter-container-text {
   margin-top: 20px;
   padding: 18px;
   font-weight: 400;
@@ -548,9 +513,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .page-content__filter-by-rating-choice-stars-button.selected {
-  background: #F2F2F2;
+  background: #f2f2f2;
 }
-
 
 .page-content__filter-by-rating-choice-stars-button-star-icon {
   width: 18px;
