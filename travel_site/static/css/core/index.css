@@ -37,6 +37,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .booking-search__cover-photo-container {
   position: relative;
   text-align: center;
+  margin-bottom: 82px;
 }
 
 .booking-search__cover-photo {
