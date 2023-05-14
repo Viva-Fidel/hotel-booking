@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.github',
     'widget_tweaks',
     'formtools',
+    'nested_admin',
+    'smart_selects',
     'core',
     'hotels.apps.HotelsConfig',
     'blogs.apps.BlogsConfig',
@@ -198,3 +200,5 @@ EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
 EMAIL_HOST_USER = 'alexi.artamonov@yandex.ru'
 EMAIL_HOST_PASSWORD = "qutasxeantyrszux"
+
+USE_DJANGO_JQUERY = True

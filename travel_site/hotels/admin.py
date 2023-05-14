@@ -1,6 +1,8 @@
 from django.contrib import admin
-from .models import Hotels, HotelsImage, HotelFacilities, HotelActivities, Room, RoomType, BedType
+from nested_admin import NestedTabularInline, NestedStackedInline, NestedModelAdmin
+from .models import Hotels, Room, RoomTypeBed, HotelsImage, HotelsSearchInfo, HotelFacilities, HotelActivities, RoomType
 from django import forms
+from smart_selects.form_fields import ChainedModelChoiceField
 from core.models import Counties
 
 # Register your models here.
@@ -14,36 +16,61 @@ class HotelForm(forms.ModelForm):
         fields = '__all__'
 
 
-class HotelImageInline(admin.TabularInline):
+class HotelsSearchInfoInlice(NestedTabularInline):
+    model = HotelsSearchInfo
+    extra = 1
+
+
+class HotelImageInline(NestedTabularInline):
     model = HotelsImage
     extra = 3
+    max_num = 3
 
 
-class HotelFacilitiesInline(admin.StackedInline):
+class HotelFacilitiesInline(NestedStackedInline):
     model = HotelFacilities
     extra = 1
+    max_num = 1
 
 
-class HotelActivitiesInline(admin.StackedInline):
+class HotelActivitiesInline(NestedStackedInline):
     model = HotelActivities
     extra = 1
+    max_num = 1
 
 
-class RoomTypeInline(admin.StackedInline):
+class RoomTypeBedInline(NestedStackedInline):
+    model = RoomTypeBed
+    extra = 1
+    max_num = 1
+
+
+class RoomInline(NestedStackedInline):
     model = RoomType
     extra = 1
+    inlines = [RoomTypeBedInline]
 
 
 @admin.register(Hotels)
-class HotelsAdmin(admin.ModelAdmin):
+class HotelsAdmin(NestedModelAdmin):
     form = HotelForm
-    list_display = ('hotel_name', 'hotel_county', 'hotel_city', 'hotel_street',
+    list_display = ('hotel_name', 'hotel_type', 'hotel_county', 'hotel_city', 'hotel_street',
                     'hotel_cover_photo', 'time_create', 'is_published')
     list_filter = ('is_published', 'hotel_county', 'hotel_city')
     search_fields = ('hotel_name', 'hotel_county__county_name', 'hotel_city')
-    inlines = [HotelImageInline, HotelFacilitiesInline, HotelActivitiesInline,
-               RoomTypeInline, ]
+    inlines = [HotelImageInline, HotelFacilitiesInline,
+               HotelActivitiesInline, RoomInline]
+
     exclude = ('hotel_popularity', 'hotel_rating',)
 
     def __str__(self):
         return self.hotel_name
+
+
+@admin.register(Room)
+class RoomAdmin(admin.ModelAdmin):
+    fields = ['hotel', 'room_type', 'room_number', 'notes', 'available']
+    list_display = ['hotel', 'room_type', 'room_number']
+    search_fields = ['hotel__name', 'room_type__name', 'room_number']
+    list_filter = ['hotel', 'room_type']
+    smart_selects = ('hotel',)

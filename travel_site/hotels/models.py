@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from core.models import Counties
+from smart_selects.db_fields import ChainedForeignKey
 
 import os
 
@@ -16,18 +17,32 @@ def hotel_general_photos_path(instance, filename):
 
 
 class Hotels(models.Model):
-    hotel_name = models.CharField(max_length=255, verbose_name="Hotel name")
+
+    ALLOCATION_TYPE = [
+        ('hotel', 'Hotel'),
+        ('apartment', 'Apartment'),
+        ('residence', 'Residence'),
+        ('resort', 'Resort'),
+        ('shared_space', 'Shared Space'),
+    ]
+
+    hotel_name = models.CharField(
+        max_length=255
+        , verbose_name="Hotel name", help_text='Hotel name')
+    hotel_type = models.CharField(verbose_name="Allocation type",
+                                  choices=ALLOCATION_TYPE, max_length=50, help_text='Allocation type', default=None)
     hotel_county = models.ForeignKey(
-        Counties, on_delete=models.CASCADE, verbose_name="Hotel county", default=None)
+        Counties, on_delete=models.CASCADE, verbose_name="Hotel county", help_text='Hotel county')
     hotel_city = models.CharField(
-        max_length=255, verbose_name="Hotel city")
+        max_length=255, verbose_name="Hotel city", help_text='Hotel city')
     hotel_street = models.CharField(
-        max_length=255, verbose_name="Hotel street")
+        max_length=255, verbose_name="Hotel street", help_text='Hotel street')
     hotel_zip_code = models.CharField(
-        max_length=10, verbose_name="Hotel Zip code")
-    hotel_description = models.TextField(verbose_name="Hotel overview")
+        max_length=10, verbose_name="Hotel Zip code", help_text='Hotel Zip code')
+    hotel_description = models.TextField(
+        verbose_name="Hotel overview", help_text='Hotel description')
     hotel_cover_photo = models.ImageField(
-        upload_to=cover_hotel_photo_path, verbose_name="Hotel cover photo")
+        upload_to=cover_hotel_photo_path, verbose_name="Hotel cover photo", help_text='Hotel main photo')
     hotel_popularity = models.PositiveIntegerField(default=0)
     hotel_rating = models.DecimalField(
         decimal_places=2, max_digits=5, default=0.00)
@@ -35,7 +50,7 @@ class Hotels(models.Model):
         auto_now_add=True, verbose_name="Date of creation")
     time_update = models.DateTimeField(auto_now=True, verbose_name="Updated")
     is_published = models.BooleanField(
-        default=True, verbose_name="Is published")
+        default=True, verbose_name="Is published", help_text='Is the hotel currently available?')
 
     def __str__(self):
         return self.hotel_name
@@ -46,14 +61,26 @@ class Hotels(models.Model):
         ordering = ["hotel_name", "time_create"]
 
 
+class HotelsSearchInfo(models.Model):
+    hotel = models.ForeignKey(
+        Hotels, related_name='hotel_search_info', on_delete=models.CASCADE)
+    hotel_search_info_title = models.CharField(
+        max_length=50, verbose_name="Hotel serach page title", help_text='Hotel description title for search page')
+    hotel_search_info_text = models.CharField(
+        max_length=120, verbose_name="Hotel serach page text", help_text='Hotel description text for search page')
+
+    class Meta:
+        verbose_name = 'Information about the hotel for the search page'
+
+
 class HotelsImage(models.Model):
     hotel = models.ForeignKey(
         Hotels, related_name='general_images', on_delete=models.CASCADE)
     image = models.ImageField(
-        upload_to=hotel_general_photos_path, verbose_name="Hotel general photo")
+        upload_to=hotel_general_photos_path, verbose_name="Hotel general photos", help_text='General photos of the hotel')
 
     class Meta:
-        verbose_name_plural = 'Hotels general photos'
+        verbose_name = 'Hotel general photo'
 
 
 class HotelFacilities(models.Model):
@@ -138,22 +165,7 @@ class HotelActivities(models.Model):
     hotel_has_surfing = models.BooleanField(
         default=False, verbose_name="Surfing")
 
-
-class BedType(models.Model):
-    BED_TYPE_CHOICES = [
-        ('queen', 'Queen bed'),
-        ('sofa', 'Sofa bed'),
-        ('king', 'King bed'),
-        ('twin', 'Twin bed'),
-        ('full', 'Full bed'),
-    ]
-    beds = models.PositiveIntegerField(help_text='Number of beds in the room')
-    bed_types = models.CharField(choices=BED_TYPE_CHOICES, max_length=50,
-                                 help_text='Types of beds in the room (comma-separated)')
-
-    def __str__(self):
-        return f"{self.bed_types} ({self.beds})"
-
+    
 
 class RoomType(models.Model):
     hotels = models.ForeignKey(
@@ -166,18 +178,43 @@ class RoomType(models.Model):
     photo_1 = models.ImageField(upload_to='room_types/', null=True, blank=True)
     photo_2 = models.ImageField(upload_to='room_types/', null=True, blank=True)
     photo_3 = models.ImageField(upload_to='room_types/', null=True, blank=True)
-    bed_types = models.ManyToManyField(
-        BedType, help_text='Types and quantities of beds in the room')
+    price_discount = models.IntegerField(
+        help_text='Discount percentage (optional) in %',
+        blank=True,
+        validators=[MinValueValidator(0), MaxValueValidator(100)], default=None)
+    special_discount = models.CharField(
+        max_length=50, help_text='Special discount (optional) in text', blank=True , default=None)
 
     def __str__(self):
         return self.name
 
 
+class RoomTypeBed(models.Model):
+    room_type = models.ForeignKey(RoomType, on_delete=models.CASCADE)
+    queen_bed_quantity = models.PositiveIntegerField(default=0)
+    sofa_bed_quantity = models.PositiveIntegerField(default=0)
+    king_bed_quantity = models.PositiveIntegerField(default=0)
+    twin_bed_quantity = models.PositiveIntegerField(default=0)
+    full_bed_quantity = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return f"{self.room_type.name}"
+
 class Room(models.Model):
     room_number = models.CharField(
         max_length=50, help_text='Room number', default=None)
     notes = models.TextField(help_text='Notes for the room', default=None)
-    room_type = models.ForeignKey(RoomType, on_delete=models.CASCADE)
+    hotel = models.ForeignKey(Hotels, on_delete=models.CASCADE, default=None)
+    room_type = ChainedForeignKey(
+        RoomType,
+        chained_field='hotel',
+        chained_model_field='hotels',
+        show_all=False,
+        auto_choose=True,
+        sort=True,
+        help_text='Room type',
+        default=None
+    )
     available = models.BooleanField(
         default=True, help_text='Is the room currently available?')
 
