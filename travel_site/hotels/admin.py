@@ -16,10 +16,10 @@ class HotelForm(forms.ModelForm):
         fields = '__all__'
 
 
-class HotelsSearchInfoInlice(NestedTabularInline):
+class HotelsSearchInfoInlice(NestedStackedInline):
     model = HotelsSearchInfo
     extra = 1
-
+    max_num = 1
 
 class HotelImageInline(NestedTabularInline):
     model = HotelsImage
@@ -58,7 +58,7 @@ class HotelsAdmin(NestedModelAdmin):
                     'hotel_cover_photo', 'time_create', 'is_published')
     list_filter = ('is_published', 'hotel_county', 'hotel_city')
     search_fields = ('hotel_name', 'hotel_county__county_name', 'hotel_city')
-    inlines = [HotelImageInline, HotelFacilitiesInline,
+    inlines = [HotelsSearchInfoInlice, HotelImageInline, HotelFacilitiesInline,
                HotelActivitiesInline, RoomInline]
 
     exclude = ('hotel_popularity', 'hotel_rating',)

@@ -705,7 +705,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   margin-block-end: 0px;
 }
 
-.page-content__search-results-item-info-title-promo {
+.page-content__search-results-item-info-title-promo__active {
   width: 190px;
   height: 26px;
   background: #eb5757;
@@ -718,6 +718,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.page-content__search-results-item-info-title-promo__not-active {
+  width: 190px;
+  height: 26px;
+  
 }
 
 .page-content__search-results-item-info-rating-container {
@@ -812,13 +818,13 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .page-content__search-results-item-info-data-container-right {
-  margin-top: 31px;
+  margin-top: 18px;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
 }
 
-.page-content__search-results-item-info-data-discount {
+.page-content__search-results-item-info-data-discount__active {
   width: 54px;
   height: 26px;
   background: #219653;
@@ -832,6 +838,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.page-content__search-results-item-info-data-discount__not-active {
+  width: 54px;
+  height: 26px;
 }
 
 .page-content__search-results-item-info-data-rooms-text {
@@ -852,11 +863,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  width: 88px;
   height: 24px;
 }
 
-.page-content__search-results-item-info-data-price-discount {
+.page-content__search-results-item-info-data-price-discount__active {
   margin-block-start: 0px;
   margin-block-end: 0px;
   font-weight: 500;
@@ -865,6 +875,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   letter-spacing: 0.01em;
   text-decoration-line: line-through;
   color: #eb5757;
+}
+
+.page-content__search-results-item-info-data-price-discount__not-active{
+  height: 17px;
 }
 
 .page-content__search-results-item-info-data-price-full {
@@ -879,6 +893,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   text-align: right;
   letter-spacing: 0.01em;
   color: #333333;
+  margin-left: 8px;
 }
 
 .page-content__search-results-item-info-data-taxes-text {

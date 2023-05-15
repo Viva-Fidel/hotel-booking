@@ -328,7 +328,7 @@
             </div>
             <div class="page-content__right-side">
               <h3 class="page-content__search-results-title">
-                Melbourne : 2,582 search results found
+                {{ destination }}: {{ num_hotels_found }} search results found
               </h3>
               <div class="page-content__allocation-type-filter-container">
                 <button
@@ -392,10 +392,11 @@
                 </div>
               </div>
               <ul class="page-content__search-results-list">
+                {% for hotel_result in hotel_results %}
                 <li class="page-content__search-results-item">
                   <img
-                    src="{% static 'images/hotels/Adriatic View Hotel/cover/hotel-3243724_960_720_o9fQvDM.jpg' %}"
-                    alt=""
+                    src="/media/{{ hotel_result.hotel_cover_photo }}"
+                    alt="{{ hotel_result.hotel_name }}"
                     class="page-content__search-results-item-image"
                   />
                   <div class="page-content__search-results-item-info-container">
@@ -403,13 +404,21 @@
                       class="page-content__search-results-item-info-title-container"
                     >
                       <h4 class="page-content__search-results-item-info-title">
-                        Lakeside Motel Warefront
+                        {{ hotel_result.hotel_name }}
                       </h4>
+                      
+                        {% if hotel_result.total_price_with_discount != 0 %}
                       <div
-                        class="page-content__search-results-item-info-title-promo"
+                        class="page-content__search-results-item-info-title-promo__active"
                       >
-                        Book now and receive 15% off
+                      {{ hotel_result.special_discount }}
                       </div>
+                      {% else %}
+                      <div
+                      class="page-content__search-results-item-info-title-promo__not-active"
+                    >
+                    </div>
+                      {% endif %}
                     </div>
                     <div
                       class="page-content__search-results-item-info-rating-container"
@@ -458,14 +467,12 @@
                         <p
                           class="page-content__search-results-item-info-data-offer-title"
                         >
-                          Live a little and celbrate with champagne
+                        {{ hotel_result.hotel_search_info_title }}
                         </p>
                         <p
                           class="page-content__search-results-item-info-data-offer-text"
                         >
-                          Reats include a glass of French champagne, parking and
-                          a late checkout. Gym included. Flexible cancellation
-                          applies
+                        {{ hotel_result.hotel_search_info_text }}
                         </p>
                         <button
                           type="submit"
@@ -477,30 +484,42 @@
                       <div
                         class="page-content__search-results-item-info-data-container-right"
                       >
+                      {% if hotel_result.total_price_with_discount != 0 %}
                         <div
-                          class="page-content__search-results-item-info-data-discount"
+                          class="page-content__search-results-item-info-data-discount__active"
                         >
-                          5% off
+                        {{ hotel_result.price_discount }}% off
                         </div>
+                        {% else %}
+                        <div
+                          class="page-content__search-results-item-info-data-discount__not-active"
+                        >
+                        </div>
+                        {% endif %}
                         <p
                           class="page-content__search-results-item-info-data-rooms-text"
                         >
-                          1 room 2 days
+                          {{ guests }} {{ duration }} days
                         </p>
-                        <div
-                          class="page-content__search-results-item-info-data-price-container"
-                        >
-                          <p
-                            class="page-content__search-results-item-info-data-price-discount"
-                          >
-                            $150
-                          </p>
-                          <p
+                        <p
                             class="page-content__search-results-item-info-data-price-full"
                           >
-                            $130
+                          US${{ hotel_result.total_price }}
                           </p>
-                        </div>
+                        
+                        {% if hotel_result.total_price_with_discount != 0 %}
+                          <p
+                            class="page-content__search-results-item-info-data-price-discount__active"
+                          >
+                          US${{ hotel_result.total_price_with_discount }}
+                          </p>
+                          {% else %}
+                          <div class="page-content__search-results-item-info-data-price-discount__not-active"></div>
+                          {% endif %}
+                          
+                          <!-- <div
+                          class="page-content__search-results-item-info-data-price-container"
+                        > -->
                         <p
                           class="page-content__search-results-item-info-data-taxes-text"
                         >
@@ -510,6 +529,7 @@
                     </div>
                   </div>
                 </li>
+                {% endfor %}
               </ul>
               <div class="more-results__button-container">
                 <button type="button" class="more-results__button">

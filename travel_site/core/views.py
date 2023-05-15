@@ -7,6 +7,7 @@ from hotels.models import Hotels, HotelsImage
 from blogs.models import Blogs
 
 import random
+from datetime import datetime
 
 
 # Create your views here.
@@ -105,6 +106,18 @@ def search_hotels(request):
     # Create a Q object for searching hotels by destination
     query = Q(hotel_county__county_name__contains=destination)
 
+    # Filter hotels by destination
+    hotels = Hotels.objects.filter(query)
+
+    # Count number of hotels found
+    num_hotels_found = hotels.count()
+
+    # Calculate number of days of stay
+    checkout_datetime = datetime.strptime(checkin, '%d-%m-%Y')
+    checkin_datetime = datetime.strptime(checkout, '%d-%m-%Y')
+
+    duration = checkin_datetime - checkout_datetime
+
     price_ranges = [
         {'value': '$0-$50', 'label': '$0 - $50', 'count': 200},
         {'value': '$50-$100', 'label': '$50 - $100', 'count': 100},
@@ -118,7 +131,8 @@ def search_hotels(request):
         {'value': 'Spa', 'label': 'Spa', 'count': 100},
         {'value': 'Beach front', 'label': 'Beach front', 'count': 15},
         {'value': 'Hot tub/ jacuzzi', 'label': 'Hot tub/ jacuzzi', 'count': 12},
-        {'value': 'Book without credit card', 'label': 'Book without credit card', 'count': 230},
+        {'value': 'Book without credit card',
+            'label': 'Book without credit card', 'count': 230},
         {'value': 'No prepayment', 'label': 'No prepayment', 'count': 230},
     ]
 
@@ -131,18 +145,56 @@ def search_hotels(request):
         {'value': 'Night lights', 'label': 'Night lights', 'count': 230},
     ]
 
-    # Filter hotels by destination
-    hotels = Hotels.objects.filter(query)
+    hotel_results = []
+
+    for hotel in hotels:
+        cheapest_room = hotel.hotel_rooms.order_by('price_per_night').first()
+        price_per_night = cheapest_room.price_per_night if cheapest_room else 0
+        num_days = (datetime.strptime(checkout, '%d-%m-%Y') -
+                    datetime.strptime(checkin, '%d-%m-%Y')).days
+
+        price_discount = cheapest_room.price_discount if cheapest_room else 0
+        special_discount = cheapest_room.special_discount if cheapest_room else 0
+
+        total_price = price_per_night * num_days
+
+        if price_discount != 0:
+            total_price_with_discount = total_price - total_price/100*price_discount
+        else:
+            total_price_with_discount = 0
+
+        hotel_search_info = hotel.hotel_search_info.first()
+
+        # Create a dictionary for each hotel's result
+        hotel_result = {
+            'hotel_search_info_title': hotel_search_info.hotel_search_info_title,
+            'hotel_search_info_text': hotel_search_info.hotel_search_info_text,
+            'hotel_name': hotel.hotel_name,
+            'hotel_type': hotel.hotel_type,
+            'hotel_cover_photo': hotel.hotel_cover_photo,
+            'total_price': total_price,
+            'total_price_with_discount': total_price_with_discount,
+            'price_discount': price_discount,
+            'special_discount': special_discount
+        }
+
+        # Append the dictionary to the list of hotel results
+        hotel_results.append(hotel_result)
+    
+    
 
     # Create a context dictionary with query parameters
     context = {
         'destination': destination,
+        'num_hotels_found': num_hotels_found,
+        'duration': duration.days,
         'checkin': checkin,
         'checkout': checkout,
-        'guests': guests,
+        'guests': guests.split("·")[1].strip(),
         'price_ranges': price_ranges,
         'popular_filters': popular_filters,
-        'activities': activities
+        'activities': activities,
+        'hotel_results': hotel_results
     }
 
     # Render the search results page with context
