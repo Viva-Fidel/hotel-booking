@@ -12,6 +12,7 @@ urlpatterns = [
     path('search/hotels/', views.search_hotels, name='search_hotels'),
     path('blog/<slug:slug>/', blog_detail, name='blog_detail'),
 
+
 ]
 
 urlpatterns += staticfiles_urlpatterns()

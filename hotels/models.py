@@ -7,7 +7,6 @@ import os
 
 # Create your models here.
 
-
 def cover_hotel_photo_path(instance, filename):
     return os.path.join('images/hotels', instance.hotel_name, 'cover', filename)
 
@@ -202,9 +201,11 @@ class RoomTypeBed(models.Model):
     def __str__(self):
         return f"{self.room_type.name}"
 
+
+
 class Room(models.Model):
     room_number = models.CharField(
-        max_length=50, help_text='Room number', default=None)
+        max_length=10, help_text='Room number', default=None)
     notes = models.TextField(help_text='Notes for the room', default=None)
     hotel = models.ForeignKey(Hotels, on_delete=models.CASCADE, default=None)
     room_type = ChainedForeignKey(
@@ -219,6 +220,26 @@ class Room(models.Model):
     )
     available = models.BooleanField(
         default=True, help_text='Is the room currently available?')
+    max_guests = models.IntegerField(default=0, editable=False)
+
+    
+    def save(self, *args, **kwargs):
+        room_type_bed = self.room_type.roomtypebed_set.first()
+        if room_type_bed:
+            queen_bed_guests = room_type_bed.queen_bed_quantity * 2
+            sofa_bed_guests = room_type_bed.sofa_bed_quantity * 2
+            king_bed_guests = room_type_bed.king_bed_quantity * 2
+            twin_bed_guests = room_type_bed.twin_bed_quantity
+            full_bed_guests = room_type_bed.full_bed_quantity * 2
+
+            self.max_guests = (
+                queen_bed_guests + sofa_bed_guests + king_bed_guests + twin_bed_guests + full_bed_guests
+            )
+        else:
+            self.max_guests = 0
+
+        super().save(*args, **kwargs)
+
 
     class Meta:
         unique_together = ['room_type', 'room_number']

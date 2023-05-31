@@ -199,3 +199,4 @@ def search_hotels(request):
 
     # Render the search results page with context
     return render(request, 'core/search_results.html', context)
+

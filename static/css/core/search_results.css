@@ -194,7 +194,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   display: flex;
 }
 
-.header-uer-profile-container__dropdown-menu-item-container:not(:last-child) {
+.header-user-profile-container__dropdown-menu-item-container:not(:last-child) {
   padding: 10px 10px 10px 14px;
   height: 40px;
   width: 100%;
@@ -204,17 +204,17 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   cursor: pointer;
 }
 
-.header-uer-profile-container__dropdown-menu-item-container:last-child {
+.header-user-profile-container__dropdown-menu-item-container:last-child {
   padding: 10px 10px 10px 14px;
   height: 40px;
   width: 100%;
 }
 
-.header-uer-profile-container__dropdown-menu-item-container:hover {
+.header-user-profile-container__dropdown-menu-item-container:hover {
   text-decoration: underline;
 }
 
-.header-uer-profile-container__dropdown-menu-item-container a {
+.header-user-profile-container__dropdown-menu-item-container a {
   font-weight: 400;
   font-size: 15px;
   line-height: 20px;
@@ -224,7 +224,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   flex-direction: row;
 }
 
-.header-uer-profile-container__dropdown-menu-item-container img {
+.header-user-profile-container__dropdown-menu-item-container img {
   width: 20px;
   height: 20px;
   margin-right: 10px;

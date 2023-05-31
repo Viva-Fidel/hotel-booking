@@ -78,7 +78,7 @@
                 id="dropdown-menu"
               >
                 <div
-                  class="header-uer-profile-container__dropdown-menu-item-container"
+                  class="header-user-profile-container__dropdown-menu-item-container"
                 >
                   <a
                     href="/account/"
@@ -96,7 +96,7 @@
                   </a>
                 </div>
                 <div
-                  class="header-uer-profile-container__dropdown-menu-item-container"
+                  class="header-user-profile-container__dropdown-menu-item-container"
                 >
                   <a
                     href="/reservations/"
@@ -114,7 +114,7 @@
                   </a>
                 </div>
                 <div
-                  class="header-uer-profile-container__dropdown-menu-item-container"
+                  class="header-user-profile-container__dropdown-menu-item-container"
                 >
                   <a
                     href="/rewards/"
@@ -132,7 +132,7 @@
                   </a>
                 </div>
                 <div
-                  class="header-uer-profile-container__dropdown-menu-item-container"
+                  class="header-user-profile-container__dropdown-menu-item-container"
                 >
                   <a
                     href="{% url 'logout' %}"
@@ -156,10 +156,10 @@
 
           <div class="header-button-container">
             <a href="/register" class="register-link"
-              ><button class="register-button">Register</button></a
+              ><button class="header-button-container__register-button">Register</button></a
             >
             <a href="/signin" class="signin-link"
-              ><button class="signin-button">Sign In</button></a
+              ><button class="header-button-container__signin-button">Sign In</button></a
             >
           </div>
           {% endif %} {% include 'partials/_search_form.html' %}
@@ -185,11 +185,13 @@
                     alt="Guests icon"
                     class="page-content__filter-search-icon"
                   />
+                  
                   <input
                     type="text"
                     class="page-content__filter-search-input"
                     placeholder="e.g. Multnomah County"
-                    name="q"
+                    name="hotel-search-input"
+                    id="hotel-search-input"
                   />
                   <ul class="autocomplete-result-list"></ul>
                 </div>

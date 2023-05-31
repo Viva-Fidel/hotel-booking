@@ -70,7 +70,7 @@ class HotelsAdmin(NestedModelAdmin):
 @admin.register(Room)
 class RoomAdmin(admin.ModelAdmin):
     fields = ['hotel', 'room_type', 'room_number', 'notes', 'available']
-    list_display = ['hotel', 'room_type', 'room_number']
+    list_display = ['hotel', 'room_type', 'room_number', 'max_guests']
     search_fields = ['hotel__name', 'room_type__name', 'room_number']
     list_filter = ['hotel', 'room_type']
     smart_selects = ('hotel',)
