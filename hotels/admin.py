@@ -1,6 +1,6 @@
 from django.contrib import admin
 from nested_admin import NestedTabularInline, NestedStackedInline, NestedModelAdmin
-from .models import Hotels, Room, RoomTypeBed, HotelsImage, HotelsSearchInfo, HotelFacilities, HotelActivities, RoomType
+from .models import Hotels, Booking, Room, RoomTypeBed, HotelsImage, HotelsSearchInfo, HotelFacilities, HotelActivities, RoomType
 from django import forms
 from smart_selects.form_fields import ChainedModelChoiceField
 from core.models import Counties
@@ -66,6 +66,10 @@ class HotelsAdmin(NestedModelAdmin):
     def __str__(self):
         return self.hotel_name
 
+class BookingInline(admin.TabularInline):
+    model = Booking
+    extra = 1
+    fields = ['check_in_date', 'check_out_date', 'guest_count']
 
 @admin.register(Room)
 class RoomAdmin(admin.ModelAdmin):
@@ -74,3 +78,4 @@ class RoomAdmin(admin.ModelAdmin):
     search_fields = ['hotel__name', 'room_type__name', 'room_number']
     list_filter = ['hotel', 'room_type']
     smart_selects = ('hotel',)
+    inlines = [BookingInline]

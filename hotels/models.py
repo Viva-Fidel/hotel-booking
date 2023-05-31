@@ -201,8 +201,6 @@ class RoomTypeBed(models.Model):
     def __str__(self):
         return f"{self.room_type.name}"
 
-
-
 class Room(models.Model):
     room_number = models.CharField(
         max_length=10, help_text='Room number', default=None)
