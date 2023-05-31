@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "@trevoreyre/autocomplete-js": "^2.4.1",
-    "flatpickr": "^4.6.13"
-  }
-}
