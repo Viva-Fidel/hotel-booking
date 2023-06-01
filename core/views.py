@@ -131,30 +131,54 @@ def search_hotels(request):
     duration = checkin_datetime - checkout_datetime
 
     price_ranges = [
-        {'value': '$0-$50', 'label': '$0 - $50', 'count': 200},
-        {'value': '$50-$100', 'label': '$50 - $100', 'count': 100},
-        {'value': '$100-$150', 'label': '$100 - $150', 'count': 15},
-        {'value': '$150-$200', 'label': '$150 - $200', 'count': 12},
-        {'value': '$200+', 'label': '$200+', 'count': 230},
+        {'value': '$0-$50', 'label': '$0 - $50', 'count': 0},
+        {'value': '$50-$100', 'label': '$50 - $100', 'count': 0},
+        {'value': '$100-$150', 'label': '$100 - $150', 'count': 0},
+        {'value': '$150-$200', 'label': '$150 - $200', 'count': 0},
+        {'value': '$200+', 'label': '$200+', 'count': 0},
     ]
 
-    popular_filters = [
-        {'value': 'Free cancellation', 'label': 'Free cancellation', 'count': 200},
-        {'value': 'Spa', 'label': 'Spa', 'count': 100},
-        {'value': 'Beach front', 'label': 'Beach front', 'count': 15},
-        {'value': 'Hot tub/ jacuzzi', 'label': 'Hot tub/ jacuzzi', 'count': 12},
-        {'value': 'Book without credit card',
-            'label': 'Book without credit card', 'count': 230},
-        {'value': 'No prepayment', 'label': 'No prepayment', 'count': 230},
+    facilities  = [
+        {'value': 'Free wifi', 'label': 'Free wifi', 'count': 0},
+        {'value': 'Air Conditioning', 'label': 'Air Conditioning', 'count': 0},
+        {'value': 'Parking available', 'label': 'Parking available', 'count': 0},
+        {'value': 'Business Services', 'label': 'Business Services', 'count': 0},
+        {'value': 'Swimming pool', 'label': 'Swimming pool', 'count': 0},
+        {'value': 'Top rated in area', 'label': 'Top rated in area', 'count': 0},
+        {'value': 'Flat-screen TV', 'label': 'Flat-screen TV', 'count': 0},
+        {'value': '24-hour front desk', 'label': '24-hour front desk', 'count': 0},
+        {'value': 'Non-smoking rooms', 'label': 'Non-smoking rooms', 'count': 0},
+        {'value': 'Fitness center', 'label': 'Fitness center', 'count': 0},
+        {'value': 'Room service', 'label': 'Room service', 'count': 0},
+        {'value': 'Restaurant', 'label': 'Restaurant', 'count': 0},
+        {'value': 'Pet friendly', 'label': 'Pet friendly', 'count': 0},
+        {'value': 'Facilities for disabled guests', 'label': 'Facilities for disabled guests', 'count': 0},
+        {'value': 'Room service', 'label': 'Room service', 'count': 0},
+        {'value': 'Family rooms', 'label': 'Family rooms', 'count': 0},
+        {'value': 'Airport shuttle', 'label': 'Airport shuttle', 'count': 0},
+        {'value': 'Electric vehicle charging station', 'label': 'Electric vehicle charging station', 'count': 0},
+        {'value': 'Free cancellation', 'label': 'Free cancellation', 'count': 0},
+        {'value': 'Beach front', 'label': 'Beach front', 'count': 0},
+        {'value': 'Hot tub/jacuzzi', 'label': 'Hot tub/jacuzzi', 'count': 0},
+        {'value': 'Book without credit card', 'label': 'Book without credit card', 'count': 0},
+        {'value': 'No prepayment', 'label': 'No prepayment', 'count': 0},
     ]
 
     activities = [
-        {'value': 'Fishing', 'label': 'Fishing', 'count': 200},
-        {'value': 'Hiking', 'label': 'Hiking', 'count': 100},
-        {'value': 'Beach', 'label': 'Beach', 'count': 15},
-        {'value': 'Cycling', 'label': 'Cycling', 'count': 12},
-        {'value': 'Sauna', 'label': 'Sauna', 'count': 230},
-        {'value': 'Night lights', 'label': 'Night lights', 'count': 230},
+        {'value': 'Fishing', 'label': 'Fishing', 'count': 0},
+        {'value': 'Hiking', 'label': 'Hiking', 'count': 0},
+        {'value': 'Beach', 'label': 'Beach', 'count': 0},
+        {'value': 'Cycling', 'label': 'Cycling', 'count': 0},
+        {'value': 'Sauna', 'label': 'Sauna', 'count': 0},
+        {'value': 'Night lights', 'label': 'Night lights', 'count': 0},
+        {'value': 'Tennis', 'label': 'Tennis', 'count': 0},
+        {'value': 'Yoga', 'label': 'Yoga', 'count': 0},
+        {'value': 'Scuba diving', 'label': 'Scuba diving', 'count': 0},
+        {'value': 'Rafting', 'label': 'Rafting', 'count': 0},
+        {'value': 'Guided nature walks', 'label': 'Guided nature walks', 'count': 0},
+        {'value': 'Skiing or snowboarding', 'label': 'Skiing or snowboarding', 'count': 0},
+        {'value': 'Golfing', 'label': 'Golfing', 'count': 0},
+        {'value': 'Surfing', 'label': 'Surfing', 'count': 0},
     ]
 
     hotel_results = []
@@ -180,6 +204,7 @@ def search_hotels(request):
     
             hotel_search_info = hotel.hotel_search_info.first()
 
+
             # Create a dictionary for each hotel's result
             hotel_result = {
                 'hotel_search_info_title': hotel_search_info.hotel_search_info_title,
@@ -187,19 +212,85 @@ def search_hotels(request):
                 'hotel_name': hotel.hotel_name,
                 'hotel_type': hotel.hotel_type,
                 'hotel_cover_photo': hotel.hotel_cover_photo,
+                'price_per_night': price_per_night,
                 'total_price': total_price,
                 'total_price_with_discount': total_price_with_discount,
                 'price_discount': price_discount,
-                'special_discount': special_discount
-            }
+                'special_discount': special_discount,
+                'facilities': {
+                    'Free wifi': hotel.hotel_facilities.first().hotel_has_free_wifi if hotel.hotel_facilities.exists() else False,
+                    'Air Conditioning': hotel.hotel_facilities.first().hotel_has_air_conditioning if hotel.hotel_facilities.exists() else False,
+                    'Parking available': hotel.hotel_facilities.first().hotel_has_parking_available if hotel.hotel_facilities.exists() else False,
+                    'Business Services': hotel.hotel_facilities.first().hotel_has_business_services if hotel.hotel_facilities.exists() else False,
+                    'Swimming pool': hotel.hotel_facilities.first().hotel_has_swimming_pool if hotel.hotel_facilities.exists() else False,
+                    'Top rated in area': hotel.hotel_facilities.first().hotel_has_top_rated_in_area if hotel.hotel_facilities.exists() else False,
+                    'Flat-screen TV': hotel.hotel_facilities.first().hotel_has_flat_screen_tv if hotel.hotel_facilities.exists() else False,
+                    '24-hour front desk': hotel.hotel_facilities.first().hotel_has_24_hour_front_desk if hotel.hotel_facilities.exists() else False,
+                    'Non-smoking rooms': hotel.hotel_facilities.first().hotel_has_non_smoking_rooms if hotel.hotel_facilities.exists() else False,
+                    'Fitness center': hotel.hotel_facilities.first().hotel_has_fitness_center if hotel.hotel_facilities.exists() else False,
+                    'Room service': hotel.hotel_facilities.first().hotel_has_room_service if hotel.hotel_facilities.exists() else False,
+                    'Restaurant': hotel.hotel_facilities.first().hotel_has_restaurant if hotel.hotel_facilities.exists() else False,
+                    'Pet friendly': hotel.hotel_facilities.first().hotel_is_pet_friendly if hotel.hotel_facilities.exists() else False,
+                    'Facilities for disabled guests': hotel.hotel_facilities.first().hotel_has_facilities_for_disabled_guests if hotel.hotel_facilities.exists() else False,
+                    'Family rooms': hotel.hotel_facilities.first().hotel_has_family_rooms if hotel.hotel_facilities.exists() else False,
+                    'Spa': hotel.hotel_facilities.first().hotel_has_spa if hotel.hotel_facilities.exists() else False,
+                    'Airport shuttle': hotel.hotel_facilities.first().hotel_has_airport_shuttle if hotel.hotel_facilities.exists() else False,
+                    'Electric vehicle charging station': hotel.hotel_facilities.first().hotel_has_electric_vehicle_charging_station if hotel.hotel_facilities.exists() else False,
+                    'Free cancellation': hotel.hotel_facilities.first().hotel_has_free_cancellation if hotel.hotel_facilities.exists() else False,
+                    'Beach front': hotel.hotel_facilities.first().hotel_has_beach_front if hotel.hotel_facilities.exists() else False,
+                    'Hot tub/jacuzzi': hotel.hotel_facilities.first().hotel_has_jacuzzi if hotel.hotel_facilities.exists() else False,
+                    'Book without credit card': hotel.hotel_facilities.first().hotel_has_without_credit_card if hotel.hotel_facilities.exists() else False,
+                    'No prepayment': hotel.hotel_facilities.first().hotel_has_no_prepayment if hotel.hotel_facilities.exists() else False,
+                    },
+                'activities': {
+                    'Fishing': hotel.hotel_activities.first().hotel_has_fishing if hotel.hotel_activities.exists() else False,
+                    'Hiking': hotel.hotel_activities.first().hotel_has_hiking if hotel.hotel_activities.exists() else False,
+                    'Beach': hotel.hotel_activities.first().hotel_has_beach if hotel.hotel_activities.exists() else False,
+                    'Cycling': hotel.hotel_activities.first().hotel_has_cycling if hotel.hotel_activities.exists() else False,
+                    'Sauna': hotel.hotel_activities.first().hotel_has_sauna if hotel.hotel_activities.exists() else False,
+                    'Night lights': hotel.hotel_activities.first().hotel_has_night_lights if hotel.hotel_activities.exists() else False,
+                    'Tennis': hotel.hotel_activities.first().hotel_has_tennis if hotel.hotel_activities.exists() else False,
+                    'Yoga': hotel.hotel_activities.first().hotel_has_yoga if hotel.hotel_activities.exists() else False,
+                    'Scuba diving': hotel.hotel_activities.first().hotel_has_scuba_diving if hotel.hotel_activities.exists() else False,
+                    'Rafting': hotel.hotel_activities.first().hotel_has_rafting if hotel.hotel_activities.exists() else False,
+                    'Guided nature walks': hotel.hotel_activities.first().hotel_has_guided_nature_walks if hotel.hotel_activities.exists() else False,
+                    'Skiing or snowboarding': hotel.hotel_activities.first().hotel_has_skiing if hotel.hotel_activities.exists() else False,
+                    'Golfing': hotel.hotel_activities.first().hotel_has_golfing if hotel.hotel_activities.exists() else False,
+                    'Surfing': hotel.hotel_activities.first().hotel_has_surfing if hotel.hotel_activities.exists() else False,
+                    },
+                }
     
             # Append the dictionary to the list of hotel results
             hotel_results.append(hotel_result)
 
+    for hotel_result in hotel_results:
+        price_per_night = hotel_result['price_per_night']
+        if price_per_night <= 50:
+            price_ranges[0]['count'] += 1
+        elif price_per_night <= 100:
+            price_ranges[1]['count'] += 1
+        elif price_per_night <= 150:
+            price_ranges[2]['count'] += 1
+        elif price_per_night <= 200:
+            price_ranges[3]['count'] += 1
+        else:
+            price_ranges[4]['count'] += 1
     
+        facilities_present = hotel_result['facilities']
+        for facility in facilities:
+            facility_value = facility['value']
+            if facilities_present.get(facility_value, False):
+                facility['count'] += 1
+    
+        activities_present = hotel_result['activities']
+        for activity in activities:
+            activity_value = activity['value']
+            if activities_present.get(activity_value, False):
+                activity['count'] += 1
+
     
 
-        # Create a context dictionary with query parameters
+    # Create a context dictionary with query parameters
     context = {
             'destination': destination,
             'num_hotels_found': num_hotels_found,
@@ -208,7 +299,7 @@ def search_hotels(request):
             'checkout': checkout,
             'guests': guests.split("·")[1].strip(),
             'price_ranges': price_ranges,
-            'popular_filters': popular_filters,
+            'facilities': facilities,
             'activities': activities,
             'hotel_results': hotel_results
         }
@@ -256,30 +347,54 @@ def update_search_results(request):
     duration = checkin_datetime - checkout_datetime
 
     price_ranges = [
-        {'value': '$0-$50', 'label': '$0 - $50', 'count': 200},
-        {'value': '$50-$100', 'label': '$50 - $100', 'count': 100},
-        {'value': '$100-$150', 'label': '$100 - $150', 'count': 15},
-        {'value': '$150-$200', 'label': '$150 - $200', 'count': 12},
-        {'value': '$200+', 'label': '$200+', 'count': 230},
+        {'value': '$0-$50', 'label': '$0 - $50', 'count': 0},
+        {'value': '$50-$100', 'label': '$50 - $100', 'count': 0},
+        {'value': '$100-$150', 'label': '$100 - $150', 'count': 0},
+        {'value': '$150-$200', 'label': '$150 - $200', 'count': 0},
+        {'value': '$200+', 'label': '$200+', 'count': 0},
     ]
 
-    popular_filters = [
-        {'value': 'Free cancellation', 'label': 'Free cancellation', 'count': 200},
-        {'value': 'Spa', 'label': 'Spa', 'count': 100},
-        {'value': 'Beach front', 'label': 'Beach front', 'count': 15},
-        {'value': 'Hot tub/ jacuzzi', 'label': 'Hot tub/ jacuzzi', 'count': 12},
-        {'value': 'Book without credit card',
-            'label': 'Book without credit card', 'count': 230},
-        {'value': 'No prepayment', 'label': 'No prepayment', 'count': 230},
+    facilities  = [
+        {'value': 'Free wifi', 'label': 'Free wifi', 'count': 0},
+        {'value': 'Air Conditioning', 'label': 'Air Conditioning', 'count': 0},
+        {'value': 'Parking available', 'label': 'Parking available', 'count': 0},
+        {'value': 'Business Services', 'label': 'Business Services', 'count': 0},
+        {'value': 'Swimming pool', 'label': 'Swimming pool', 'count': 0},
+        {'value': 'Top rated in area', 'label': 'Top rated in area', 'count': 0},
+        {'value': 'Flat-screen TV', 'label': 'Flat-screen TV', 'count': 0},
+        {'value': '24-hour front desk', 'label': '24-hour front desk', 'count': 0},
+        {'value': 'Non-smoking rooms', 'label': 'Non-smoking rooms', 'count': 0},
+        {'value': 'Fitness center', 'label': 'Fitness center', 'count': 0},
+        {'value': 'Room service', 'label': 'Room service', 'count': 0},
+        {'value': 'Restaurant', 'label': 'Restaurant', 'count': 0},
+        {'value': 'Pet friendly', 'label': 'Pet friendly', 'count': 0},
+        {'value': 'Facilities for disabled guests', 'label': 'Facilities for disabled guests', 'count': 0},
+        {'value': 'Room service', 'label': 'Room service', 'count': 0},
+        {'value': 'Family rooms', 'label': 'Family rooms', 'count': 0},
+        {'value': 'Airport shuttle', 'label': 'Airport shuttle', 'count': 0},
+        {'value': 'Electric vehicle charging station', 'label': 'Electric vehicle charging station', 'count': 0},
+        {'value': 'Free cancellation', 'label': 'Free cancellation', 'count': 0},
+        {'value': 'Beach front', 'label': 'Beach front', 'count': 0},
+        {'value': 'Hot tub/jacuzzi', 'label': 'Hot tub/jacuzzi', 'count': 0},
+        {'value': 'Book without credit card', 'label': 'Book without credit card', 'count': 0},
+        {'value': 'No prepayment', 'label': 'No prepayment', 'count': 0},
     ]
 
     activities = [
-        {'value': 'Fishing', 'label': 'Fishing', 'count': 200},
-        {'value': 'Hiking', 'label': 'Hiking', 'count': 100},
-        {'value': 'Beach', 'label': 'Beach', 'count': 15},
-        {'value': 'Cycling', 'label': 'Cycling', 'count': 12},
-        {'value': 'Sauna', 'label': 'Sauna', 'count': 230},
-        {'value': 'Night lights', 'label': 'Night lights', 'count': 230},
+        {'value': 'Fishing', 'label': 'Fishing', 'count': 0},
+        {'value': 'Hiking', 'label': 'Hiking', 'count': 0},
+        {'value': 'Beach', 'label': 'Beach', 'count': 0},
+        {'value': 'Cycling', 'label': 'Cycling', 'count': 0},
+        {'value': 'Sauna', 'label': 'Sauna', 'count': 0},
+        {'value': 'Night lights', 'label': 'Night lights', 'count': 0},
+        {'value': 'Tennis', 'label': 'Tennis', 'count': 0},
+        {'value': 'Yoga', 'label': 'Yoga', 'count': 0},
+        {'value': 'Scuba diving', 'label': 'Scuba diving', 'count': 0},
+        {'value': 'Rafting', 'label': 'Rafting', 'count': 0},
+        {'value': 'Guided nature walks', 'label': 'Guided nature walks', 'count': 0},
+        {'value': 'Skiing or snowboarding', 'label': 'Skiing or snowboarding', 'count': 0},
+        {'value': 'Golfing', 'label': 'Golfing', 'count': 0},
+        {'value': 'Surfing', 'label': 'Surfing', 'count': 0},
     ]
 
     hotel_results = []
@@ -307,51 +422,135 @@ def update_search_results(request):
 
             hotel_cover_photo_url = hotel.hotel_cover_photo.url
     
-
             # Create a dictionary for each hotel's result
+
             hotel_result = {
                 'hotel_search_info_title': hotel_search_info.hotel_search_info_title,
                 'hotel_search_info_text': hotel_search_info.hotel_search_info_text,
                 'hotel_name': hotel.hotel_name,
                 'hotel_type': hotel.hotel_type,
                 'hotel_cover_photo': hotel_cover_photo_url,
+                'price_per_night': price_per_night,
                 'total_price': total_price,
                 'total_price_with_discount': total_price_with_discount,
                 'price_discount': price_discount,
-                'special_discount': special_discount
-            }
+                'special_discount': special_discount,
+                'facilities': {
+                    'Free wifi': hotel.hotel_facilities.first().hotel_has_free_wifi if hotel.hotel_facilities.exists() else False,
+                    'Air Conditioning': hotel.hotel_facilities.first().hotel_has_air_conditioning if hotel.hotel_facilities.exists() else False,
+                    'Parking available': hotel.hotel_facilities.first().hotel_has_parking_available if hotel.hotel_facilities.exists() else False,
+                    'Business Services': hotel.hotel_facilities.first().hotel_has_business_services if hotel.hotel_facilities.exists() else False,
+                    'Swimming pool': hotel.hotel_facilities.first().hotel_has_swimming_pool if hotel.hotel_facilities.exists() else False,
+                    'Top rated in area': hotel.hotel_facilities.first().hotel_has_top_rated_in_area if hotel.hotel_facilities.exists() else False,
+                    'Flat-screen TV': hotel.hotel_facilities.first().hotel_has_flat_screen_tv if hotel.hotel_facilities.exists() else False,
+                    '24-hour front desk': hotel.hotel_facilities.first().hotel_has_24_hour_front_desk if hotel.hotel_facilities.exists() else False,
+                    'Non-smoking rooms': hotel.hotel_facilities.first().hotel_has_non_smoking_rooms if hotel.hotel_facilities.exists() else False,
+                    'Fitness center': hotel.hotel_facilities.first().hotel_has_fitness_center if hotel.hotel_facilities.exists() else False,
+                    'Room service': hotel.hotel_facilities.first().hotel_has_room_service if hotel.hotel_facilities.exists() else False,
+                    'Restaurant': hotel.hotel_facilities.first().hotel_has_restaurant if hotel.hotel_facilities.exists() else False,
+                    'Pet friendly': hotel.hotel_facilities.first().hotel_is_pet_friendly if hotel.hotel_facilities.exists() else False,
+                    'Facilities for disabled guests': hotel.hotel_facilities.first().hotel_has_facilities_for_disabled_guests if hotel.hotel_facilities.exists() else False,
+                    'Family rooms': hotel.hotel_facilities.first().hotel_has_family_rooms if hotel.hotel_facilities.exists() else False,
+                    'Spa': hotel.hotel_facilities.first().hotel_has_spa if hotel.hotel_facilities.exists() else False,
+                    'Airport shuttle': hotel.hotel_facilities.first().hotel_has_airport_shuttle if hotel.hotel_facilities.exists() else False,
+                    'Electric vehicle charging station': hotel.hotel_facilities.first().hotel_has_electric_vehicle_charging_station if hotel.hotel_facilities.exists() else False,
+                    'Free cancellation': hotel.hotel_facilities.first().hotel_has_free_cancellation if hotel.hotel_facilities.exists() else False,
+                    'Beach front': hotel.hotel_facilities.first().hotel_has_beach_front if hotel.hotel_facilities.exists() else False,
+                    'Hot tub/jacuzzi': hotel.hotel_facilities.first().hotel_has_jacuzzi if hotel.hotel_facilities.exists() else False,
+                    'Book without credit card': hotel.hotel_facilities.first().hotel_has_without_credit_card if hotel.hotel_facilities.exists() else False,
+                    'No prepayment': hotel.hotel_facilities.first().hotel_has_no_prepayment if hotel.hotel_facilities.exists() else False,
+                    },
+                'activities': {
+                    'Fishing': hotel.hotel_activities.first().hotel_has_fishing if hotel.hotel_activities.exists() else False,
+                    'Hiking': hotel.hotel_activities.first().hotel_has_hiking if hotel.hotel_activities.exists() else False,
+                    'Beach': hotel.hotel_activities.first().hotel_has_beach if hotel.hotel_activities.exists() else False,
+                    'Cycling': hotel.hotel_activities.first().hotel_has_cycling if hotel.hotel_activities.exists() else False,
+                    'Sauna': hotel.hotel_activities.first().hotel_has_sauna if hotel.hotel_activities.exists() else False,
+                    'Night lights': hotel.hotel_activities.first().hotel_has_night_lights if hotel.hotel_activities.exists() else False,
+                    'Tennis': hotel.hotel_activities.first().hotel_has_tennis if hotel.hotel_activities.exists() else False,
+                    'Yoga': hotel.hotel_activities.first().hotel_has_yoga if hotel.hotel_activities.exists() else False,
+                    'Scuba diving': hotel.hotel_activities.first().hotel_has_scuba_diving if hotel.hotel_activities.exists() else False,
+                    'Rafting': hotel.hotel_activities.first().hotel_has_rafting if hotel.hotel_activities.exists() else False,
+                    'Guided nature walks': hotel.hotel_activities.first().hotel_has_guided_nature_walks if hotel.hotel_activities.exists() else False,
+                    'Skiing or snowboarding': hotel.hotel_activities.first().hotel_has_skiing if hotel.hotel_activities.exists() else False,
+                    'Golfing': hotel.hotel_activities.first().hotel_has_golfing if hotel.hotel_activities.exists() else False,
+                    'Surfing': hotel.hotel_activities.first().hotel_has_surfing if hotel.hotel_activities.exists() else False,
+                    },
+                }
     
             # Append the dictionary to the list of hotel results
             hotel_results.append(hotel_result)
 
+    for hotel_result in hotel_results:
+        price_per_night = hotel_result['price_per_night']
+        if price_per_night <= 50:
+            price_ranges[0]['count'] += 1
+        elif price_per_night <= 100:
+            price_ranges[1]['count'] += 1
+        elif price_per_night <= 150:
+            price_ranges[2]['count'] += 1
+        elif price_per_night <= 200:
+            price_ranges[3]['count'] += 1
+        else:
+            price_ranges[4]['count'] += 1
     
+        facilities_present = hotel_result['facilities']
+        for facility in facilities:
+            facility_value = facility['value']
+            if facilities_present.get(facility_value, False):
+                facility['count'] += 1
+    
+        activities_present = hotel_result['activities']
+        for activity in activities:
+            activity_value = activity['value']
+            if activities_present.get(activity_value, False):
+                activity['count'] += 1
     
 
-        # Create a context dictionary with query parameters
-    # context = {
-    #         'destination': destination,
-    #         'num_hotels_found': num_hotels_found,
-    #         'duration': duration.days,
-    #         'checkin': checkin,
-    #         'checkout': checkout,
-    #         'guests': guests.split("·")[1].strip(),
-    #         'price_ranges': price_ranges,
-    #         'popular_filters': popular_filters,
-    #         'activities': activities,
-    #         'hotel_results': hotel_results
-    #     }
+
+    for hotel_result in hotel_results:
+        price_per_night = hotel_result['price_per_night']
+        if price_per_night <= 50:
+            price_ranges[0]['count'] += 1
+        elif price_per_night <= 100:
+            price_ranges[1]['count'] += 1
+        elif price_per_night <= 150:
+            price_ranges[2]['count'] += 1
+        elif price_per_night <= 200:
+            price_ranges[3]['count'] += 1
+        else:
+            price_ranges[4]['count'] += 1
+    
+        facilities_present = hotel_result['facilities']
+        for facility in facilities:
+            facility_value = facility['value']
+            if facilities_present.get(facility_value, False):
+                facility['count'] += 1
+    
+        activities_present = hotel_result['activities']
+        for activity in activities:
+            activity_value = activity['value']
+            if activities_present.get(activity_value, False):
+                activity['count'] += 1
     
 
-    #  # Create the context dictionary with search results
-    # context = {
-    #     'hotel_results': hotel_results
-    # }
-
+    # Create a context dictionary with query parameters
     context = {
+            'destination': destination,
+            'num_hotels_found': num_hotels_found,
             'duration': duration.days,
+            'checkin': checkin,
+            'checkout': checkout,
             'guests': guests.split("·")[1].strip(),
+            'price_ranges': price_ranges,
+            'facilities': facilities,
+            'activities': activities,
             'hotel_results': hotel_results
         }
+
+    # Return the search results as JSON response
+    return JsonResponse(context)
+
 
 
 

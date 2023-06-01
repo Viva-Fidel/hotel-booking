@@ -1,10 +1,11 @@
-{% load static %} {% load static %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>my Dream Place | Search results</title>
     <link
       rel="icon"
       type="image/x-icon"
@@ -15,7 +16,6 @@
       type="text/css"
       href="{% static 'css/normalize.css' %}"
     />
-    <title>my Dream Place | Search results</title>
     <link
       rel="stylesheet"
       type="text/css"
@@ -192,7 +192,7 @@
                   <input
                     type="text"
                     class="page-content__filter-search-input"
-                    placeholder="e.g. Multnomah County"
+                    placeholder="e.g. Hilton"
                     name="hotel-search-input"
                     id="hotel-search-input"
                   />
@@ -296,18 +296,18 @@
               </div>
               <div class="page-content__filter-container">
                 <div class="page-content__filter-container-title">
-                  Popular Filters
+                  Facilities
                 </div>
                 <div class="page-content__filter-choice-list">
-                  {% for popular_filter in popular_filters %}
+                  {% for facility in facilities %}
                   <li>
                     <input
                       type="checkbox"
                       name="price-range"
-                      value="{{ popular_filter.value }}"
+                      value="{{ facility.value }}"
                     />
-                    {{ popular_filter.label }}
-                    <span>{{ popular_filter.count }}</span>
+                    {{ facility.label }}
+                    <span>{{ facility.count }}</span>
                   </li>
                   {% endfor %}
                 </div>
@@ -333,7 +333,7 @@
             </div>
             <div class="page-content__right-side">
               <h3 class="page-content__search-results-title">
-                {{ destination }}: {{ num_hotels_found }} search results found
+                {{ destination }}: <span id="num-hotels-found">{{ num_hotels_found }}</span> search results found
               </h3>
               <div class="page-content__allocation-type-filter-container">
                 <button
@@ -507,19 +507,23 @@
                         >
                           {{ guests }} {{ duration }} days
                         </p>
+                        {% if hotel_result.total_price_with_discount != 0 %}
+                        <p
+                          class="page-content__search-results-item-info-data-price-full"
+                        >
+                        US${{ hotel_result.total_price_with_discount }}
+                        </p>
+                        <p
+                          class="page-content__search-results-item-info-data-price-discount__active"
+                        >
+                        US${{ hotel_result.total_price }}
+                        </p>
+                        {% else %}
                         <p
                           class="page-content__search-results-item-info-data-price-full"
                         >
                           US${{ hotel_result.total_price }}
                         </p>
-
-                        {% if hotel_result.total_price_with_discount != 0 %}
-                        <p
-                          class="page-content__search-results-item-info-data-price-discount__active"
-                        >
-                          US${{ hotel_result.total_price_with_discount }}
-                        </p>
-                        {% else %}
                         <div
                           class="page-content__search-results-item-info-data-price-discount__not-active"
                         ></div>
@@ -719,6 +723,7 @@
           var data = response;
           var duration = data.duration;
           var guests = data.guests;
+          var num_hotels_found = data.num_hotels_found; 
           var hotelResults = data.hotel_results;
 
           // Clear the existing search results
@@ -727,117 +732,120 @@
           if (hotelResults.length > 0) {
             // Loop through the hotel results and append the updated HTML
             hotelResults.forEach(function (hotelResult) {
-              console.log(hotelResult.hotel_cover_photo)
-              // ...
+
+              var html = '';
+
               // Generate the HTML for each hotel result
-              var html = `
+              html += `
               <li class="page-content__search-results-item">
+          <img
+            src="${hotelResult.hotel_cover_photo}"
+            alt="${hotelResult.hotel_name}"
+            class="page-content__search-results-item-image"
+          />
+          <div class="page-content__search-results-item-info-container">
+            <div class="page-content__search-results-item-info-title-container">
+              <h4 class="page-content__search-results-item-info-title">
+                ${hotelResult.hotel_name}
+              </h4>
+              ${
+                hotelResult.total_price_with_discount != 0
+                  ? `
+                    <div class="page-content__search-results-item-info-title-promo__active">
+                      ${hotelResult.special_discount}
+                    </div>
+                  `
+                  : `
+                    <div class="page-content__search-results-item-info-title-promo__not-active"></div>
+                  `
+              }
+            </div>
+            <div class="page-content__search-results-item-info-rating-container">
+              <div class="page-content__search-results-item-info-rating-stars-container">
                 <img
-                src="${hotelResult.hotel_cover_photo}"
-                  alt="${hotelResult.hotel_name}"
-                  class="page-content__search-results-item-image"
+                  src="{% static 'images/core/icons/star.png' %}"
+                  alt="Star icon"
+                  class="page-content__search-results-item-info-rating-star-icon"
                 />
-                <div class="page-content__search-results-item-info-container">
-                  <div class="page-content__search-results-item-info-title-container">
-                    <h4 class="page-content__search-results-item-info-title">
-                      ${hotelResult.hotel_name}
-                    </h4>
-                    ${
-                      hotelResult.total_price_with_discount != 0
-                        ? `
-                      <div class="page-content__search-results-item-info-title-promo__active">
-                        ${hotelResult.special_discount}
+                <img
+                  src="{% static 'images/core/icons/star.png' %}"
+                  alt="Star icon"
+                  class="page-content__search-results-item-info-rating-star-icon"
+                />
+                <img
+                  src="{% static 'images/core/icons/star.png' %}"
+                  alt="Star icon"
+                  class="page-content__search-results-item-info-rating-star-icon"
+                />
+                <img
+                  src="{% static 'images/core/icons/star.png' %}"
+                  alt="Star icon"
+                  class="page-content__search-results-item-info-rating-star-icon"
+                />
+                <img
+                  src="{% static 'images/core/icons/half-star.png' %}"
+                  alt="Star icon"
+                  class="page-content__search-results-item-info-rating-star-icon-half"
+                />
+              </div>
+              <p class="page-content__search-results-item-info-rating-stars-text">
+                4.5 (1200 Reviews)
+              </p>
+            </div>
+            <div class="page-content__search-results-item-info-data-container">
+              <div class="page-content__search-results-item-info-data-container-left">
+                <p class="page-content__search-results-item-info-data-offer-title">
+                  ${hotelResult.hotel_search_info_title}
+                </p>
+                <p class="page-content__search-results-item-info-data-offer-text">
+                  ${hotelResult.hotel_search_info_text}
+                </p>
+                <button type="submit" class="page-content__search-results-item-info-data-see-availability">
+                  See availability
+                </button>
+              </div>
+              <div class="page-content__search-results-item-info-data-container-right">
+                ${
+                  hotelResult.total_price_with_discount != 0
+                    ? `
+                      <div class="page-content__search-results-item-info-data-discount__active">
+                        ${hotelResult.price_discount}% off
                       </div>
                     `
-                        : `
-                      <div class="page-content__search-results-item-info-title-promo__not-active"></div>
+                    : `
+                      <div class="page-content__search-results-item-info-data-discount__not-active"></div>
                     `
-                    }
-                  </div>
-                  <div class="page-content__search-results-item-info-rating-container">
-                    <div class="page-content__search-results-item-info-rating-stars-container">
-                      <img
-                        src="{% static 'images/core/icons/star.png' %}"
-                        alt="Star icon"
-                        class="page-content__search-results-item-info-rating-star-icon"
-                      />
-                      <img
-                        src="{% static 'images/core/icons/star.png' %}"
-                        alt="Star icon"
-                        class="page-content__search-results-item-info-rating-star-icon"
-                      />
-                      <img
-                        src="{% static 'images/core/icons/star.png' %}"
-                        alt="Star icon"
-                        class="page-content__search-results-item-info-rating-star-icon"
-                      />
-                      <img
-                        src="{% static 'images/core/icons/star.png' %}"
-                        alt="Star icon"
-                        class="page-content__search-results-item-info-rating-star-icon"
-                      />
-                      <img
-                        src="{% static 'images/core/icons/half-star.png' %}"
-                        alt="Star icon"
-                        class="page-content__search-results-item-info-rating-star-icon-half"
-                      />
-                    </div>
-                    <p class="page-content__search-results-item-info-rating-stars-text">
-                      4.5 (1200 Reviews)
-                    </p>
-                  </div>
-                  <div class="page-content__search-results-item-info-data-container">
-                    <div class="page-content__search-results-item-info-data-container-left">
-                      <p class="page-content__search-results-item-info-data-offer-title">
-                        ${hotelResult.hotel_search_info_title}
+                }
+                <p class="page-content__search-results-item-info-data-rooms-text">
+                  ${guests} ${duration} days
+                </p>
+                ${
+                  hotelResult.total_price_with_discount != 0
+                    ? `
+                      <p class="page-content__search-results-item-info-data-price-full">
+                        US$${hotelResult.total_price_with_discount}
                       </p>
-                      <p class="page-content__search-results-item-info-data-offer-text">
-                        ${hotelResult.hotel_search_info_text}
+                      <p class="page-content__search-results-item-info-data-price-discount__active">
+                        US$${hotelResult.total_price}
                       </p>
-                      <button
-                        type="submit"
-                        class="page-content__search-results-item-info-data-see-availability"
-                      >
-                        See availability
-                      </button>
-                    </div>
-                    <div class="page-content__search-results-item-info-data-container-right">
-                      ${
-                        hotelResult.total_price_with_discount != 0
-                          ? `
-                        <div class="page-content__search-results-item-info-data-discount__active">
-                          ${hotelResult.price_discount}% off
-                        </div>
-                      `
-                          : `
-                        <div class="page-content__search-results-item-info-data-discount__not-active"></div>
-                      `
-                      }
-                      <p class="page-content__search-results-item-info-data-rooms-text">
-                        ${hotelResult.guests} ${hotelResult.duration} days
-                      </p>
+                    `
+                    : `
                       <p class="page-content__search-results-item-info-data-price-full">
                         US$${hotelResult.total_price}
                       </p>
-                      ${
-                        hotelResult.total_price_with_discount != 0
-                          ? `
-                        <p class="page-content__search-results-item-info-data-price-discount__active">
-                          US$${hotelResult.total_price_with_discount}
-                        </p>
-                      `
-                          : `
-                        <div class="page-content__search-results-item-info-data-price-discount__not-active"></div>
-                      `
-                      }
-                      <p class="page-content__search-results-item-info-data-taxes-text">
-                        Includes taxes and fees
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </li>
+                      <div class="page-content__search-results-item-info-data-price-discount__not-active"></div>
+                    `
+                }
+                <p class="page-content__search-results-item-info-data-taxes-text">
+                  Includes taxes and fees
+                </p>
+              </div>
+            </div>
+          </div>
+        </li>
             `;
+
+            $('#num-hotels-found').text(num_hotels_found);
 
               // Append the HTML to the search results container
               $("#search-results-container").append(html);
