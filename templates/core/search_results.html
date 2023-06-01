@@ -156,10 +156,14 @@
 
           <div class="header-button-container">
             <a href="/register" class="register-link"
-              ><button class="header-button-container__register-button">Register</button></a
+              ><button class="header-button-container__register-button">
+                Register
+              </button></a
             >
             <a href="/signin" class="signin-link"
-              ><button class="header-button-container__signin-button">Sign In</button></a
+              ><button class="header-button-container__signin-button">
+                Sign In
+              </button></a
             >
           </div>
           {% endif %} {% include 'partials/_search_form.html' %}
@@ -185,7 +189,6 @@
                     alt="Guests icon"
                     class="page-content__filter-search-icon"
                   />
-                  
                   <input
                     type="text"
                     class="page-content__filter-search-input"
@@ -393,11 +396,14 @@
                   </ul>
                 </div>
               </div>
-              <ul class="page-content__search-results-list">
+              <ul
+                class="page-content__search-results-list"
+                id="search-results-container"
+              >
                 {% for hotel_result in hotel_results %}
                 <li class="page-content__search-results-item">
                   <img
-                    src="/media/{{ hotel_result.hotel_cover_photo }}"
+                    src="{{ hotel_result.hotel_cover_photo.url }}"
                     alt="{{ hotel_result.hotel_name }}"
                     class="page-content__search-results-item-image"
                   />
@@ -408,18 +414,17 @@
                       <h4 class="page-content__search-results-item-info-title">
                         {{ hotel_result.hotel_name }}
                       </h4>
-                      
-                        {% if hotel_result.total_price_with_discount != 0 %}
+
+                      {% if hotel_result.total_price_with_discount != 0 %}
                       <div
                         class="page-content__search-results-item-info-title-promo__active"
                       >
-                      {{ hotel_result.special_discount }}
+                        {{ hotel_result.special_discount }}
                       </div>
                       {% else %}
                       <div
-                      class="page-content__search-results-item-info-title-promo__not-active"
-                    >
-                    </div>
+                        class="page-content__search-results-item-info-title-promo__not-active"
+                      ></div>
                       {% endif %}
                     </div>
                     <div
@@ -469,12 +474,12 @@
                         <p
                           class="page-content__search-results-item-info-data-offer-title"
                         >
-                        {{ hotel_result.hotel_search_info_title }}
+                          {{ hotel_result.hotel_search_info_title }}
                         </p>
                         <p
                           class="page-content__search-results-item-info-data-offer-text"
                         >
-                        {{ hotel_result.hotel_search_info_text }}
+                          {{ hotel_result.hotel_search_info_text }}
                         </p>
                         <button
                           type="submit"
@@ -486,17 +491,16 @@
                       <div
                         class="page-content__search-results-item-info-data-container-right"
                       >
-                      {% if hotel_result.total_price_with_discount != 0 %}
+                        {% if hotel_result.total_price_with_discount != 0 %}
                         <div
                           class="page-content__search-results-item-info-data-discount__active"
                         >
-                        {{ hotel_result.price_discount }}% off
+                          {{ hotel_result.price_discount }}% off
                         </div>
                         {% else %}
                         <div
                           class="page-content__search-results-item-info-data-discount__not-active"
-                        >
-                        </div>
+                        ></div>
                         {% endif %}
                         <p
                           class="page-content__search-results-item-info-data-rooms-text"
@@ -504,22 +508,24 @@
                           {{ guests }} {{ duration }} days
                         </p>
                         <p
-                            class="page-content__search-results-item-info-data-price-full"
-                          >
+                          class="page-content__search-results-item-info-data-price-full"
+                        >
                           US${{ hotel_result.total_price }}
-                          </p>
-                        
+                        </p>
+
                         {% if hotel_result.total_price_with_discount != 0 %}
-                          <p
-                            class="page-content__search-results-item-info-data-price-discount__active"
-                          >
+                        <p
+                          class="page-content__search-results-item-info-data-price-discount__active"
+                        >
                           US${{ hotel_result.total_price_with_discount }}
-                          </p>
-                          {% else %}
-                          <div class="page-content__search-results-item-info-data-price-discount__not-active"></div>
-                          {% endif %}
-                          
-                          <!-- <div
+                        </p>
+                        {% else %}
+                        <div
+                          class="page-content__search-results-item-info-data-price-discount__not-active"
+                        ></div>
+                        {% endif %}
+
+                        <!-- <div
                           class="page-content__search-results-item-info-data-price-container"
                         > -->
                         <p
@@ -552,6 +558,8 @@
     {%endblock %}
   </body>
 </html>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 {% if user.is_authenticated %}
 <!-- Script to activate drop down menu when user clicks on the avatar -->
@@ -670,6 +678,183 @@
       sortByChoice.textContent = selectedItem.textContent.trim();
       dropDownList.style.display = "none";
       dropDownIcon.classList.remove("rotated");
+    }
+  });
+</script>
+<script>
+  $(document).ready(function () {
+    // Add event listener to the hotel name input field
+    $("#hotel-search-input").keypress(function (event) {
+      if (event.which === 13) {
+        // Enter key code
+        event.preventDefault();
+        updateSearchResults();
+      }
+    });
+
+    // Function to update the search results using AJAX
+    function updateSearchResults() {
+      // Get the search parameters from the URL
+      var searchParams = new URLSearchParams(window.location.search);
+      var destination = searchParams.get("destination");
+      var checkin = searchParams.get("checkin");
+      var checkout = searchParams.get("checkout");
+      var guests = searchParams.get("guests");
+      var hotelName = $("#hotel-search-input").val();
+
+      // Create the AJAX request
+      $.ajax({
+        url: "/update-search-results/",
+        type: "GET",
+        data: {
+          destination: destination,
+          checkin: checkin,
+          checkout: checkout,
+          guests: guests,
+          hotel_name: hotelName,
+        },
+        dataType: "json",
+        success: function (response) {
+          // Parse the JSON response
+          var data = response;
+          var duration = data.duration;
+          var guests = data.guests;
+          var hotelResults = data.hotel_results;
+
+          // Clear the existing search results
+          $("#search-results-container").empty();
+
+          if (hotelResults.length > 0) {
+            // Loop through the hotel results and append the updated HTML
+            hotelResults.forEach(function (hotelResult) {
+              console.log(hotelResult.hotel_cover_photo)
+              // ...
+              // Generate the HTML for each hotel result
+              var html = `
+              <li class="page-content__search-results-item">
+                <img
+                src="${hotelResult.hotel_cover_photo}"
+                  alt="${hotelResult.hotel_name}"
+                  class="page-content__search-results-item-image"
+                />
+                <div class="page-content__search-results-item-info-container">
+                  <div class="page-content__search-results-item-info-title-container">
+                    <h4 class="page-content__search-results-item-info-title">
+                      ${hotelResult.hotel_name}
+                    </h4>
+                    ${
+                      hotelResult.total_price_with_discount != 0
+                        ? `
+                      <div class="page-content__search-results-item-info-title-promo__active">
+                        ${hotelResult.special_discount}
+                      </div>
+                    `
+                        : `
+                      <div class="page-content__search-results-item-info-title-promo__not-active"></div>
+                    `
+                    }
+                  </div>
+                  <div class="page-content__search-results-item-info-rating-container">
+                    <div class="page-content__search-results-item-info-rating-stars-container">
+                      <img
+                        src="{% static 'images/core/icons/star.png' %}"
+                        alt="Star icon"
+                        class="page-content__search-results-item-info-rating-star-icon"
+                      />
+                      <img
+                        src="{% static 'images/core/icons/star.png' %}"
+                        alt="Star icon"
+                        class="page-content__search-results-item-info-rating-star-icon"
+                      />
+                      <img
+                        src="{% static 'images/core/icons/star.png' %}"
+                        alt="Star icon"
+                        class="page-content__search-results-item-info-rating-star-icon"
+                      />
+                      <img
+                        src="{% static 'images/core/icons/star.png' %}"
+                        alt="Star icon"
+                        class="page-content__search-results-item-info-rating-star-icon"
+                      />
+                      <img
+                        src="{% static 'images/core/icons/half-star.png' %}"
+                        alt="Star icon"
+                        class="page-content__search-results-item-info-rating-star-icon-half"
+                      />
+                    </div>
+                    <p class="page-content__search-results-item-info-rating-stars-text">
+                      4.5 (1200 Reviews)
+                    </p>
+                  </div>
+                  <div class="page-content__search-results-item-info-data-container">
+                    <div class="page-content__search-results-item-info-data-container-left">
+                      <p class="page-content__search-results-item-info-data-offer-title">
+                        ${hotelResult.hotel_search_info_title}
+                      </p>
+                      <p class="page-content__search-results-item-info-data-offer-text">
+                        ${hotelResult.hotel_search_info_text}
+                      </p>
+                      <button
+                        type="submit"
+                        class="page-content__search-results-item-info-data-see-availability"
+                      >
+                        See availability
+                      </button>
+                    </div>
+                    <div class="page-content__search-results-item-info-data-container-right">
+                      ${
+                        hotelResult.total_price_with_discount != 0
+                          ? `
+                        <div class="page-content__search-results-item-info-data-discount__active">
+                          ${hotelResult.price_discount}% off
+                        </div>
+                      `
+                          : `
+                        <div class="page-content__search-results-item-info-data-discount__not-active"></div>
+                      `
+                      }
+                      <p class="page-content__search-results-item-info-data-rooms-text">
+                        ${hotelResult.guests} ${hotelResult.duration} days
+                      </p>
+                      <p class="page-content__search-results-item-info-data-price-full">
+                        US$${hotelResult.total_price}
+                      </p>
+                      ${
+                        hotelResult.total_price_with_discount != 0
+                          ? `
+                        <p class="page-content__search-results-item-info-data-price-discount__active">
+                          US$${hotelResult.total_price_with_discount}
+                        </p>
+                      `
+                          : `
+                        <div class="page-content__search-results-item-info-data-price-discount__not-active"></div>
+                      `
+                      }
+                      <p class="page-content__search-results-item-info-data-taxes-text">
+                        Includes taxes and fees
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            `;
+
+              // Append the HTML to the search results container
+              $("#search-results-container").append(html);
+            });
+          } else {
+            // No hotel results found, display a message
+            var message = `
+            <li class="page-content__search-results-no-results">
+              <p>No hotels found for the specified search parameters.</p>
+            </li>
+          `;
+
+            // Append the message to the search results container
+            $("#search-results-container").append(message);
+          }
+        },
+      });
     }
   });
 </script>
