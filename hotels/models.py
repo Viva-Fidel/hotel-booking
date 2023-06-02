@@ -25,6 +25,15 @@ class Hotels(models.Model):
         ('shared_space', 'Shared Space'),
     ]
 
+    STAR_CHOICES = [
+        (0, '0 Stars'),
+        (1, '1 Star'),
+        (2, '2 Stars'),
+        (3, '3 Stars'),
+        (4, '4 Stars'),
+        (5, '5 Stars'),
+    ]
+
     hotel_name = models.CharField(
         max_length=255
         , verbose_name="Hotel name", help_text='Hotel name')
@@ -43,8 +52,9 @@ class Hotels(models.Model):
     hotel_cover_photo = models.ImageField(
         upload_to=cover_hotel_photo_path, verbose_name="Hotel cover photo", help_text='Hotel main photo')
     hotel_popularity = models.PositiveIntegerField(default=0)
-    hotel_rating = models.DecimalField(
+    user_rating = models.DecimalField(
         decimal_places=2, max_digits=5, default=0.00)
+    hotel_star_rating = models.PositiveIntegerField(choices=STAR_CHOICES, default=0, verbose_name="Hotel star rating")
     time_create = models.DateTimeField(
         auto_now_add=True, verbose_name="Date of creation")
     time_update = models.DateTimeField(auto_now=True, verbose_name="Updated")

@@ -54,15 +54,14 @@ class RoomInline(NestedStackedInline):
 @admin.register(Hotels)
 class HotelsAdmin(NestedModelAdmin):
     form = HotelForm
-    list_display = ('hotel_name', 'hotel_type', 'hotel_county', 'hotel_city', 'hotel_street',
-                    'hotel_cover_photo', 'time_create', 'is_published')
+    list_display = ('hotel_name', 'hotel_type', 'hotel_star_rating', 'hotel_county', 'hotel_city', 'hotel_street',
+                    'hotel_cover_photo', 'user_rating', 'time_create', 'is_published')
     list_filter = ('is_published', 'hotel_county', 'hotel_city')
     search_fields = ('hotel_name', 'hotel_county__county_name', 'hotel_city')
     inlines = [HotelsSearchInfoInlice, HotelImageInline, HotelFacilitiesInline,
                HotelActivitiesInline, RoomInline]
 
-    exclude = ('hotel_popularity', 'hotel_rating',)
-
+    exclude = ('hotel_popularity',)
     def __str__(self):
         return self.hotel_name
 
