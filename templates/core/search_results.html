@@ -213,6 +213,7 @@
                       type="checkbox"
                       name="price-range"
                       value="{{ price.value }}"
+                      class="page-content__filter-choice-list-item__price-range"
                     />
                     {{ price.label }}
                     <span>{{ price.count }}</span>
@@ -300,7 +301,10 @@
                 <div class="page-content__filter-container-title">
                   Facilities
                 </div>
-                <div class="page-content__filter-choice-list" id="facilities-choice-list">
+                <div
+                  class="page-content__filter-choice-list"
+                  id="facilities-choice-list"
+                >
                   {% for facility in facilities %}
                   <li>
                     <input
@@ -318,7 +322,10 @@
                 <div class="page-content__filter-container-title">
                   Activities
                 </div>
-                <ul class="page-content__filter-choice-list" id="activities-choice-list">
+                <ul
+                  class="page-content__filter-choice-list"
+                  id="activities-choice-list"
+                >
                   {% for activity in activities %}
                   <li>
                     <input
@@ -671,6 +678,7 @@
     }
   });
 </script>
+
 <script>
   $(document).ready(function () {
     // Add event listener to the hotel name input field
@@ -682,8 +690,30 @@
       }
     });
 
+  // $(document).on("change", ".page-content__filter-choice-list-item__price-range", function () {
+  //     var selectedPrices = []; // Array to store selected price ranges
+  //     // Loop through all the checkboxes and collect the selected price ranges
+  //     $(".page-content__filter-choice-list-item__price-range:checked").each(function () {
+  //       selectedPrices.push($(this).val());
+  //     });
+
+  //     updateSearchResults(selectedPrices);
+  //   });
+  $(document).on("change", ".page-content__filter-choice-list-item__price-range", function () {
+  var selectedPrices = []; // Array to store selected price ranges
+  // Loop through all the checkboxes and collect the selected price ranges
+  $(".page-content__filter-choice-list-item__price-range").each(function () {
+    if ($(this).is(":checked")) {
+      selectedPrices.push($(this).val());
+    }
+  });
+
+  updateSearchResults(selectedPrices);
+});
+
+
     // Function to update the search results using AJAX
-    function updateSearchResults() {
+    function updateSearchResults(selectedPrices) {
       // Get the search parameters from the URL
       var searchParams = new URLSearchParams(window.location.search);
       var destination = searchParams.get("destination");
@@ -702,6 +732,7 @@
           checkout: checkout,
           guests: guests,
           hotel_name: hotelName,
+          price: selectedPrices.join(","),
         },
         dataType: "json",
         success: function (response) {
@@ -715,25 +746,31 @@
           var activities = data.activities;
           var hotelResults = data.hotel_results;
 
-          $("#price-choice-list").empty();
+          var checkedState = {};
+$("input[name='price-range']").each(function () {
+  checkedState[$(this).val()] = $(this).is(":checked");
+});
 
-          priceRanges.forEach(function (price) {
-            console.log(price.count);
-            var listItem = `
-      <li>
-        <input
-          type="checkbox"
-          name="price-range"
-          value="${price.value}"
-        />
-        ${price.label}
-        <span>${price.count}</span>
-      </li>
-    `;
+$("#price-choice-list").empty();
+
+priceRanges.forEach(function (price) {
+  var checked = checkedState[price.value] ? "checked" : ""; // Add this line to get the checked state
+  var listItem = `
+    <li>
+      <input
+        type="checkbox"
+        name="price-range"
+        value="${price.value}"
+        class="page-content__filter-choice-list-item__price-range"
+        ${checked}
+      />
+      ${price.label}
+      <span>${price.count}</span>
+    </li>
+  `;
   // Append the list item to the price range list
   $("#price-choice-list").append(listItem);
-          });
-
+});
 
           $("#facilities-choice-list").empty();
 
@@ -774,9 +811,6 @@
             // Append the list item to the price range list
             $("#activities-choice-list").append(listItem);
           });
-
-
-          
 
           // Clear the existing search results
           $("#search-results-container").empty();

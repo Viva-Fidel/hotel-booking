@@ -117,9 +117,8 @@ def search_hotels(request):
             Q(room__available=True) & \
             ~Q(room__bookings__check_in_date__lt=checkout_date, room__bookings__check_out_date__gt=checkin_date)
 
-
     # Filter hotels by destination
-    hotels = Hotels.objects.filter(query)
+    hotels = Hotels.objects.filter(query).distinct()
 
     # Count number of hotels found
     num_hotels_found = hotels.count()
@@ -188,14 +187,16 @@ def search_hotels(request):
         total_capacity = sum(room.max_guests for room in rooms)
         if guests_count <= total_capacity:
             cheapest_room = hotel.hotel_rooms.order_by('price_per_night').first()
-            price_per_night = cheapest_room.price_per_night if cheapest_room else 0
+            cheapest_price_per_night = cheapest_room.price_per_night if cheapest_room else 0
+            price_per_night = set(room.room_type.price_per_night for room in rooms)
+
             num_days = (datetime.strptime(checkout, '%d-%m-%Y') -
                         datetime.strptime(checkin, '%d-%m-%Y')).days
     
             price_discount = cheapest_room.price_discount if cheapest_room else 0
             special_discount = cheapest_room.special_discount if cheapest_room else 0
     
-            total_price = price_per_night * num_days
+            total_price = cheapest_price_per_night * num_days
     
             if price_discount != 0:
                 total_price_with_discount = total_price - total_price/100*price_discount
@@ -213,6 +214,7 @@ def search_hotels(request):
                 'hotel_type': hotel.hotel_type,
                 'hotel_cover_photo': hotel.hotel_cover_photo,
                 'price_per_night': price_per_night,
+                'cheapest_price_per_night': cheapest_price_per_night,
                 'total_price': total_price,
                 'total_price_with_discount': total_price_with_discount,
                 'price_discount': price_discount,
@@ -264,17 +266,18 @@ def search_hotels(request):
             hotel_results.append(hotel_result)
 
     for hotel_result in hotel_results:
-        price_per_night = hotel_result['price_per_night']
-        if price_per_night <= 50:
-            price_ranges[0]['count'] += 1
-        elif price_per_night <= 100:
-            price_ranges[1]['count'] += 1
-        elif price_per_night <= 150:
-            price_ranges[2]['count'] += 1
-        elif price_per_night <= 200:
-            price_ranges[3]['count'] += 1
-        else:
-            price_ranges[4]['count'] += 1
+        price_per_night_set = hotel_result['price_per_night']
+        for price_per_night in price_per_night_set:
+            if price_per_night <= 50:
+                price_ranges[0]['count'] += 1
+            elif price_per_night <= 100:
+                price_ranges[1]['count'] += 1
+            elif price_per_night <= 150:
+                price_ranges[2]['count'] += 1
+            elif price_per_night <= 200:
+                price_ranges[3]['count'] += 1
+            else:
+                price_ranges[4]['count'] += 1
     
         facilities_present = hotel_result['facilities']
         for facility in facilities:
@@ -288,7 +291,6 @@ def search_hotels(request):
             if activities_present.get(activity_value, False):
                 activity['count'] += 1
 
-    
 
     # Create a context dictionary with query parameters
     context = {
@@ -314,7 +316,9 @@ def update_search_results(request):
     checkout = request.GET.get('checkout')
     guests = request.GET.get('guests')
     hotel_name = request.GET.get('hotel_name')
+    price = request.GET.get('price')
 
+    price = price.split(",") if price else []
 
      # Extract amount of guests
     guests_parts = guests.split("·")
@@ -324,7 +328,6 @@ def update_search_results(request):
     checkin_date = datetime.strptime(checkin, '%d-%m-%Y').date()
     checkout_date = datetime.strptime(checkout, '%d-%m-%Y').date()
 
-
     # Perform the database query based on the search parameters
     query = Q(hotel_county__county_name__contains=destination) & \
             Q(room__available=True) & \
@@ -332,10 +335,27 @@ def update_search_results(request):
 
     if hotel_name:
         query &= Q(hotel_name__icontains=hotel_name)
-
     
+    price_query = Q()  # Create an empty query for price ranges
+    
+    if price:
+        for price_range in price:
+            if price_range == '$0-$50':
+                price_query |= Q(hotel_rooms__price_per_night__range=(0, 50))
+            elif price_range == '$50-$100':
+                price_query |= Q(hotel_rooms__price_per_night__range=(50, 100))
+            elif price_range == '$100-$150':
+                price_query |= Q(hotel_rooms__price_per_night__range=(100, 150))
+            elif price_range == '$150-$200':
+                price_query |= Q(hotel_rooms__price_per_night__range=(150, 200))
+            elif price_range == '$200+':
+                price_query |= Q(hotel_rooms__price_per_night__gte=200)
+    
+    if price_query:
+        query &= price_query
+
      # Filter hotels by destination
-    hotels = Hotels.objects.filter(query)
+    hotels = Hotels.objects.filter(query).distinct()
 
     # Count number of hotels found
     num_hotels_found = hotels.count()
@@ -404,14 +424,16 @@ def update_search_results(request):
         total_capacity = sum(room.max_guests for room in rooms)
         if guests_count <= total_capacity:
             cheapest_room = hotel.hotel_rooms.order_by('price_per_night').first()
-            price_per_night = cheapest_room.price_per_night if cheapest_room else 0
+            cheapest_price_per_night = cheapest_room.price_per_night if cheapest_room else 0
+            price_per_night = list(set(room.room_type.price_per_night for room in rooms))
+            
             num_days = (datetime.strptime(checkout, '%d-%m-%Y') -
                         datetime.strptime(checkin, '%d-%m-%Y')).days
     
             price_discount = cheapest_room.price_discount if cheapest_room else 0
             special_discount = cheapest_room.special_discount if cheapest_room else 0
     
-            total_price = price_per_night * num_days
+            total_price = cheapest_price_per_night * num_days
     
             if price_discount != 0:
                 total_price_with_discount = total_price - total_price/100*price_discount
@@ -430,6 +452,7 @@ def update_search_results(request):
                 'hotel_name': hotel.hotel_name,
                 'hotel_type': hotel.hotel_type,
                 'hotel_cover_photo': hotel_cover_photo_url,
+                'cheapest_price_per_night': cheapest_price_per_night,
                 'price_per_night': price_per_night,
                 'total_price': total_price,
                 'total_price_with_discount': total_price_with_discount,
@@ -482,17 +505,18 @@ def update_search_results(request):
             hotel_results.append(hotel_result)
 
     for hotel_result in hotel_results:
-        price_per_night = hotel_result['price_per_night']
-        if price_per_night <= 50:
-            price_ranges[0]['count'] += 1
-        elif price_per_night <= 100:
-            price_ranges[1]['count'] += 1
-        elif price_per_night <= 150:
-            price_ranges[2]['count'] += 1
-        elif price_per_night <= 200:
-            price_ranges[3]['count'] += 1
-        else:
-            price_ranges[4]['count'] += 1
+        price_per_night_set = hotel_result['price_per_night']
+        for price_per_night in price_per_night_set:
+            if price_per_night <= 50:
+                price_ranges[0]['count'] += 1
+            elif price_per_night <= 100:
+                price_ranges[1]['count'] += 1
+            elif price_per_night <= 150:
+                price_ranges[2]['count'] += 1
+            elif price_per_night <= 200:
+                price_ranges[3]['count'] += 1
+            else:
+                price_ranges[4]['count'] += 1
     
         facilities_present = hotel_result['facilities']
         for facility in facilities:
