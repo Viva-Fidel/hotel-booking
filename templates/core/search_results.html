@@ -196,7 +196,6 @@
                     name="hotel-search-input"
                     id="hotel-search-input"
                   />
-                  <ul class="autocomplete-result-list"></ul>
                 </div>
               </div>
               <h4 class="page-content__filter-by-title">Filter by</h4>
@@ -204,7 +203,10 @@
                 <div class="page-content__filter-container-title">
                   <b>Your budget per day</b>
                 </div>
-                <ul class="page-content__filter-choice-list">
+                <ul
+                  class="page-content__filter-choice-list"
+                  id="price-choice-list"
+                >
                   {% for price in price_ranges %}
                   <li>
                     <input
@@ -298,12 +300,12 @@
                 <div class="page-content__filter-container-title">
                   Facilities
                 </div>
-                <div class="page-content__filter-choice-list">
+                <div class="page-content__filter-choice-list" id="facilities-choice-list">
                   {% for facility in facilities %}
                   <li>
                     <input
                       type="checkbox"
-                      name="price-range"
+                      name="facility-range"
                       value="{{ facility.value }}"
                     />
                     {{ facility.label }}
@@ -316,12 +318,12 @@
                 <div class="page-content__filter-container-title">
                   Activities
                 </div>
-                <ul class="page-content__filter-choice-list">
+                <ul class="page-content__filter-choice-list" id="activities-choice-list">
                   {% for activity in activities %}
                   <li>
                     <input
                       type="checkbox"
-                      name="price-range"
+                      name="activity-range"
                       value="{{ activity.value }}"
                     />
                     {{ activity.label }}
@@ -333,7 +335,9 @@
             </div>
             <div class="page-content__right-side">
               <h3 class="page-content__search-results-title">
-                {{ destination }}: <span id="num-hotels-found">{{ num_hotels_found }}</span> search results found
+                {{ destination }}:
+                <span id="num-hotels-found">{{ num_hotels_found }}</span> search
+                results found
               </h3>
               <div class="page-content__allocation-type-filter-container">
                 <button
@@ -511,12 +515,12 @@
                         <p
                           class="page-content__search-results-item-info-data-price-full"
                         >
-                        US${{ hotel_result.total_price_with_discount }}
+                          US${{ hotel_result.total_price_with_discount }}
                         </p>
                         <p
                           class="page-content__search-results-item-info-data-price-discount__active"
                         >
-                        US${{ hotel_result.total_price }}
+                          US${{ hotel_result.total_price }}
                         </p>
                         {% else %}
                         <p
@@ -590,24 +594,6 @@
   });
 </script>
 {% endif %}
-
-<script src="{% static 'node_modules/@trevoreyre/autocomplete-js/dist/autocomplete.min.js' %}"></script>
-<script>
-  new Autocomplete("#page-content__filter-search-geo", {
-    // The search function takes user input and returns a Promise that resolves with an array of results
-    search: (input) => {
-      const url = "/search/?address=" + input.trim();
-      // Using fetch to send an HTTP request to the specified URL and return a Promise that resolves with the response
-      return new Promise((resolve) => {
-        fetch(url)
-          .then((response) => response.json())
-          .then((data) => {
-            resolve(data.data); // Resolving the Promise with the array of results from the response data
-          });
-      });
-    },
-  });
-</script>
 
 <script>
   const StarButtons = document.querySelectorAll(
@@ -723,8 +709,74 @@
           var data = response;
           var duration = data.duration;
           var guests = data.guests;
-          var num_hotels_found = data.num_hotels_found; 
+          var numHotelsFound = data.num_hotels_found;
+          var priceRanges = data.price_ranges;
+          var facilities = data.facilities;
+          var activities = data.activities;
           var hotelResults = data.hotel_results;
+
+          $("#price-choice-list").empty();
+
+          priceRanges.forEach(function (price) {
+            console.log(price.count);
+            var listItem = `
+      <li>
+        <input
+          type="checkbox"
+          name="price-range"
+          value="${price.value}"
+        />
+        ${price.label}
+        <span>${price.count}</span>
+      </li>
+    `;
+  // Append the list item to the price range list
+  $("#price-choice-list").append(listItem);
+          });
+
+
+          $("#facilities-choice-list").empty();
+
+          facilities.forEach(function (facility) {
+            console.log(facility.count);
+            var listItem = `
+      <li>
+        <input
+          type="checkbox"
+          name="facility-range"
+          value="${facility.value}"
+        />
+        ${facility.label}
+        <span>${facility.count}</span>
+      </li>
+    `;
+
+            // Append the list item to the price range list
+            $("#facilities-choice-list").append(listItem);
+          });
+
+          $("#activities-choice-list").empty();
+
+          facilities.forEach(function (activity) {
+            console.log(activity.count);
+            var listItem = `
+      <li>
+        <input
+          type="checkbox"
+          name="facility-range"
+          value="${activity.value}"
+        />
+        ${activity.label}
+        <span>${activity.count}</span>
+      </li>
+    `;
+
+            // Append the list item to the price range list
+            $("#activities-choice-list").append(listItem);
+          });
+
+
+          
 
           // Clear the existing search results
           $("#search-results-container").empty();
@@ -732,8 +784,7 @@
           if (hotelResults.length > 0) {
             // Loop through the hotel results and append the updated HTML
             hotelResults.forEach(function (hotelResult) {
-
-              var html = '';
+              var html = "";
 
               // Generate the HTML for each hotel result
               html += `
@@ -845,7 +896,7 @@
         </li>
             `;
 
-            $('#num-hotels-found').text(num_hotels_found);
+              $("#num-hotels-found").text(numHotelsFound);
 
               // Append the HTML to the search results container
               $("#search-results-container").append(html);

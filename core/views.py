@@ -507,33 +507,6 @@ def update_search_results(request):
                 activity['count'] += 1
     
 
-
-    for hotel_result in hotel_results:
-        price_per_night = hotel_result['price_per_night']
-        if price_per_night <= 50:
-            price_ranges[0]['count'] += 1
-        elif price_per_night <= 100:
-            price_ranges[1]['count'] += 1
-        elif price_per_night <= 150:
-            price_ranges[2]['count'] += 1
-        elif price_per_night <= 200:
-            price_ranges[3]['count'] += 1
-        else:
-            price_ranges[4]['count'] += 1
-    
-        facilities_present = hotel_result['facilities']
-        for facility in facilities:
-            facility_value = facility['value']
-            if facilities_present.get(facility_value, False):
-                facility['count'] += 1
-    
-        activities_present = hotel_result['activities']
-        for activity in activities:
-            activity_value = activity['value']
-            if activities_present.get(activity_value, False):
-                activity['count'] += 1
-    
-
     # Create a context dictionary with query parameters
     context = {
             'destination': destination,
@@ -551,8 +524,3 @@ def update_search_results(request):
     # Return the search results as JSON response
     return JsonResponse(context)
 
-
-
-
-    # Return the search results as JSON response
-    return JsonResponse(context)
