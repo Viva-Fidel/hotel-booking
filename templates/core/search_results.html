@@ -397,11 +397,11 @@
                       <span>Recommended</span>
                     </li>
                     <li class="page-content__sort-by-drop-down-item">
-                      <span>Rating (high to low)</span>
+                      <span>Stars (high to low)</span>
                     </li>
 
                     <li class="page-content__sort-by-drop-down-item">
-                      <span>Rating (low to high)</span>
+                      <span>Stars (low to high)</span>
                     </li>
                     <li class="page-content__sort-by-drop-down-item">
                       <span>Top reviewed</span>
@@ -481,7 +481,7 @@
                       <p
                         class="page-content__search-results-item-info-rating-stars-text"
                       >
-                        Guest rating: {{ hotel_result.user_rating }} (1200
+                        Guest rating: {{ hotel_result.user_rating }} ({{ hotel_result.amount_of_reviews }}
                         Reviews)
                       </p>
                     </div>
@@ -612,7 +612,7 @@
 {% endif %}
 
 
-<script>
+<!-- <script>
   const dropDownList = document.querySelector(
     ".page-content__sort-by-drop-down-item-list"
   );
@@ -649,20 +649,28 @@
       dropDownIcon.classList.remove("rotated");
     }
   });
-</script>
+</script> -->
 
 <script>
   $(document).ready(function () {
-    // Add event listener to the hotel name input field
-    $("#hotel-search-input").keypress(function (event) {
-      if (event.which === 13) {
-        // Enter key code
-        event.preventDefault();
-        updateSearchResults();
-      }
-    });
+  // Define variables to store the selected values
+  let selectedPrices = null;
+  let hotelRating = null;
+  let selectedFacilities = null;
+  let selectedActivities = null;
+  let hotelType = null;
+  let sorting = null; 
 
-    const allocationButtons = document.querySelectorAll(".page-content__allocation-type-filter-button");
+  // Add event listener to the hotel name input field
+  $("#hotel-search-input").keypress(function (event) {
+    if (event.which === 13) {
+      // Enter key code
+      event.preventDefault();
+      updateSearchResults();
+    }
+  });
+
+  const allocationButtons = document.querySelectorAll(".page-content__allocation-type-filter-button");
 
     allocationButtons.forEach((button) => {
       button.addEventListener("click", () => {
@@ -674,7 +682,8 @@
           });
           button.classList.add("selected");
         }
-        updateSearchResults(null, null, null, null, getHotelType());
+        hotelType = getHotelType();
+        updateSearchResults();
       });
     });
 
@@ -688,102 +697,111 @@
       return null;
     }
 
-    // Event listener for facility checkbox changes
-    $(document).on(
-      "change",
-      ".page-content__filter-choice-list__facility-range",
-      function () {
-        var selectedFacilities = []; // Array to store selected facility values
-        // Loop through all the checkboxes and collect the selected facility values
-        $(".page-content__filter-choice-list__facility-range").each(
-          function () {
-            if ($(this).is(":checked")) {
-              selectedFacilities.push($(this).val());
-            }
-          }
-        );
-
-        updateSearchResults(null, null, selectedFacilities); // Pass null as the first two arguments if they're not needed
-      }
-    );
-
-    $(document).on(
-      "change",
-      ".page-content__filter-choice-list__activity-range",
-      function () {
-        var selectedActivities = []; // Array to store selected activity values
-        // Loop through all the checkboxes and collect the selected activity values
-        $(".page-content__filter-choice-list__activity-range").each(
-          function () {
-            if ($(this).is(":checked")) {
-              selectedActivities.push($(this).val());
-            }
-          }
-        );
-
-        updateSearchResults(null, null, null, selectedActivities); // Pass null as the first two arguments if they're not needed
-      }
-    );
 
 
-
-    // Event listener for price range changes
-    $(document).on(
-      "change",
-      ".page-content__filter-choice-list-item__price-range",
-      function () {
-        var selectedPrices = []; // Array to store selected price ranges
-        // Loop through all the checkboxes and collect the selected price ranges
-        $(".page-content__filter-choice-list-item__price-range").each(
-          function () {
-            if ($(this).is(":checked")) {
-              selectedPrices.push($(this).val());
-            }
-          }
-        );
-
-        updateSearchResults(selectedPrices);
-      }
-    );
-
-
-
-    
-    const starButtons = document.querySelectorAll(
-      ".page-content__filter-by-rating-choice-stars-button"
-    );
-
-    starButtons.forEach((button) => {
-      button.addEventListener("click", () => {
-        if (button.classList.contains("selected")) {
-          button.classList.remove("selected");
-        } else {
-          starButtons.forEach((otherButton) => {
-            otherButton.classList.remove("selected");
-          });
-          button.classList.add("selected");
+  $(document).on(
+    "change",
+    ".page-content__filter-choice-list__facility-range",
+    function () {
+      selectedFacilities = [];
+      $(".page-content__filter-choice-list__facility-range").each(function () {
+        if ($(this).is(":checked")) {
+          selectedFacilities.push($(this).val());
         }
-        updateSearchResults(null, getSelectedRating());
       });
-    });
-
-    function getSelectedRating() {
-      const selectedButton = document.querySelector(
-        ".page-content__filter-by-rating-choice-stars-button.selected"
-      );
-      if (selectedButton) {
-        return parseInt(selectedButton.textContent.trim());
-      }
-      return null;
+      updateSearchResults();
     }
+  );
 
-    function updateSearchResults(
-      selectedPrices,
-      hotelRating,
-      selectedFacilities,
-      selectedActivities,
-      hotelType,
-    ) {
+  $(document).on(
+    "change",
+    ".page-content__filter-choice-list__activity-range",
+    function () {
+      selectedActivities = [];
+      $(".page-content__filter-choice-list__activity-range").each(function () {
+        if ($(this).is(":checked")) {
+          selectedActivities.push($(this).val());
+        }
+      });
+      updateSearchResults();
+    }
+  );
+
+  $(document).on(
+    "change",
+    ".page-content__filter-choice-list-item__price-range",
+    function () {
+      selectedPrices = [];
+      $(".page-content__filter-choice-list-item__price-range").each(function () {
+        if ($(this).is(":checked")) {
+          selectedPrices.push($(this).val());
+        }
+      });
+      updateSearchResults();
+    }
+  );
+
+  const starButtons = document.querySelectorAll(
+    ".page-content__filter-by-rating-choice-stars-button"
+  );
+
+  starButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      if (button.classList.contains("selected")) {
+        button.classList.remove("selected");
+      } else {
+        starButtons.forEach((otherButton) => {
+          otherButton.classList.remove("selected");
+        });
+        button.classList.add("selected");
+      }
+      hotelRating = getSelectedRating();
+      updateSearchResults();
+    });
+  });
+
+  function getSelectedRating() {
+    const selectedButton = document.querySelector(
+      ".page-content__filter-by-rating-choice-stars-button.selected"
+    );
+    if (selectedButton) {
+      return parseInt(selectedButton.textContent.trim());
+    }
+    return null;
+  }
+
+  const dropDownList = document.querySelector(".page-content__sort-by-drop-down-item-list");
+  const dropDownIcon = document.querySelector(".page-content__sort-by-container-icon");
+  const sortByContainer = document.querySelector(".page-content__sort-by-container");
+  const sortByChoice = document.querySelector(".page-content__sort-by-container-choice");
+
+  // Hide the drop-down list on page load
+  dropDownList.style.display = "none";
+
+  // Toggle the drop-down list when the icon is clicked
+  dropDownIcon.addEventListener("click", () => {
+    if (dropDownList.style.display === "none") {
+      dropDownList.style.display = "flex";
+      dropDownIcon.classList.add("rotated");
+    } else {
+      dropDownList.style.display = "none";
+      dropDownIcon.classList.remove("rotated");
+    }
+  });
+
+  // Update the sort-by choice when an item is clicked
+  dropDownList.addEventListener("click", (event) => {
+    const selectedItem = event.target.closest("li");
+    if (selectedItem) {
+      sortByChoice.textContent = selectedItem.textContent.trim();
+      dropDownList.style.display = "none";
+      dropDownIcon.classList.remove("rotated");
+      sorting = sortByChoice.textContent; // Set the sorting value based on the selected item
+      updateSearchResults();
+    }
+  });
+
+  function updateSearchResults() {
       // Get the search parameters from the URL
       var searchParams = new URLSearchParams(window.location.search);
       var destination = searchParams.get("destination");
@@ -807,6 +825,7 @@
           facilities: (selectedFacilities || []).join(","),
           activities: (selectedActivities || []).join(","),
           hotel_type: hotelType,
+          sorting: sorting,
         },
         dataType: "json",
         success: function (response) {
@@ -934,7 +953,7 @@
                         
                       </div>
                       <p class="page-content__search-results-item-info-rating-stars-text">
-                        Guest rating: ${hotelResult.user_rating} (1200 Reviews)
+                        Guest rating: ${hotelResult.user_rating} (${hotelResult.amount_of_reviews} Reviews)
                       </p>
                     </div>
 

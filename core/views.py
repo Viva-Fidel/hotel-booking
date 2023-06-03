@@ -120,6 +120,8 @@ def search_hotels(request):
     # Filter hotels by destination
     hotels = Hotels.objects.filter(query).distinct()
 
+    hotels = hotels.order_by('-recommended_score')
+
     # Count number of hotels found
     num_hotels_found = hotels.count()
 
@@ -215,6 +217,7 @@ def search_hotels(request):
                 'hotel_cover_photo': hotel.hotel_cover_photo,
                 'hotel_rating': hotel.hotel_star_rating,
                 'user_rating': hotel.user_rating,
+                'amount_of_reviews': hotel.amount_of_reviews,
                 'price_per_night': price_per_night,
                 'cheapest_price_per_night': cheapest_price_per_night,
                 'total_price': total_price,
@@ -323,6 +326,7 @@ def update_search_results(request):
     facilities = request.GET.get('facilities')
     activities = request.GET.get('activities')
     hotel_type = request.GET.get('hotel_type')
+    sorting = request.GET.get('sorting')
 
 
     price = price.split(",") if price else []
@@ -396,11 +400,25 @@ def update_search_results(request):
             query &= Q(is_top_pick=True)
         elif hotel_type == 'Hotel and apartments':
             query &= Q(hotel_type__in=['hotel', 'apartment'])
+        elif hotel_type == 'Residence':
+            query &= Q(hotel_type='residence')
+        elif hotel_type == 'Resort':
+            query &= Q(hotel_type='resort')
         else:
-            query &= Q(hotel_type=hotel_type)
+            query &= Q(hotel_type='shared_space')
 
      # Filter hotels by destination
     hotels = Hotels.objects.filter(query).distinct()
+
+    # Sort hotels based on sorting
+    if sorting == 'Recommended':
+        hotels = hotels.order_by('-recommended_score')
+    elif sorting == 'Stars (high to low)':
+        hotels = hotels.order_by('-hotel_star_rating')
+    elif sorting == 'Stars (low to high)':
+        hotels = hotels.order_by('hotel_star_rating')
+    elif sorting == 'Top reviewed':
+        hotels = hotels.annotate(num_reviews=Count('amount_of_reviews')).order_by('num_reviews')
 
     # Count number of hotels found
     num_hotels_found = hotels.count()
@@ -499,6 +517,7 @@ def update_search_results(request):
                 'hotel_cover_photo': hotel_cover_photo_url,
                 'hotel_rating': hotel.hotel_star_rating,
                 'user_rating': hotel.user_rating,
+                'amount_of_reviews': hotel.amount_of_reviews,
                 'cheapest_price_per_night': cheapest_price_per_night,
                 'price_per_night': price_per_night,
                 'total_price': total_price,
