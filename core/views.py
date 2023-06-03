@@ -322,6 +322,7 @@ def update_search_results(request):
     hotel_rating = request.GET.get('hotel_rating')
     facilities = request.GET.get('facilities')
     activities = request.GET.get('activities')
+    hotel_type = request.GET.get('hotel_type')
 
 
     price = price.split(",") if price else []
@@ -389,6 +390,14 @@ def update_search_results(request):
                 facility_query &= field_query
         if facility_query is not None:
             query &= facility_query
+    
+    if hotel_type:
+        if hotel_type == 'Our top picks':
+            query &= Q(is_top_pick=True)
+        elif hotel_type == 'Hotel and apartments':
+            query &= Q(hotel_type__in=['hotel', 'apartment'])
+        else:
+            query &= Q(hotel_type=hotel_type)
 
      # Filter hotels by destination
     hotels = Hotels.objects.filter(query).distinct()

@@ -611,24 +611,6 @@
 </script>
 {% endif %}
 
-<script>
-  const AllocationButtons = document.querySelectorAll(
-    ".page-content__allocation-type-filter-button"
-  );
-
-  AllocationButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      if (button.classList.contains("selected")) {
-        button.classList.remove("selected");
-      } else {
-        AllocationButtons.forEach((otherButton) => {
-          otherButton.classList.remove("selected");
-        });
-        button.classList.add("selected");
-      }
-    });
-  });
-</script>
 
 <script>
   const dropDownList = document.querySelector(
@@ -679,6 +661,32 @@
         updateSearchResults();
       }
     });
+
+    const allocationButtons = document.querySelectorAll(".page-content__allocation-type-filter-button");
+
+    allocationButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        if (button.classList.contains("selected")) {
+          button.classList.remove("selected");
+        } else {
+          allocationButtons.forEach((otherButton) => {
+            otherButton.classList.remove("selected");
+          });
+          button.classList.add("selected");
+        }
+        updateSearchResults(null, null, null, null, getHotelType());
+      });
+    });
+
+    function getHotelType() {
+      const selectedButton = document.querySelector(
+        ".page-content__allocation-type-filter-button.selected"
+      );
+      if (selectedButton) {
+        return selectedButton.textContent.trim();
+      }
+      return null;
+    }
 
     // Event listener for facility checkbox changes
     $(document).on(
@@ -774,6 +782,7 @@
       hotelRating,
       selectedFacilities,
       selectedActivities,
+      hotelType,
     ) {
       // Get the search parameters from the URL
       var searchParams = new URLSearchParams(window.location.search);
@@ -797,6 +806,7 @@
           hotel_rating: hotelRating,
           facilities: (selectedFacilities || []).join(","),
           activities: (selectedActivities || []).join(","),
+          hotel_type: hotelType,
         },
         dataType: "json",
         success: function (response) {
