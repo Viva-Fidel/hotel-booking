@@ -321,10 +321,12 @@ def update_search_results(request):
     price = request.GET.get('price')
     hotel_rating = request.GET.get('hotel_rating')
     facilities = request.GET.get('facilities')
+    activities = request.GET.get('activities')
 
 
     price = price.split(",") if price else []
     facilities = facilities.split(",") if facilities else []
+    activities = activities.split(",") if activities else []
 
      # Extract amount of guests
     guests_parts = guests.split("·")
@@ -364,6 +366,18 @@ def update_search_results(request):
         hotel_rating = int(hotel_rating)
         query &= Q(hotel_star_rating__gte=hotel_rating)
 
+    if activities:
+        activity_query = None
+        for activity in activities:
+            field_lookup = f"hotel_activities__hotel_has_{activity.replace(' ', '_').lower()}"
+            field_query = Q(**{field_lookup: True})
+            if activity_query is None:
+                activity_query = field_query
+            else:
+                activity_query &= field_query
+        if activity_query is not None:
+            query &= activity_query
+    
     if facilities:
         facility_query = None
         for facility in facilities:

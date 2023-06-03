@@ -333,6 +333,7 @@
                       type="checkbox"
                       name="activity-range"
                       value="{{ activity.value }}"
+                      class="page-content__filter-choice-list__activity-range"
                     />
                     {{ activity.label }}
                     <span>{{ activity.count }}</span>
@@ -697,6 +698,27 @@
         updateSearchResults(null, null, selectedFacilities); // Pass null as the first two arguments if they're not needed
       }
     );
+
+    $(document).on(
+      "change",
+      ".page-content__filter-choice-list__activity-range",
+      function () {
+        var selectedActivities = []; // Array to store selected activity values
+        // Loop through all the checkboxes and collect the selected activity values
+        $(".page-content__filter-choice-list__activity-range").each(
+          function () {
+            if ($(this).is(":checked")) {
+              selectedActivities.push($(this).val());
+            }
+          }
+        );
+
+        updateSearchResults(null, null, null, selectedActivities); // Pass null as the first two arguments if they're not needed
+      }
+    );
+
+
+
     // Event listener for price range changes
     $(document).on(
       "change",
@@ -716,6 +738,9 @@
       }
     );
 
+
+
+    
     const starButtons = document.querySelectorAll(
       ".page-content__filter-by-rating-choice-stars-button"
     );
@@ -747,7 +772,8 @@
     function updateSearchResults(
       selectedPrices,
       hotelRating,
-      selectedFacilities
+      selectedFacilities,
+      selectedActivities,
     ) {
       // Get the search parameters from the URL
       var searchParams = new URLSearchParams(window.location.search);
@@ -770,6 +796,7 @@
           price: (selectedPrices || []).join(","),
           hotel_rating: hotelRating,
           facilities: (selectedFacilities || []).join(","),
+          activities: (selectedActivities || []).join(","),
         },
         dataType: "json",
         success: function (response) {
@@ -792,6 +819,11 @@
             checkedStateFacility[$(this).val()] = $(this).is(":checked");
           });
 
+          var checkedStateActivity = {};
+          $("input[name='activity-range']").each(function () {
+            checkedStateActivity[$(this).val()] = $(this).is(":checked");
+          });
+          
           $; // Update the price range list
           $("#price-choice-list").empty();
           priceRanges.forEach(function (price) {
@@ -834,12 +866,15 @@
           $("#activities-choice-list").empty();
 
           activities.forEach(function (activity) {
+            var checked = checkedStateActivity[activity.value] ? "checked" : "";
             var listItem = `
               <li>
                 <input
                   type="checkbox"
                   name="activity-range"
                   value="${activity.value}"
+                  class="page-content__filter-choice-list__activity-range"
+        ${checked}
                 />
                 ${activity.label}
                 <span>${activity.count}</span>
