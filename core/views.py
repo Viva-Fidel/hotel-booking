@@ -319,6 +319,7 @@ def update_search_results(request):
     guests = request.GET.get('guests')
     hotel_name = request.GET.get('hotel_name')
     price = request.GET.get('price')
+    hotel_rating = request.GET.get('hotel_rating')
 
     price = price.split(",") if price else []
 
@@ -355,6 +356,11 @@ def update_search_results(request):
     
     if price_query:
         query &= price_query
+    
+    if hotel_rating:
+        hotel_rating = int(hotel_rating)
+        query &= Q(hotel_star_rating__gt=hotel_rating)
+
 
      # Filter hotels by destination
     hotels = Hotels.objects.filter(query).distinct()

@@ -613,7 +613,7 @@
 </script>
 {% endif %}
 
-<script>
+<!-- <script>
   const StarButtons = document.querySelectorAll(
     ".page-content__filter-by-rating-choice-stars-button"
   );
@@ -630,7 +630,7 @@
       }
     });
   });
-</script>
+</script> -->
 
 <script>
   const AllocationButtons = document.querySelectorAll(
@@ -691,32 +691,55 @@
 </script>
 
 <script>
-  $(document).ready(function () {
-    // Add event listener to the hotel name input field
-    $("#hotel-search-input").keypress(function (event) {
-      if (event.which === 13) {
-        // Enter key code
-        event.preventDefault();
-        updateSearchResults();
+$(document).ready(function() {
+  // Add event listener to the hotel name input field
+  $("#hotel-search-input").keypress(function(event) {
+    if (event.which === 13) {
+      // Enter key code
+      event.preventDefault();
+      updateSearchResults();
+    }
+  });
+
+  // Event listener for price range changes
+  $(document).on("change", ".page-content__filter-choice-list-item__price-range", function() {
+    var selectedPrices = []; // Array to store selected price ranges
+    // Loop through all the checkboxes and collect the selected price ranges
+    $(".page-content__filter-choice-list-item__price-range").each(function() {
+      if ($(this).is(":checked")) {
+        selectedPrices.push($(this).val());
       }
     });
 
+    updateSearchResults(selectedPrices);
+  });
 
-    $(document).on("change", ".page-content__filter-choice-list-item__price-range", function () {
-      var selectedPrices = []; // Array to store selected price ranges
-      // Loop through all the checkboxes and collect the selected price ranges
-      $(".page-content__filter-choice-list-item__price-range").each(function () {
-        if ($(this).is(":checked")) {
-          selectedPrices.push($(this).val());
-        }
-      });
+  const starButtons = document.querySelectorAll(".page-content__filter-by-rating-choice-stars-button");
 
-      updateSearchResults(selectedPrices);
+  starButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      if (button.classList.contains("selected")) {
+        button.classList.remove("selected");
+      } else {
+        starButtons.forEach((otherButton) => {
+          otherButton.classList.remove("selected");
+        });
+        button.classList.add("selected");
+      }
+      updateSearchResults(null, getSelectedRating());
     });
+  });
+
+  function getSelectedRating() {
+    const selectedButton = document.querySelector(".page-content__filter-by-rating-choice-stars-button.selected");
+    if (selectedButton) {
+      return parseInt(selectedButton.textContent.trim());
+    }
+    return null;
+  }
 
 
-    // Function to update the search results using AJAX
-    function updateSearchResults(selectedPrices) {
+  function updateSearchResults(selectedPrices, hotelRating) {
       // Get the search parameters from the URL
       var searchParams = new URLSearchParams(window.location.search);
       var destination = searchParams.get("destination");
@@ -736,6 +759,7 @@
           guests: guests,
           hotel_name: hotelName,
           price: (selectedPrices || []).join(","),
+          hotel_rating: hotelRating,
         },
         dataType: "json",
         success: function (response) {
@@ -936,10 +960,12 @@
 
             // Append the message to the search results container
             $("#search-results-container").append(message);
+            $("#num-hotels-found").text(numHotelsFound);
           }
         },
       });
     }
+    
   });
 </script>
 
