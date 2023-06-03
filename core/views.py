@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.db.models import Q
 from django.http import JsonResponse
 from django.contrib.auth import logout
-from django.templatetags.static import static
+from django.db.models import Count
 from .models import Counties, Cover
 from hotels.models import Hotels, HotelsImage
 from blogs.models import Blogs
@@ -234,7 +234,7 @@ def search_hotels(request):
                     'Fitness center': hotel.hotel_facilities.first().hotel_has_fitness_center if hotel.hotel_facilities.exists() else False,
                     'Room service': hotel.hotel_facilities.first().hotel_has_room_service if hotel.hotel_facilities.exists() else False,
                     'Restaurant': hotel.hotel_facilities.first().hotel_has_restaurant if hotel.hotel_facilities.exists() else False,
-                    'Pet friendly': hotel.hotel_facilities.first().hotel_is_pet_friendly if hotel.hotel_facilities.exists() else False,
+                    'Pet friendly': hotel.hotel_facilities.first().hotel_has_pet_friendly if hotel.hotel_facilities.exists() else False,
                     'Facilities for disabled guests': hotel.hotel_facilities.first().hotel_has_facilities_for_disabled_guests if hotel.hotel_facilities.exists() else False,
                     'Family rooms': hotel.hotel_facilities.first().hotel_has_family_rooms if hotel.hotel_facilities.exists() else False,
                     'Spa': hotel.hotel_facilities.first().hotel_has_spa if hotel.hotel_facilities.exists() else False,
@@ -320,8 +320,11 @@ def update_search_results(request):
     hotel_name = request.GET.get('hotel_name')
     price = request.GET.get('price')
     hotel_rating = request.GET.get('hotel_rating')
+    facilities = request.GET.get('facilities')
+
 
     price = price.split(",") if price else []
+    facilities = facilities.split(",") if facilities else []
 
      # Extract amount of guests
     guests_parts = guests.split("·")
@@ -359,8 +362,19 @@ def update_search_results(request):
     
     if hotel_rating:
         hotel_rating = int(hotel_rating)
-        query &= Q(hotel_star_rating__gt=hotel_rating)
+        query &= Q(hotel_star_rating__gte=hotel_rating)
 
+    if facilities:
+        facility_query = None
+        for facility in facilities:
+            field_lookup = f"hotel_facilities__hotel_has_{facility.replace(' ', '_').lower()}"
+            field_query = Q(**{field_lookup: True})
+            if facility_query is None:
+                facility_query = field_query
+            else:
+                facility_query &= field_query
+        if facility_query is not None:
+            query &= facility_query
 
      # Filter hotels by destination
     hotels = Hotels.objects.filter(query).distinct()
@@ -481,7 +495,7 @@ def update_search_results(request):
                     'Fitness center': hotel.hotel_facilities.first().hotel_has_fitness_center if hotel.hotel_facilities.exists() else False,
                     'Room service': hotel.hotel_facilities.first().hotel_has_room_service if hotel.hotel_facilities.exists() else False,
                     'Restaurant': hotel.hotel_facilities.first().hotel_has_restaurant if hotel.hotel_facilities.exists() else False,
-                    'Pet friendly': hotel.hotel_facilities.first().hotel_is_pet_friendly if hotel.hotel_facilities.exists() else False,
+                    'Pet friendly': hotel.hotel_facilities.first().hotel_has_pet_friendly if hotel.hotel_facilities.exists() else False,
                     'Facilities for disabled guests': hotel.hotel_facilities.first().hotel_has_facilities_for_disabled_guests if hotel.hotel_facilities.exists() else False,
                     'Family rooms': hotel.hotel_facilities.first().hotel_has_family_rooms if hotel.hotel_facilities.exists() else False,
                     'Spa': hotel.hotel_facilities.first().hotel_has_spa if hotel.hotel_facilities.exists() else False,

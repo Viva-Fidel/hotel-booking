@@ -119,7 +119,7 @@ class HotelFacilities(models.Model):
         default=False, verbose_name="Room service")
     hotel_has_restaurant = models.BooleanField(
         default=False, verbose_name="Restaurant")
-    hotel_is_pet_friendly = models.BooleanField(
+    hotel_has_pet_friendly = models.BooleanField(
         default=False, verbose_name="Pet friendly")
     hotel_has_facilities_for_disabled_guests = models.BooleanField(
         default=False, verbose_name="Facilities for disabled guests")
