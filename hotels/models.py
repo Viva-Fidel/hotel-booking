@@ -55,6 +55,7 @@ class Hotels(models.Model):
     user_rating = models.DecimalField(
         decimal_places=2, max_digits=5, default=0.00)
     hotel_star_rating = models.PositiveIntegerField(choices=STAR_CHOICES, default=0, verbose_name="Hotel star rating")
+    is_top_pick = models.BooleanField(default=False, verbose_name="Is Top Pick")
     time_create = models.DateTimeField(
         auto_now_add=True, verbose_name="Date of creation")
     time_update = models.DateTimeField(auto_now=True, verbose_name="Updated")
