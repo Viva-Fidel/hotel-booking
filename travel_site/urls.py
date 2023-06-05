@@ -23,6 +23,7 @@ urlpatterns = [
     path('', include('core.urls')),
     path('admin/', admin.site.urls),
     path('', include('users.urls')),
+    path('', include('hotels.urls')),
     re_path(r'^_nested_admin/', include('nested_admin.urls')),
     re_path(r'^chaining/', include('smart_selects.urls')),
 ]

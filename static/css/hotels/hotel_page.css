@@ -1,0 +1,22 @@
+.hotel-photo__container{
+    display: flex;
+}
+
+.hotel-photo__container-left{
+    width: 820px;
+    height: 452px;
+    border-radius: 5px;
+}
+
+.hotel-photo__container-right-photos{
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+    justify-content: space-between;
+}
+
+.hotel-photo__container-right-photo{
+    width: 400px;
+    height: 218px;
+    border-radius: 5px;
+}
