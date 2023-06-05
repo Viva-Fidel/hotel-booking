@@ -23,7 +23,10 @@ my Dream Place is an online hotel booking website partially based on this <a hre
 All hotel names and descriptions are generated using neural networks. All matches with real hotels or hotel descriptions is a coincidence.
 
 ## 05.06 Update
-Implemented search filters on a hotel search page
+* Implemented search filters on a hotel search page
+* Implemented default search parameters generation if user doesnt input anything in dates/guests and rooms
+![image](https://github.com/Viva-Fidel/hotel-booking/assets/98227548/bfff5c92-5ce7-4e2e-8a5a-2d3e5124dbfa)
+
 
 ## To do
 - [ ] User account managment
