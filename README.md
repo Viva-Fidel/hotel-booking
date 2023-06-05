@@ -24,7 +24,7 @@ All hotel names and descriptions are generated using neural networks. All matche
 
 ## 05.06 Update
 * Implemented search filters on a hotel search page
-* Implemented default search parameters generation if user doesnt input anything in dates/guests and rooms
+* Implemented default search parameters generation if user doesn`t input anything in dates/guests and rooms:
 ![image](https://github.com/Viva-Fidel/hotel-booking/assets/98227548/bfff5c92-5ce7-4e2e-8a5a-2d3e5124dbfa)
 
 
