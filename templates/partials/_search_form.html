@@ -194,13 +194,14 @@
   // Selecting the HTML elements for the check-in and check-out date inputs
   const checkIn = document.getElementById("checkin");
   const checkOut = document.getElementById("checkout");
+  const submitButton = document.querySelector(".booking-search-form__submit-button");
 
   // Setting the maximum date for the check-out input to one year from today
   const maxDate = new Date();
   maxDate.setFullYear(maxDate.getFullYear() + 1);
 
   // Initializing Flatpickr for the check-out input with options for date formatting, minimum and maximum dates, and event handling
-  flatpickr(checkOut, {
+  const checkOutPicker = flatpickr(checkOut, {
     altInput: checkOut, // Using an alternate input field for better accessibility
     minDate: "today", // Setting the minimum date to today
     maxDate: maxDate, // Setting the maximum date to one year from today
@@ -222,7 +223,7 @@
   });
 
   // Initializing Flatpickr for the check-in input with options for date formatting, minimum date, and event handling
-  flatpickr(checkIn, {
+  const checkInPicker = flatpickr(checkIn, {
     altInput: checkIn, // Using an alternate input field for better accessibility
     minDate: "today", // Setting the minimum date to today
     dateFormat: "d-m-Y", // Specifying the date format as day-month-year
@@ -244,6 +245,65 @@
       }
     },
   });
+
+  // Event listener for the search button click
+  submitButton.addEventListener("click", function(event) {
+    // Check if check-in and check-out dates are not selected
+    if (checkIn.value === "" && checkOut.value === "") {
+      // Set default dates as 7 days from today
+      const defaultCheckInDate = new Date();
+      const defaultCheckOutDate = new Date();
+      defaultCheckInDate.setDate(defaultCheckInDate.getDate() + 7);
+      defaultCheckOutDate.setDate(defaultCheckInDate.getDate() + 7);
+      
+      // Format the default dates as "d-m-Y"
+      const defaultCheckInDateStr = `${defaultCheckInDate.getDate()}-${defaultCheckInDate.getMonth() + 1}-${defaultCheckInDate.getFullYear()}`;
+      const defaultCheckOutDateStr = `${defaultCheckOutDate.getDate()}-${defaultCheckOutDate.getMonth() + 1}-${defaultCheckOutDate.getFullYear()}`;
+      
+      // Set the default dates in the input fields and update the Flatpickr instances
+      checkIn.value = defaultCheckInDateStr;
+      checkOut.value = defaultCheckOutDateStr;
+      checkInPicker.setDate(defaultCheckInDate);
+      checkOutPicker.setDate(defaultCheckOutDate);
+    }
+    else if (checkIn.value === "" && checkOut.value !== "") {
+    // If only check-out date is selected, set default check-in date as 1 day before the selected check-out date
+    const selectedCheckOutDateParts = checkOut.value.split("-");
+    const selectedCheckOutDate = new Date(
+      parseInt(selectedCheckOutDateParts[2]),
+      parseInt(selectedCheckOutDateParts[1]) - 1,
+      parseInt(selectedCheckOutDateParts[0])
+    );
+    const defaultCheckInDate = new Date(selectedCheckOutDate);
+    defaultCheckInDate.setDate(selectedCheckOutDate.getDate() - 1);
+
+    // Format the default check-in date as "d-m-Y"
+    const defaultCheckInDateStr = `${defaultCheckInDate.getDate()}-${defaultCheckInDate.getMonth() + 1}-${defaultCheckInDate.getFullYear()}`;
+
+    // Set the default check-in date in the input field and update the Flatpickr instance
+    checkIn.value = defaultCheckInDateStr;
+    checkInPicker.setDate(defaultCheckInDate);
+    checkOutPicker.setDate(selectedCheckOutDate); // Update the check-out date in the Flatpickr instance
+  } else if (checkIn.value !== "" && checkOut.value === "") {
+    // If only check-in date is selected, set default check-out date as 1 day after the selected check-in date
+    const selectedCheckInDateParts = checkIn.value.split("-");
+    const selectedCheckInDate = new Date(
+      parseInt(selectedCheckInDateParts[2]),
+      parseInt(selectedCheckInDateParts[1]) - 1,
+      parseInt(selectedCheckInDateParts[0])
+    );
+    const defaultCheckOutDate = new Date(selectedCheckInDate);
+    defaultCheckOutDate.setDate(selectedCheckInDate.getDate() + 1);
+
+    // Format the default check-out date as "d-m-Y"
+    const defaultCheckOutDateStr = `${defaultCheckOutDate.getDate()}-${defaultCheckOutDate.getMonth() + 1}-${defaultCheckOutDate.getFullYear()}`;
+
+    // Set the default check-out date in the input field and update the Flatpickr instance
+    checkOut.value = defaultCheckOutDateStr;
+    checkOutPicker.setDate(defaultCheckOutDate);
+    checkInPicker.setDate(selectedCheckInDate); // Update the check-in date in the Flatpickr instance
+  }
+});
 </script>
 
 <!-- Script to show or hide drop down menu for choosing amount of guests -->
@@ -320,6 +380,26 @@
     }
   }
 
+
+  // Event listener for the search button click
+document.getElementsByClassName("booking-search-form__submit-button")[0].addEventListener("click", function(event) {
+  // Get the guest count values
+  var adults = parseInt(document.getElementById("adults-count").textContent);
+  var children = parseInt(document.getElementById("children-count").textContent);
+  var rooms = parseInt(document.getElementById("rooms-count").textContent);
+  
+  if ((adults === 1 && children === 0 && rooms === 1)) {
+    var totalGuests = parseInt(adults) + parseInt(children);
+    var guestsLabel = " guest";
+    var roomsLabel = " room";
+
+    document.getElementById("guests").value =
+      totalGuests + guestsLabel + " · " + rooms + roomsLabel;
+  }
+  
+  
+});
+
   // Function to set the guest count in the input field
   function setGuests() {
     // Get the count of adults, children, and rooms
@@ -335,5 +415,6 @@
     // Set the value of the input field with the guest count and room count labels
     document.getElementById("guests").value =
       totalGuests + guestsLabel + " · " + rooms + roomsLabel;
+    
   }
 </script>
