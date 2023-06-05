@@ -22,12 +22,15 @@ my Dream Place is an online hotel booking website partially based on this <a hre
 
 All hotel names and descriptions are generated using neural networks. All matches with real hotels or hotel descriptions is a coincidence.
 
+## 05.06 Update
+Implemented search filters on a hotel search page
+
 ## To do
 - [ ] User account managment
 - [ ] User notification
 - [ ] 404 page
 - [ ] Blog section
-- [ ] Make filter work on a search page
+- [X] Make filter work on a search page
 - [ ] Allow to book hotels
 - [ ] Generate pdf booking confirmations
 - [ ] Each hotel personal page
