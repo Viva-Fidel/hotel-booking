@@ -120,10 +120,10 @@ def search_hotels(request):
     # Filter hotels by destination
     hotels = Hotels.objects.filter(query).distinct()
 
-    hotels = hotels.order_by('-recommended_score')
-
     # Count number of hotels found
     num_hotels_found = hotels.count()
+
+    hotels = hotels.order_by('-recommended_score')
 
     # Calculate number of days of stay
     checkout_datetime = datetime.strptime(checkin, '%d-%m-%Y')
@@ -146,22 +146,22 @@ def search_hotels(request):
         {'value': 'Business Services', 'label': 'Business Services', 'count': 0},
         {'value': 'Swimming pool', 'label': 'Swimming pool', 'count': 0},
         {'value': 'Top rated in area', 'label': 'Top rated in area', 'count': 0},
-        {'value': 'Flat-screen TV', 'label': 'Flat-screen TV', 'count': 0},
-        {'value': '24-hour front desk', 'label': '24-hour front desk', 'count': 0},
-        {'value': 'Non-smoking rooms', 'label': 'Non-smoking rooms', 'count': 0},
+        {'value': 'Flat screen TV', 'label': 'Flat-screen TV', 'count': 0},
+        {'value': '24 hour front desk', 'label': '24-hour front desk', 'count': 0},
+        {'value': 'Non smoking rooms', 'label': 'Non-smoking rooms', 'count': 0},
         {'value': 'Fitness center', 'label': 'Fitness center', 'count': 0},
         {'value': 'Room service', 'label': 'Room service', 'count': 0},
         {'value': 'Restaurant', 'label': 'Restaurant', 'count': 0},
         {'value': 'Pet friendly', 'label': 'Pet friendly', 'count': 0},
         {'value': 'Facilities for disabled guests', 'label': 'Facilities for disabled guests', 'count': 0},
-        {'value': 'Room service', 'label': 'Room service', 'count': 0},
         {'value': 'Family rooms', 'label': 'Family rooms', 'count': 0},
+        {'value': 'Spa', 'label': 'Spa', 'count': 0},
         {'value': 'Airport shuttle', 'label': 'Airport shuttle', 'count': 0},
         {'value': 'Electric vehicle charging station', 'label': 'Electric vehicle charging station', 'count': 0},
         {'value': 'Free cancellation', 'label': 'Free cancellation', 'count': 0},
         {'value': 'Beach front', 'label': 'Beach front', 'count': 0},
-        {'value': 'Hot tub/jacuzzi', 'label': 'Hot tub/jacuzzi', 'count': 0},
-        {'value': 'Book without credit card', 'label': 'Book without credit card', 'count': 0},
+        {'value': 'Jacuzzi', 'label': 'Hot tub/jacuzzi', 'count': 0},
+        {'value': 'Without credit card', 'label': 'Book without credit card', 'count': 0},
         {'value': 'No prepayment', 'label': 'No prepayment', 'count': 0},
     ]
 
@@ -177,7 +177,7 @@ def search_hotels(request):
         {'value': 'Scuba diving', 'label': 'Scuba diving', 'count': 0},
         {'value': 'Rafting', 'label': 'Rafting', 'count': 0},
         {'value': 'Guided nature walks', 'label': 'Guided nature walks', 'count': 0},
-        {'value': 'Skiing or snowboarding', 'label': 'Skiing or snowboarding', 'count': 0},
+        {'value': 'Skiing', 'label': 'Skiing or snowboarding', 'count': 0},
         {'value': 'Golfing', 'label': 'Golfing', 'count': 0},
         {'value': 'Surfing', 'label': 'Surfing', 'count': 0},
     ]
@@ -296,6 +296,7 @@ def search_hotels(request):
             if activities_present.get(activity_value, False):
                 activity['count'] += 1
 
+    hotel_results = hotel_results[:8]
 
     # Create a context dictionary with query parameters
     context = {
@@ -326,8 +327,8 @@ def update_search_results(request):
     facilities = request.GET.get('facilities')
     activities = request.GET.get('activities')
     hotel_type = request.GET.get('hotel_type')
-    sorting = request.GET.get('sorting')
-
+    sorting = request.GET.get('sorting', 'default_value')
+    displayed_hotels = request.GET.get('displayed_hotels')
 
     price = price.split(",") if price else []
     facilities = facilities.split(",") if facilities else []
@@ -409,16 +410,16 @@ def update_search_results(request):
 
      # Filter hotels by destination
     hotels = Hotels.objects.filter(query).distinct()
-
+    
     # Sort hotels based on sorting
-    if sorting == 'Recommended':
+    if sorting == 'Recommended' or sorting == '':
         hotels = hotels.order_by('-recommended_score')
     elif sorting == 'Stars (high to low)':
         hotels = hotels.order_by('-hotel_star_rating')
     elif sorting == 'Stars (low to high)':
         hotels = hotels.order_by('hotel_star_rating')
     elif sorting == 'Top reviewed':
-        hotels = hotels.annotate(num_reviews=Count('amount_of_reviews')).order_by('num_reviews')
+        hotels = hotels.order_by('-amount_of_reviews')
 
     # Count number of hotels found
     num_hotels_found = hotels.count()
@@ -444,22 +445,22 @@ def update_search_results(request):
         {'value': 'Business Services', 'label': 'Business Services', 'count': 0},
         {'value': 'Swimming pool', 'label': 'Swimming pool', 'count': 0},
         {'value': 'Top rated in area', 'label': 'Top rated in area', 'count': 0},
-        {'value': 'Flat-screen TV', 'label': 'Flat-screen TV', 'count': 0},
-        {'value': '24-hour front desk', 'label': '24-hour front desk', 'count': 0},
-        {'value': 'Non-smoking rooms', 'label': 'Non-smoking rooms', 'count': 0},
+        {'value': 'Flat screen TV', 'label': 'Flat-screen TV', 'count': 0},
+        {'value': '24 hour front desk', 'label': '24-hour front desk', 'count': 0},
+        {'value': 'Non smoking rooms', 'label': 'Non-smoking rooms', 'count': 0},
         {'value': 'Fitness center', 'label': 'Fitness center', 'count': 0},
         {'value': 'Room service', 'label': 'Room service', 'count': 0},
         {'value': 'Restaurant', 'label': 'Restaurant', 'count': 0},
         {'value': 'Pet friendly', 'label': 'Pet friendly', 'count': 0},
         {'value': 'Facilities for disabled guests', 'label': 'Facilities for disabled guests', 'count': 0},
-        {'value': 'Room service', 'label': 'Room service', 'count': 0},
         {'value': 'Family rooms', 'label': 'Family rooms', 'count': 0},
+        {'value': 'Spa', 'label': 'Spa', 'count': 0},
         {'value': 'Airport shuttle', 'label': 'Airport shuttle', 'count': 0},
         {'value': 'Electric vehicle charging station', 'label': 'Electric vehicle charging station', 'count': 0},
         {'value': 'Free cancellation', 'label': 'Free cancellation', 'count': 0},
         {'value': 'Beach front', 'label': 'Beach front', 'count': 0},
-        {'value': 'Hot tub/jacuzzi', 'label': 'Hot tub/jacuzzi', 'count': 0},
-        {'value': 'Book without credit card', 'label': 'Book without credit card', 'count': 0},
+        {'value': 'Jacuzzi', 'label': 'Hot tub/jacuzzi', 'count': 0},
+        {'value': 'Without credit card', 'label': 'Book without credit card', 'count': 0},
         {'value': 'No prepayment', 'label': 'No prepayment', 'count': 0},
     ]
 
@@ -475,7 +476,7 @@ def update_search_results(request):
         {'value': 'Scuba diving', 'label': 'Scuba diving', 'count': 0},
         {'value': 'Rafting', 'label': 'Rafting', 'count': 0},
         {'value': 'Guided nature walks', 'label': 'Guided nature walks', 'count': 0},
-        {'value': 'Skiing or snowboarding', 'label': 'Skiing or snowboarding', 'count': 0},
+        {'value': 'Skiing', 'label': 'Skiing or snowboarding', 'count': 0},
         {'value': 'Golfing', 'label': 'Golfing', 'count': 0},
         {'value': 'Surfing', 'label': 'Surfing', 'count': 0},
     ]
@@ -510,9 +511,9 @@ def update_search_results(request):
             # Create a dictionary for each hotel's result
 
             hotel_result = {
+                'hotel_name': hotel.hotel_name,
                 'hotel_search_info_title': hotel_search_info.hotel_search_info_title,
                 'hotel_search_info_text': hotel_search_info.hotel_search_info_text,
-                'hotel_name': hotel.hotel_name,
                 'hotel_type': hotel.hotel_type,
                 'hotel_cover_photo': hotel_cover_photo_url,
                 'hotel_rating': hotel.hotel_star_rating,
@@ -595,8 +596,10 @@ def update_search_results(request):
             activity_value = activity['value']
             if activities_present.get(activity_value, False):
                 activity['count'] += 1
-    
 
+    hotel_results = hotel_results[:int(displayed_hotels)]
+    
+    
     # Create a context dictionary with query parameters
     context = {
             'destination': destination,

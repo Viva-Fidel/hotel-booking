@@ -660,6 +660,15 @@
   let selectedActivities = null;
   let hotelType = null;
   let sorting = null; 
+  let displayedHotels = 8;
+
+  $(".more-results__button").click(function () {
+    // Increase the number of displayed hotels by 4
+    displayedHotels += 4;
+
+    // Call the updateSearchResults function with the updated number of displayed hotels
+    updateSearchResults();
+  });
 
   // Add event listener to the hotel name input field
   $("#hotel-search-input").keypress(function (event) {
@@ -826,6 +835,7 @@
           activities: (selectedActivities || []).join(","),
           hotel_type: hotelType,
           sorting: sorting,
+          displayed_hotels: displayedHotels,
         },
         dataType: "json",
         success: function (response) {
