@@ -1,4 +1,6 @@
 from django.db import models
+from django.utils.text import slugify
+from django.urls import reverse
 from django.core.validators import MinValueValidator, MaxValueValidator
 from core.models import Counties
 from smart_selects.db_fields import ChainedForeignKey
@@ -63,7 +65,15 @@ class Hotels(models.Model):
     time_update = models.DateTimeField(auto_now=True, verbose_name="Updated")
     is_published = models.BooleanField(
         default=True, verbose_name="Is published", help_text='Is the hotel currently available?')
+    slug = models.SlugField(max_length=255, unique=True, null=True)
 
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.hotel_name)
+        super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('hotel_name', args=[self.slug])
+    
     def __str__(self):
         return self.hotel_name
 

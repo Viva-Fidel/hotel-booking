@@ -1,0 +1,123 @@
+{% extends 'base.html' %} {% load static %}
+
+<!-- Amending page title -->
+{% block title %} | {{ hotel.hotel_name }}{% endblock%}
+
+<!-- Adding navigation block -->
+{% block navigation %} {% include 'partials/_navigation.html' %} {% endblock %}
+
+<!-- Adding main content -->
+{% block content %}
+<!-- Connectiong page CSS styles -->
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'css/hotels/hotel_detail.css' %}"
+/>
+<main class="main">
+  <section class="hotel-photos">
+    <div class="container">
+      <div class="hotel-photo__container">
+        {% if hotel.general_images.all %}
+        <img
+          src="{{ hotel.general_images.all.0.image.url }}"
+          alt="Hotel photo"
+          class="hotel-photo__container-left"
+        />
+        <div class="hotel-photo__container-right-photos">
+          <img
+            src="{{ hotel.general_images.all.1.image.url }}"
+            alt="Hotel photo"
+            class="hotel-photo__container-right-photo"
+          />
+          <img
+            src="{{ hotel.general_images.all.2.image.url }}"
+            alt="Hotel photo"
+            class="hotel-photo__container-right-photo"
+          />
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+  <section class="hotel-data">
+    <div class="container">
+      <div class="hotel-data-menu__container">
+        <button type="button" class="hotel-data-menu__container-button">
+          Overview
+        </button>
+        <button type="button" class="hotel-data-menu__container-button">
+          Rooms
+        </button>
+        <button type="button" class="hotel-data-menu__container-button">
+          Guest Reviews
+        </button>
+      </div>
+      <div class="hotel-data__container">
+        <div class="hotel-data__container-left">
+          <h2 class="hotel-data__container-left-title">
+            {{ hotel.hotel_name }}
+          </h2>
+          <div class="hotel-data__container-left-rating-container">
+            <div
+              class="hotel-data__container-left-rating-stars-container"
+            >
+              {% if hotel.hotel_star_rating >= 1 %}
+              <img
+                src="{% static 'images/core/icons/star.png' %}"
+                alt="Star icon"
+                class="hotel-data__container-left-rating"
+              />
+              {% endif %} {% if hotel.hotel_star_rating >= 2 %}
+              <img
+                src="{% static 'images/core/icons/star.png' %}"
+                alt="Star icon"
+                class="hotel-data__container-left-rating-star-icon"
+              />
+              {% endif %} {% if hotel.hotel_star_rating >= 3 %}
+              <img
+                src="{% static 'images/core/icons/star.png' %}"
+                alt="Star icon"
+                class="hotel-data__container-left-rating-star-icon"
+              />
+              {% endif %} {% if hotel.hotel_star_rating >= 4 %}
+              <img
+                src="{% static 'images/core/icons/star.png' %}"
+                alt="Star icon"
+                class="hotel-data__container-left-rating-star-icon"
+              />
+              {% endif %} {% if hotel.hotel_star_rating >= 5 %}
+              <img
+                src="{% static 'images/core/icons/star.png' %}"
+                alt="Star icon"
+                class="hotel-data__container-left-rating-star-icon"
+              />
+              {% endif %}
+            </div>
+            <p class="hotel-data__container-left-rating-container-text">
+              Guest rating: {{ hotel.user_rating }} ({{ hotel.amount_of_reviews }} Reviews)
+            </p>
+          </div>
+          <div class="hotel-data__container-left-address-container">
+            <img
+            src="{% static 'images/core/icons/geo_color.svg' %}"
+            alt="Gelocation icon"
+            class="hotel-data__container-left-address-icon"
+          />
+          <p class="hotel-data__container-left-address-text">Lorem ipsum road, Tantruim-2322, Melbourne, Australia</p>
+          </div>
+          <div class="hotel-data__container-general-data-container">
+            <h4 class="hotel-data__container-general-data-container-overview-title">
+              Overview
+            </h4>
+            <p class="hotel-data__container-general-data-container-overview-text">
+              {{ hotel.hotel_description }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+{% endblock%}

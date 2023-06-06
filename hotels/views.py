@@ -1,4 +1,5 @@
 from django.shortcuts import get_object_or_404, render
+from .models import Hotels
 from django.views.decorators.http import require_GET
 from django.http import JsonResponse
 # from admin import RoomAdminForm
@@ -14,5 +15,7 @@ from django.http import JsonResponse
 #     else:
 #         return JsonResponse({'choices': []})
     
-def hotels(request):
-    return render(request, 'hotels/hotel_page.html')
+def hotel_detail(request, slug):
+    hotel = get_object_or_404(Hotels, slug=slug)
+    context = {'hotel': hotel}
+    return render(request, 'hotels/hotel_detail.html', context)
