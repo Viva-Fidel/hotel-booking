@@ -1,7 +1,7 @@
 {% extends 'base.html' %} {% load static %}
 
 <!-- Amending page title -->
-{% block title %} | {{ hotel.hotel_name }}{% endblock%}
+{% block title %} | {{ hotel.hotel_name }} {% endblock %}
 
 <!-- Adding navigation block -->
 {% block navigation %} {% include 'partials/_navigation.html' %} {% endblock %}
@@ -14,110 +14,687 @@
   type="text/css"
   href="{% static 'css/hotels/hotel_detail.css' %}"
 />
+<!-- Connecting styles for JS calendar script -->
+<link
+  rel="stylesheet"
+  href="{% static 'node_modules/flatpickr/dist/flatpickr.min.css' %}"
+/>
 <main class="main">
   <section class="hotel-photos">
     <div class="container">
-      <div class="hotel-photo__container">
+      <div class="hotel-photos__container">
         {% if hotel.general_images.all %}
         <img
           src="{{ hotel.general_images.all.0.image.url }}"
           alt="Hotel photo"
-          class="hotel-photo__container-left"
+          class="hotel-photos__container-left-photo"
         />
-        <div class="hotel-photo__container-right-photos">
+        <div class="hotel-photos__container-right-photos">
           <img
             src="{{ hotel.general_images.all.1.image.url }}"
             alt="Hotel photo"
-            class="hotel-photo__container-right-photo"
+            class="hotel-photos__container-right-photo"
           />
           <img
             src="{{ hotel.general_images.all.2.image.url }}"
             alt="Hotel photo"
-            class="hotel-photo__container-right-photo"
+            class="hotel-photos__container-right-photo"
           />
         </div>
         {% endif %}
       </div>
     </div>
   </section>
+  <section class="page-menu">
+    <div class="container">
+    <div class="page-menu__container">
+      <button type="button" class="page-menu__container-button first-button">
+        Overview
+      </button>
+      <button type="button" class="page-menu__container-button">
+        Rooms
+      </button>
+      <button type="button" class="page-menu__container-button">
+        Guest Reviews
+      </button>
+    </div>
+  </div>
+  </section>
   <section class="hotel-data">
     <div class="container">
-      <div class="hotel-data-menu__container">
-        <button type="button" class="hotel-data-menu__container-button">
-          Overview
-        </button>
-        <button type="button" class="hotel-data-menu__container-button">
-          Rooms
-        </button>
-        <button type="button" class="hotel-data-menu__container-button">
-          Guest Reviews
-        </button>
-      </div>
       <div class="hotel-data__container">
-        <div class="hotel-data__container-left">
-          <h2 class="hotel-data__container-left-title">
+        <div class="hotel-data__left-side-container">
+          <h2 class="hotel-data__hotel-title">
             {{ hotel.hotel_name }}
           </h2>
-          <div class="hotel-data__container-left-rating-container">
-            <div
-              class="hotel-data__container-left-rating-stars-container"
-            >
+          <div class="hotel-data__hotel-rating-container">
+            <div class="hotel-data__hotel-rating-stars-container">
               {% if hotel.hotel_star_rating >= 1 %}
               <img
                 src="{% static 'images/core/icons/star.png' %}"
                 alt="Star icon"
-                class="hotel-data__container-left-rating"
+                class="hotel-data__hotel-rating-stars-star-icon"
               />
               {% endif %} {% if hotel.hotel_star_rating >= 2 %}
               <img
                 src="{% static 'images/core/icons/star.png' %}"
                 alt="Star icon"
-                class="hotel-data__container-left-rating-star-icon"
+                class="hotel-data__hotel-rating-stars-star-icon"
               />
               {% endif %} {% if hotel.hotel_star_rating >= 3 %}
               <img
                 src="{% static 'images/core/icons/star.png' %}"
                 alt="Star icon"
-                class="hotel-data__container-left-rating-star-icon"
+                class="hotel-data__hotel-rating-stars-star-icon"
               />
               {% endif %} {% if hotel.hotel_star_rating >= 4 %}
               <img
                 src="{% static 'images/core/icons/star.png' %}"
                 alt="Star icon"
-                class="hotel-data__container-left-rating-star-icon"
+                class="hotel-data__hotel-rating-stars-star-icon"
               />
               {% endif %} {% if hotel.hotel_star_rating >= 5 %}
               <img
                 src="{% static 'images/core/icons/star.png' %}"
                 alt="Star icon"
-                class="hotel-data__container-left-rating-star-icon"
+                class="hotel-data__hotel-rating-stars-star-icon"
               />
               {% endif %}
             </div>
-            <p class="hotel-data__container-left-rating-container-text">
-              Guest rating: {{ hotel.user_rating }} ({{ hotel.amount_of_reviews }} Reviews)
+            <p class="hotel-data__hotel-rating-container-text">
+              Guest rating: {{ hotel.user_rating }} 
+              ({{hotel.amount_of_reviews}} Reviews)
             </p>
           </div>
-          <div class="hotel-data__container-left-address-container">
+          <div class="hotel-data__hotel-address-container">
             <img
-            src="{% static 'images/core/icons/geo_color.svg' %}"
-            alt="Gelocation icon"
-            class="hotel-data__container-left-address-icon"
-          />
-          <p class="hotel-data__container-left-address-text">Lorem ipsum road, Tantruim-2322, Melbourne, Australia</p>
+              src="{% static 'images/core/icons/geo_color.svg' %}"
+              alt="Gelocation icon"
+              class="hotel-data__hotel-address-icon"
+            />
+            <p class="hotel-data__hotel-address-text">
+              {{ hotel.hotel_street }}, {{ hotel.hotel_city }}, 
+              {{ hotel.hotel_county }}, OR {{ hotel.hotel_zip_code }}
+            </p>
           </div>
-          <div class="hotel-data__container-general-data-container">
-            <h4 class="hotel-data__container-general-data-container-overview-title">
+          <div class="hotel-data__general-hotel-data-container">
+            <h4 class="hotel-data__general-hotel-data-title">
               Overview
             </h4>
-            <p class="hotel-data__container-general-data-container-overview-text">
+            <p class="hotel-data__general-hotel-data-overview-text">
               {{ hotel.hotel_description }}
             </p>
+            <div class="hotel-data__general-hotel-data-border"></div>
+            <h4 class="hotel-data__general-hotel-data-title">
+              Top facilities
+            </h4>
+            <div class="hotel-data__general-hotel-data-facilities-column-container">
+              {% for facility in facility_data %} {% if forloop.counter0|divisibleby:2 %}
+              <div
+                class="hotel-data__general-hotel-data-facilities-row-container"
+              >
+                {% endif %}
+                <div
+                  class="hotel-data__general-hotel-data-facilities-row-item"
+                >
+                  <img
+                    src="{{ facility.icon }}"
+                    alt="{{ facility.name }}"
+                    class="hotel-data__general-hotel-data-facilities-row-icon"
+                  />
+                  <p
+                    class="hotel-data__general-hotel-data-facilities-row-text"
+                  >
+                    {{ facility.name }}
+                  </p>
+                </div>
+                {% if forloop.counter|divisibleby:2 or forloop.last %}
+              </div>
+              {% endif %} {% endfor %}
+            </div>
           </div>
+        </div>
+        <div class="hotel-data__right-side-container">
+          <div id="myMap" class="hotel-data__map"></div>
+          <h4 class="hotel-data__explore-title">
+            Explore the area
+          </h4>
+          <div class="hotel-data__explore-container"></div>
         </div>
       </div>
     </div>
   </section>
+  <section class="room-availability">
+    <div class="container">
+      <h4 class="room-availability__title">Available rooms</h4>
+      <form
+  class="availability-check-form"
+  method="get"
+  action="{% url 'search_hotels' %}"
+>
+
+  <div class="availability-check-form__item availability-check-form__item__calendar">
+    <img
+      src="{% static 'images/core/icons/calendar.svg' %}"
+      alt="Calendar icon"
+      class="availability-check-form__item-icon"
+    />
+    <input
+      type="text"
+      id="checkin"
+      name="checkin"
+      placeholder="Check-in date"
+      required
+    />
+  </div>
+  <div class="availability-check-form__item availability-check-form__item__calendar">
+    <img
+      src="{% static 'images/core/icons/calendar.svg' %}"
+      alt="Calendar icon"
+      class="availability-check-form__item-icon"
+    />
+    <input
+      type="text"
+      id="checkout"
+      name="checkout"
+      placeholder="Check-out date"
+      required
+    />
+  </div>
+  <div class="availability-check-form__item availability-check-form__item__guests" onload="setGuests()">
+    <img
+      src="{% static 'images/core/icons/guests.svg' %}"
+      alt="Guests icon"
+      class="availability-check-form__item-icon"
+    />
+    <input
+      type="text"
+      id="guests"
+      name="guests"
+      placeholder="Guests & Rooms"
+      readonly
+    />
+    <div
+      class="availability-check-form__drop-down-menu"
+      id="guests-input-container-dropdown-menu"
+    >
+      <div class="availability-check-form__drop-down-menu-item">
+        <span class="availability-check-form__drop-down-menu-label">Adults</span>
+        <div class="availability-check-form__drop-down-menu-choice_container">
+          <button
+            type="button"
+            class="availability-check-form__drop-down-menu-button-minus"
+            onclick="changeCount('adults', 'minus')"
+            disabled
+          >
+            -
+          </button>
+          <span
+            id="adults-count"
+            class="availability-check-form__drop-down-menu-count"
+            onchange="updateGuestsInput()"
+            >1</span
+          >
+          <button
+            type="button"
+            class="availability-check-form__drop-down-menu-button-plus"
+            onclick="changeCount('adults', 'plus')"
+          >
+            +
+          </button>
+        </div>
+      </div>
+      <div class="availability-check-form__drop-down-menu-item">
+        <span class="availability-check-form__drop-down-menu-label">Children</span>
+        <div class="availability-check-form__drop-down-menu-choice_container">
+          <button
+            type="button"
+            class="availability-check-form__drop-down-menu-button-minus"
+            onclick="changeCount('children', 'minus')"
+            disabled
+          >
+            -
+          </button>
+          <span
+            id="children-count"
+            class="availability-check-form__drop-down-menu-count"
+            onchange="updateGuestsInput()"
+            >0</span
+          >
+          <button
+            type="button"
+            class="availability-check-form__drop-down-menu-button-plus"
+            onclick="changeCount('children', 'plus')"
+          >
+            +
+          </button>
+        </div>
+      </div>
+      <div class="availability-check-form__drop-down-menu-item">
+        <span class="availability-check-form__drop-down-menu-label">Rooms</span>
+        <div class="availability-check-form__drop-down-menu-choice_container">
+          <button
+            type="button"
+            class="availability-check-form__drop-down-menu-button-minus"
+            onclick="changeCount('rooms', 'minus')"
+            disabled
+          >
+            -
+          </button>
+          <span
+            id="rooms-count"
+            class="availability-check-form__drop-down-menu-count"
+            onchange="updateGuestsInput()"
+            >1</span
+          >
+          <button
+            type="button"
+            class="availability-check-form__drop-down-menu-button-plus"
+            onclick="changeCount('rooms', 'plus')"
+          >
+            +
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button type="submit" class="availability-check-form__submit-button">
+    Check Availability
+  </button>
+</form>
+      <div class="room-availability__room-list-container">
+        <div class="room-availability__room-list-item__promo">
+          <img
+            src="{% static 'images/hotels/icons/logo.svg' %}"
+            alt="Logo icon"
+            class="room-availability__room-list-item-icon-logo__promo"
+          />
+          <img
+            src="{% static 'images/hotels/icons/coupon_text.svg' %}"
+            alt="Promo text icon"
+            class="room-availability__room-list-item-icon-promo-text__promo"
+          />
+          <img
+            src="{% static 'images/hotels/icons/traveller.svg' %}"
+            alt="Promo text icon"
+            class="room-availability__room-list-item-icon-traveller__promo"
+          />
+        </div>
+        <div class="room-availability__room-list-container-item__room">
+          {% for room in hotel.hotel_rooms.all|slice:":2" %}
+          <div class="room-availability__room-list-item__room">
+            {% if room.photo_1 %}
+            <img
+              src="{{ room.photo_1.url }}"
+              alt="Room Photo"
+              class="room-availability__room-list-item-photo__room"
+            />
+            {% endif %}
+            <h4 class="room-availability__room-list-item-title__room">
+              {{ room.name }}
+            </h4>
+            <div class="room-availability__room-list-item-text-container-column__room">
+              <div
+                class="room-availability__room-list-item-text-container-row__room"
+              >
+                <img
+                  src="{% static 'images/hotels/icons/bag_gray.svg' %}"
+                  alt="Room area icon"
+                  class="room-availability__room-list-item-text-icon__room"
+                />
+                <p class="room-availability__room-list-item-text__room">
+                  30 sq ft
+                </p>
+              </div>
+              <div
+                class="room-availability__room-list-item-text-container-row__room"
+              >
+                <img
+                  src="{% static 'images/hotels/icons/lifebuoy_gray.svg' %}"
+                  alt="Room area icon"
+                  class="room-availability__room-list-item-text-icon__room"
+                />
+                <p class="room-availability__room-list-item-text__room">
+                  Sleeps 3
+                </p>
+              </div>
+              <div
+                class="room-availability__room-list-item-text-container-row__room"
+              >
+                <img
+                  src="{% static 'images/hotels/icons/like_gray.svg' %}"
+                  alt="Room area icon"
+                  class="room-availability__room-list-item-text-icon__room"
+                />
+                <p class="room-availability__room-list-item-text__room">
+                  1 double bed and 1 twin bed
+                </p>
+              </div>
+              
+            </div>
+            <button class="room-availability__reserve-button">
+              Reserve suite
+            </button>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="restrictions">
+    <div class="container">{% include 'partials/_warning.html' %}</div>
+  </section>
+  <section class="footer">
+    {% include 'partials/_footer.html' %}
+  </section>
 </main>
+
+<script type="text/javascript">
+  function loadMapScenario() {
+    var map = new Microsoft.Maps.Map(document.getElementById("myMap"), {
+      /* No need to set credentials if already passed in URL */
+      center: new Microsoft.Maps.Location(
+        45.52643797510934,
+        -122.60225638970428
+      ),
+      zoom: 15,
+    });
+
+    Microsoft.Maps.loadModule("Microsoft.Maps.Search", function () {
+      var searchManager = new Microsoft.Maps.Search.SearchManager(map);
+      var requestOptions = {
+        bounds: map.getBounds(),
+        where: "{{ address }}",
+        callback: function (answer, userData) {
+          map.setView({ bounds: answer.results[0].bestView });
+          map.entities.push(
+            new Microsoft.Maps.Pushpin(answer.results[0].location)
+          );
+          var entityLookupRequestOptions = {
+            location: new Microsoft.Maps.Location(
+              answer.results[0].location.latitude,
+              answer.results[0].location.longitude
+            ),
+            callback: function (answer) {
+              if (answer) {
+                console.log(answer);
+                var exploreContainer = document.querySelector(
+                  ".hotel-data__explore-container"
+                );
+
+                for (
+                  var i = 0, len = answer.businessesAtLocation.length;
+                  i < len;
+                  i++
+                ) {
+                  var business = answer.businessesAtLocation[i].entityName;
+                  var exploreItemContainer = document.createElement("div");
+                  exploreItemContainer.className =
+                    "hotel-data__explore-container-item";
+
+                  var iconImg = document.createElement("img");
+                  iconImg.src =
+                    "{% static 'images/hotels/icons/geo_gray.svg' %}";
+                  iconImg.alt = "Geolocation icon";
+                  iconImg.className =
+                    "hotel-data__explore-container-item-icon";
+
+                  var textP = document.createElement("p");
+                  textP.className =
+                    "hotel-data__explore-container-item-text";
+                  textP.textContent = business;
+
+                  exploreItemContainer.appendChild(iconImg);
+                  exploreItemContainer.appendChild(textP);
+                  exploreContainer.appendChild(exploreItemContainer);
+                }
+              }
+            },
+          };
+          searchManager.entityLookup(entityLookupRequestOptions);
+        },
+      };
+
+      searchManager.geocode(requestOptions);
+    });
+  }
+</script>
+<script
+  type="text/javascript"
+  src="https://www.bing.com/api/maps/mapcontrol?key=AjAwHqGhcSbLyvJnuBVtFctMKHyTKDPz2qx_PF1sYsQuplSMNqWhc91XBldPI1L0&callback=loadMapScenario"
+  async
+  defer
+></script>
+
+<!-- Script to showing calendar to choose check in and check out dates -->
+<script src="{% static 'node_modules/flatpickr/dist/flatpickr.js' %}"></script>
+<script>
+  // Selecting the HTML elements for the check-in and check-out date inputs
+  const checkIn = document.getElementById("checkin");
+  const checkOut = document.getElementById("checkout");
+  const submitButton = document.querySelector(".availability-check-form__submit-button");
+
+  // Setting the maximum date for the check-out input to one year from today
+  const maxDate = new Date();
+  maxDate.setFullYear(maxDate.getFullYear() + 1);
+
+  // Initializing Flatpickr for the check-out input with options for date formatting, minimum and maximum dates, and event handling
+  const checkOutPicker = flatpickr(checkOut, {
+    altInput: checkOut, // Using an alternate input field for better accessibility
+    minDate: "today", // Setting the minimum date to today
+    maxDate: maxDate, // Setting the maximum date to one year from today
+    dateFormat: "d-m-Y", // Specifying the date format as day-month-year
+    onClose: function (selectedDates, dateStr, instance) {
+      // Handling the event when the user selects a check-out date
+      if (checkIn.value != "" && selectedDates[0] >= new Date(checkIn.value)) {
+        // If a check-in date has already been selected and the selected check-out date is later than the check-in date,
+        // clear the check-out input and set the minimum date for the check-in input to the selected check-out date
+        instance.clear();
+        checkIn._flatpickr.set("minDate", dateStr);
+      } else {
+        // If no check-in date has been selected or the selected check-out date is earlier than the check-in date,
+        // set the minimum date for the check-in input to today and the maximum date for the check-out input to the maximum date allowed
+        checkIn._flatpickr.set("minDate", "today");
+        checkIn._flatpickr.set("maxDate", dateStr);
+      }
+    },
+  });
+
+  // Initializing Flatpickr for the check-in input with options for date formatting, minimum date, and event handling
+  const checkInPicker = flatpickr(checkIn, {
+    altInput: checkIn, // Using an alternate input field for better accessibility
+    minDate: "today", // Setting the minimum date to today
+    dateFormat: "d-m-Y", // Specifying the date format as day-month-year
+    onClose: function (selectedDates, dateStr, instance) {
+      // Handling the event when the user selects a check-in date
+      if (
+        checkOut.value != "" &&
+        selectedDates[0] >= new Date(checkOut.value)
+      ) {
+        // If a check-out date has already been selected and the selected check-in date is later than the check-out date,
+        // clear the check-in input and set the minimum date for the check-out input to the selected check-in date
+        instance.clear();
+        checkOut._flatpickr.set("minDate", dateStr);
+      } else {
+        // If no check-out date has been selected or the selected check-in date is earlier than the check-out date,
+        // set the minimum date for the check-out input to the selected check-in date and the maximum date for the check-out input to the maximum date allowed
+        checkOut._flatpickr.set("minDate", dateStr);
+        checkOut._flatpickr.set("maxDate", maxDate);
+      }
+    },
+  });
+
+  // Event listener for the search button click
+  submitButton.addEventListener("click", function(event) {
+    // Check if check-in and check-out dates are not selected
+    if (checkIn.value === "" && checkOut.value === "") {
+      // Set default dates as 7 days from today
+      const defaultCheckInDate = new Date();
+      const defaultCheckOutDate = new Date();
+      defaultCheckInDate.setDate(defaultCheckInDate.getDate() + 7);
+      defaultCheckOutDate.setDate(defaultCheckInDate.getDate() + 7);
+      
+      // Format the default dates as "d-m-Y"
+      const defaultCheckInDateStr = `${defaultCheckInDate.getDate()}-${defaultCheckInDate.getMonth() + 1}-${defaultCheckInDate.getFullYear()}`;
+      const defaultCheckOutDateStr = `${defaultCheckOutDate.getDate()}-${defaultCheckOutDate.getMonth() + 1}-${defaultCheckOutDate.getFullYear()}`;
+      
+      // Set the default dates in the input fields and update the Flatpickr instances
+      checkIn.value = defaultCheckInDateStr;
+      checkOut.value = defaultCheckOutDateStr;
+      checkInPicker.setDate(defaultCheckInDate);
+      checkOutPicker.setDate(defaultCheckOutDate);
+    }
+    else if (checkIn.value === "" && checkOut.value !== "") {
+    // If only check-out date is selected, set default check-in date as 1 day before the selected check-out date
+    const selectedCheckOutDateParts = checkOut.value.split("-");
+    const selectedCheckOutDate = new Date(
+      parseInt(selectedCheckOutDateParts[2]),
+      parseInt(selectedCheckOutDateParts[1]) - 1,
+      parseInt(selectedCheckOutDateParts[0])
+    );
+    const defaultCheckInDate = new Date(selectedCheckOutDate);
+    defaultCheckInDate.setDate(selectedCheckOutDate.getDate() - 1);
+
+    // Format the default check-in date as "d-m-Y"
+    const defaultCheckInDateStr = `${defaultCheckInDate.getDate()}-${defaultCheckInDate.getMonth() + 1}-${defaultCheckInDate.getFullYear()}`;
+
+    // Set the default check-in date in the input field and update the Flatpickr instance
+    checkIn.value = defaultCheckInDateStr;
+    checkInPicker.setDate(defaultCheckInDate);
+    checkOutPicker.setDate(selectedCheckOutDate); // Update the check-out date in the Flatpickr instance
+  } else if (checkIn.value !== "" && checkOut.value === "") {
+    // If only check-in date is selected, set default check-out date as 1 day after the selected check-in date
+    const selectedCheckInDateParts = checkIn.value.split("-");
+    const selectedCheckInDate = new Date(
+      parseInt(selectedCheckInDateParts[2]),
+      parseInt(selectedCheckInDateParts[1]) - 1,
+      parseInt(selectedCheckInDateParts[0])
+    );
+    const defaultCheckOutDate = new Date(selectedCheckInDate);
+    defaultCheckOutDate.setDate(selectedCheckInDate.getDate() + 1);
+
+    // Format the default check-out date as "d-m-Y"
+    const defaultCheckOutDateStr = `${defaultCheckOutDate.getDate()}-${defaultCheckOutDate.getMonth() + 1}-${defaultCheckOutDate.getFullYear()}`;
+
+    // Set the default check-out date in the input field and update the Flatpickr instance
+    checkOut.value = defaultCheckOutDateStr;
+    checkOutPicker.setDate(defaultCheckOutDate);
+    checkInPicker.setDate(selectedCheckInDate); // Update the check-in date in the Flatpickr instance
+  }
+});
+</script>
+
+<!-- Script to show or hide drop down menu for choosing amount of guests -->
+<script>
+  const guest = document.getElementById("guests"); // Get the element with the id "guests"
+  const guestdropdownMenu = document.getElementById(
+    "guests-input-container-dropdown-menu"
+  ); // Get the element with the id "guests-input-container-dropdown-menu"
+
+  guest.addEventListener("click", function () {
+    // Add a click event listener to the "guest" element
+    guestdropdownMenu.classList.toggle("show"); // Toggle the "show" class on the "guestdropdownMenu" element
+  });
+
+  document.addEventListener("click", function (event) {
+    // Add a click event listener to the document
+    const isClickInside =
+      guest.contains(event.target) || guestdropdownMenu.contains(event.target); // Check if the click event happened inside the "guest" element or the "guestdropdownMenu" element
+    if (!isClickInside) {
+      guestdropdownMenu.classList.remove("show"); // If the click event didn't happen inside either element, remove the "show" class from the "guestdropdownMenu" element
+    }
+  });
+</script>
+
+<!-- Script to choose guests amount -->
+<script>
+  function changeCount(type, operation) {
+    // Get the HTML element of the count
+    var countEl = document.getElementById(type + "-count");
+    // Parse the current count as an integer
+    var count = parseInt(countEl.innerHTML);
+    // Get the minus and plus buttons for the current type
+    var minusButton = document.querySelector(
+      `button.availability-check-form__drop-down-menu-button-minus[onclick="changeCount('${type}', 'minus')"]`
+    );
+    var plusButton = document.querySelector(
+      `button.availability-check-form__drop-down-menu-button-plus[onclick="changeCount('${type}', 'plus')"]`
+    );
+
+    // Decrease the count if operation is minus and count is greater than zero
+    if (operation === "minus") {
+      if (count > 0) {
+        count--;
+      }
+    }
+    // Increase the count if operation is plus and count is less than 30
+    else if (operation === "plus") {
+      if (count < 30) {
+        count++;
+      }
+    }
+
+    // Update the count in the HTML element
+    countEl.innerHTML = count;
+    // Call the setGuests() function to update the guest count in the input field
+    setGuests();
+
+    // Disable the minus button if the count is at its minimum value
+    if (type === "adults" && count === 1) {
+      minusButton.disabled = true;
+    } else if (type === "children" && count === 0) {
+      minusButton.disabled = true;
+    } else if (type === "rooms" && count === 1) {
+      minusButton.disabled = true;
+    } else {
+      minusButton.disabled = false;
+    }
+
+    // Disable the plus button if the count is at its maximum value
+    if (count === 30) {
+      plusButton.disabled = true;
+    } else {
+      plusButton.disabled = false;
+    }
+  }
+
+
+  // Event listener for the search button click
+document.getElementsByClassName("availability-check-form__submit-button")[0].addEventListener("click", function(event) {
+  // Get the guest count values
+  var adults = parseInt(document.getElementById("adults-count").textContent);
+  var children = parseInt(document.getElementById("children-count").textContent);
+  var rooms = parseInt(document.getElementById("rooms-count").textContent);
+  
+  if ((adults === 1 && children === 0 && rooms === 1)) {
+    var totalGuests = parseInt(adults) + parseInt(children);
+    var guestsLabel = " guest";
+    var roomsLabel = " room";
+
+    document.getElementById("guests").value =
+      totalGuests + guestsLabel + " · " + rooms + roomsLabel;
+  }
+  
+  
+});
+
+  // Function to set the guest count in the input field
+  function setGuests() {
+    // Get the count of adults, children, and rooms
+    var adults = document.getElementById("adults-count").textContent;
+    var children = document.getElementById("children-count").textContent;
+    var rooms = document.getElementById("rooms-count").textContent;
+    // Calculate the total number of guests
+    var totalGuests = parseInt(adults) + parseInt(children);
+    // Set the label for guests depending on whether there is one guest or multiple guests
+    var guestsLabel = totalGuests === 1 ? " guest" : " guests";
+    // Set the label for rooms depending on whether there is one room or multiple rooms
+    var roomsLabel = rooms === "1" ? " room" : " rooms";
+    // Set the value of the input field with the guest count and room count labels
+    document.getElementById("guests").value =
+      totalGuests + guestsLabel + " · " + rooms + roomsLabel;
+    
+  }
+</script>
 
 {% endblock%}
