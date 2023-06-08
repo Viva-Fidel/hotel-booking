@@ -4,7 +4,6 @@ from .models import Hotels
 import random
 
 
-
 def hotel_detail(request, slug):
     hotel = get_object_or_404(Hotels, slug=slug)
     facilities = hotel.hotel_facilities.all()
@@ -63,9 +62,6 @@ def hotel_detail(request, slug):
         facility_data = random.sample(facility_data, 6)
     
     address = str(hotel.hotel_street)+ ", " + str(hotel.hotel_city) + ", " + str(hotel.hotel_county) + " OR" 
-    
-    rooms = hotel.hotel_rooms.all()
-
 
     context = {'hotel': hotel, 
                'facility_data': facility_data, 

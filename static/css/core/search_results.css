@@ -700,9 +700,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   font-size: 20px;
   line-height: 24px;
   letter-spacing: 0.01em;
-  color: #1a1a1a;
   margin-block-start: 0px;
   margin-block-end: 0px;
+}
+
+.page-content__search-results-item-info-title a{
+  color: #1a1a1a;
 }
 
 .page-content__search-results-item-info-title-promo__active {
@@ -808,13 +811,16 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   font-size: 14px;
   line-height: 20px;
   letter-spacing: 0.02em;
-  color: #ffffff;
   cursor: pointer;
 }
 
 .page-content__search-results-item-info-data-see-availability:hover {
   background: #2969bf;
   border: 1px solid #2969bf;
+}
+
+.page-content__search-results-item-info-data-see-availability a {
+  color: #ffffff;
 }
 
 .page-content__search-results-item-info-data-container-right {

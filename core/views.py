@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.db.models import Q
 from django.http import JsonResponse
 from django.contrib.auth import logout
@@ -206,6 +207,8 @@ def search_hotels(request):
                 total_price_with_discount = 0
     
             hotel_search_info = hotel.hotel_search_info.first()
+            hotel_link = reverse('hotel_detail', args=[hotel.slug])
+
 
 
             # Create a dictionary for each hotel's result
@@ -213,6 +216,7 @@ def search_hotels(request):
                 'hotel_search_info_title': hotel_search_info.hotel_search_info_title,
                 'hotel_search_info_text': hotel_search_info.hotel_search_info_text,
                 'hotel_name': hotel.hotel_name,
+                'hotel_link': hotel_link,
                 'hotel_type': hotel.hotel_type,
                 'hotel_cover_photo': hotel.hotel_cover_photo,
                 'hotel_rating': hotel.hotel_star_rating,
@@ -507,11 +511,13 @@ def update_search_results(request):
             hotel_search_info = hotel.hotel_search_info.first()
 
             hotel_cover_photo_url = hotel.hotel_cover_photo.url
+            hotel_link = reverse('hotel_detail', args=[hotel.slug])
     
             # Create a dictionary for each hotel's result
 
             hotel_result = {
                 'hotel_name': hotel.hotel_name,
+                'hotel_link': hotel_link,
                 'hotel_search_info_title': hotel_search_info.hotel_search_info_title,
                 'hotel_search_info_text': hotel_search_info.hotel_search_info_text,
                 'hotel_type': hotel.hotel_type,

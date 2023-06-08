@@ -425,7 +425,7 @@
                       class="page-content__search-results-item-info-title-container"
                     >
                       <h4 class="page-content__search-results-item-info-title">
-                        {{ hotel_result.hotel_name }}
+                        <a href="{{ hotel_result.hotel_link }}" target="_blank">{{ hotel_result.hotel_name }}</a>
                       </h4>
 
                       {% if hotel_result.total_price_with_discount != 0 %}
@@ -505,7 +505,8 @@
                           type="submit"
                           class="page-content__search-results-item-info-data-see-availability"
                         >
-                          See availability
+                        <a href="{{ hotel_result.hotel_link }}" target="_blank">See availability</a>
+                          
                         </button>
                       </div>
                       <div
@@ -611,6 +612,24 @@
 </script>
 {% endif %}
 
+
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    const params = new URLSearchParams(window.location.search); // Get the query parameters from the URL
+    const destination = params.get('destination'); // Get the value of the 'destination' parameter
+    const checkin = params.get('checkin'); // Get the value of the 'checkin' parameter
+    const checkout = params.get('checkout'); // Get the value of the 'checkout' parameter
+    const guests = params.get('guests'); // Get the value of the 'guests' parameter
+
+    // Set the values of the input fields using the retrieved query parameters
+    document.getElementById('destination').value = destination;
+    document.getElementById('checkin').value = checkin;
+    document.getElementById('checkout').value = checkout;
+    document.getElementById('guests').value = guests;
+  });
+
+  // Rest of the code remains the same
+</script>
 
 <!-- <script>
   const dropDownList = document.querySelector(
@@ -943,7 +962,7 @@
                   <div class="page-content__search-results-item-info-container">
                     <div class="page-content__search-results-item-info-title-container">
                       <h4 class="page-content__search-results-item-info-title">
-                        ${hotelResult.hotel_name}
+                        <a href="${hotelResult.hotel_link}" target="_blank">${hotelResult.hotel_name}</a>
                       </h4>
                       ${
                         hotelResult.total_price_with_discount != 0
@@ -976,7 +995,7 @@
                           ${hotelResult.hotel_search_info_text}
                         </p>
                         <button type="submit" class="page-content__search-results-item-info-data-see-availability">
-                          See availability
+                          <a href=${hotelResult.hotel_link} target="_blank">See availability</a>
                         </button>
                       </div>
                       <div class="page-content__search-results-item-info-data-container-right">
