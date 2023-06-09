@@ -196,7 +196,7 @@ class RoomType(models.Model):
     hotels = models.ForeignKey(
         Hotels, related_name='hotel_rooms', on_delete=models.CASCADE, default=None)
     name = models.CharField(max_length=50, help_text='Name of the room type')
-    # area = models.PositiveIntegerField(default=0, help_text='Room area')
+    area = models.PositiveIntegerField(default=0, help_text='Room area')
     description = models.TextField(
         help_text='Description of the room type', default=None)
     price_per_night = models.DecimalField(

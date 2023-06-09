@@ -117,9 +117,11 @@
               <span class="popular-hotels__destinations-info-name"
                 >{{ hotel.hotel_name }}</span
               >
-              <span class="popular-hotels__destinations-info-amount"
-                >10 rooms</span
-              >
+              {% if hotel.hotel_rooms.count == 1 %}
+        <span class="popular-hotels__destinations-info-amount">1 room</span>
+    {% else %}
+        <span class="popular-hotels__destinations-info-amount">{{ hotel.hotel_rooms.count }} rooms</span>
+    {% endif %}
             </div>
           </a>
         </li>

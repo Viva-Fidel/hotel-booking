@@ -10,6 +10,7 @@ from blogs.models import Blogs
 
 import random
 from datetime import datetime
+from urllib.parse import urlencode
 
 
 # Create your views here.
@@ -104,6 +105,13 @@ def search_hotels(request):
     checkin = request.GET.get('checkin')
     checkout = request.GET.get('checkout')
     guests = request.GET.get('guests')
+    
+    query_params = {
+        'destination': destination,
+        'checkin': checkin,
+        'checkout': checkout,
+        'guests': guests,
+    }
 
     # Extract amount of guests
     guests_parts = guests.split("·")
@@ -207,7 +215,7 @@ def search_hotels(request):
                 total_price_with_discount = 0
     
             hotel_search_info = hotel.hotel_search_info.first()
-            hotel_link = reverse('hotel_detail', args=[hotel.slug])
+            hotel_link = reverse('hotel_detail', args=[hotel.slug]) + '?' + urlencode(query_params)
 
 
 
@@ -334,6 +342,13 @@ def update_search_results(request):
     sorting = request.GET.get('sorting', 'default_value')
     displayed_hotels = request.GET.get('displayed_hotels')
 
+    query_params = {
+        'destination': destination,
+        'checkin': checkin,
+        'checkout': checkout,
+        'guests': guests,
+    }
+    
     price = price.split(",") if price else []
     facilities = facilities.split(",") if facilities else []
     activities = activities.split(",") if activities else []
@@ -511,7 +526,7 @@ def update_search_results(request):
             hotel_search_info = hotel.hotel_search_info.first()
 
             hotel_cover_photo_url = hotel.hotel_cover_photo.url
-            hotel_link = reverse('hotel_detail', args=[hotel.slug])
+            hotel_link = reverse('hotel_detail', args=[hotel.slug]) + '?' + urlencode(query_params)
     
             # Create a dictionary for each hotel's result
 

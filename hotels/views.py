@@ -10,6 +10,9 @@ def hotel_detail(request, slug):
 
     facility_data = []
 
+    hotel.hotel_popularity += 1
+    hotel.save()
+
     for facility in facilities:
         if facility.hotel_has_free_wifi:
             facility_data.append({'name': 'Free wifi', 'icon': '/static/images/hotels/icons/hotel_has_free_wifi.png'})

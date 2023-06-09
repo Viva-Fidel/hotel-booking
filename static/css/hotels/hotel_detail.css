@@ -527,6 +527,11 @@ input {
   color: #ffffff;
 }
 
+.room-availability__reserve-button:hover {
+  background: #2969bf;
+  border: 1px solid #2969bf;
+}
+
 .restrictions {
   background-color: #f2f2f2;
 }
