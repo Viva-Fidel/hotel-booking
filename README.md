@@ -27,6 +27,10 @@ All hotel names and descriptions are generated using neural networks. All matche
 * Implemented default search parameters generation if user doesn`t input anything in dates/guests and rooms:
 ![image](https://github.com/Viva-Fidel/hotel-booking/assets/98227548/bfff5c92-5ce7-4e2e-8a5a-2d3e5124dbfa)
 
+## 09.06 Update
+* Implemented searching of hotels from main page using main page links
+* Finished hotel hotel page generation
+![image](https://github.com/Viva-Fidel/hotel-booking/assets/98227548/3197a433-04c1-471c-a991-e86ec09ea9c8)
 
 ## To do
 - [ ] User account managment
@@ -36,6 +40,6 @@ All hotel names and descriptions are generated using neural networks. All matche
 - [X] Make filter work on a search page
 - [ ] Allow to book hotels
 - [ ] Generate pdf booking confirmations
-- [ ] Each hotel personal page
+- [X] Each hotel personal page
 - [ ] Populate Discover, Activities, About, Contact, Covid, etc. links
 - [ ] Add mobile version
