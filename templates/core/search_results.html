@@ -428,7 +428,7 @@
                         <a href="{{ hotel_result.hotel_link }}" target="_blank">{{ hotel_result.hotel_name }}</a>
                       </h4>
 
-                      {% if hotel_result.total_price_with_discount != 0 %}
+                      {% if hotel_result.special_discount != 0 %}
                       <div
                         class="page-content__search-results-item-info-title-promo__active"
                       >
@@ -512,7 +512,7 @@
                       <div
                         class="page-content__search-results-item-info-data-container-right"
                       >
-                        {% if hotel_result.total_price_with_discount != 0 %}
+                        {% if hotel_result.special_discount != 0 %}
                         <div
                           class="page-content__search-results-item-info-data-discount__active"
                         >
@@ -965,7 +965,7 @@
                         <a href="${hotelResult.hotel_link}" target="_blank">${hotelResult.hotel_name}</a>
                       </h4>
                       ${
-                        hotelResult.total_price_with_discount != 0
+                        hotelResult.special_discount != 0
                           ? `
                             <div class="page-content__search-results-item-info-title-promo__active">
                               ${hotelResult.special_discount}

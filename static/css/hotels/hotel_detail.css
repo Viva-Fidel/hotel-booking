@@ -54,7 +54,7 @@ input {
   cursor: pointer;
 }
 
-.page-menu__container-button.first-button {
+.page-menu__container-button.active {
   border-bottom: 3px solid #2f80ed;
 }
 
@@ -167,6 +167,7 @@ input {
   margin-block-end: 0px;
   margin-top: 20px;
   margin-left: 30px;
+  margin-right: 40px;
 }
 
 .hotel-data__general-hotel-data-border {
@@ -262,6 +263,271 @@ input {
   margin-top: 12px;
   margin-block-start: 0px;
   margin-block-end: 0px;
+}
+
+.room-data__rooms-list {
+  margin-top: 40px;
+  padding-inline-start: 0px;
+}
+
+.room-data__rooms-item{
+  max-width: 915px;
+  max-height: 240px;
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.room-data__rooms-item-image {
+  width: 285px;
+  height: 200px;
+  margin: 20px;
+  border-radius: 5px;
+}
+
+.room-data__rooms-item-info-container {
+  width: 562px;
+  height: 192px;
+  margin: 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.room-data__rooms-item-info-title-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.room-data__rooms-item-info-title {
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: 0.01em;
+  margin-block-start: 0px;
+  margin-block-end: 0px;
+}
+
+.room-data__rooms-item-info-title a{
+  color: #1a1a1a;
+}
+
+.room-data__rooms-item-info-title-promo__active {
+  width: 190px;
+  height: 26px;
+  background: #eb5757;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 18px;
+  letter-spacing: 0.02em;
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.page-content__search-results-item-info-title-promo__not-active {
+  width: 190px;
+  height: 26px;
+  
+}
+
+.page-content__search-results-item-info-rating-container {
+  margin-top: 7px;
+  max-height: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.page-content__search-results-item-info-rating-stars-container {
+  display: flex;
+  flex-direction: row;
+  height: 20px;
+  width: 90px;
+}
+
+.page-content__search-results-item-info-rating-star-icon {
+  height: 20px;
+  width: 20px;
+}
+
+.page-content__search-results-item-info-rating-star-icon-half {
+  height: 20px;
+  width: 10px;
+}
+
+.page-content__search-results-item-info-rating-stars-text {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 140%;
+  letter-spacing: 0.02em;
+  color: #4f4f4f;
+  margin-left: 12px;
+}
+
+.page-content__search-results-item-info-data-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.page-content__search-results-item-info-data-container-left {
+  width: 380px;
+}
+
+.page-content__search-results-item-info-data-offer-title {
+  margin-block-start: 0px;
+  margin-block-end: 0px;
+  margin-top: 18px;
+  height: 18px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 140%;
+  letter-spacing: 0.02em;
+  color: #4f4f4f;
+}
+
+.page-content__search-results-item-info-data-offer-text {
+  margin-block-start: 0px;
+  margin-block-end: 0px;
+  margin-top: 4px;
+  height: 36px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 140%;
+  letter-spacing: 0.02em;
+  color: #4f4f4f;
+}
+
+.page-content__search-results-item-info-data-see-availability {
+  margin-top: 18px;
+  padding: 10px 18px;
+  width: 137px;
+  height: 40px;
+  background: #2f80ed;
+  border: 1px solid #2f80ed;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+}
+
+.page-content__search-results-item-info-data-see-availability:hover {
+  background: #2969bf;
+  border: 1px solid #2969bf;
+}
+
+.page-content__search-results-item-info-data-see-availability a {
+  color: #ffffff;
+}
+
+.page-content__search-results-item-info-data-container-right {
+  margin-top: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.page-content__search-results-item-info-data-discount__active {
+  width: 54px;
+  height: 26px;
+  background: #219653;
+  border-radius: 6px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 18px;
+  letter-spacing: 0.02em;
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.page-content__search-results-item-info-data-discount__not-active {
+  width: 54px;
+  height: 26px;
+}
+
+.page-content__search-results-item-info-data-rooms-text {
+  margin-block-start: 0px;
+  margin-block-end: 0px;
+  margin-top: 6px;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 17px;
+  letter-spacing: 0.02em;
+  color: #333333;
+}
+
+.page-content__search-results-item-info-data-price-container {
+  margin-top: 6px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 24px;
+}
+
+.page-content__search-results-item-info-data-price-discount__active {
+  margin-block-start: 0px;
+  margin-block-end: 0px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  letter-spacing: 0.01em;
+  text-decoration-line: line-through;
+  color: #eb5757;
+}
+
+.page-content__search-results-item-info-data-price-discount__not-active{
+  height: 17px;
+}
+
+.page-content__search-results-item-info-data-price-full {
+  margin-block-start: 0px;
+  margin-block-end: 0px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+  display: flex;
+  align-items: center;
+  text-align: right;
+  letter-spacing: 0.01em;
+  color: #333333;
+  margin-left: 8px;
+}
+
+.page-content__search-results-item-info-data-taxes-text {
+  margin-block-start: 0px;
+  margin-block-end: 0px;
+  margin-top: 6px;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: right;
+  letter-spacing: 0.02em;
+  color: #333333;
+}
+
+/*  */
+
+.room-data__container {
+  display: flex;
 }
 
 .room-availability {

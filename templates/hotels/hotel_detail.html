@@ -49,13 +49,13 @@
   <section class="page-menu">
     <div class="container">
     <div class="page-menu__container">
-      <button type="button" class="page-menu__container-button first-button">
+      <button type="button" class="page-menu__container-button active" onclick="showOverview(this)">
         Overview
       </button>
-      <button type="button" class="page-menu__container-button">
+      <button type="button" class="page-menu__container-button" onclick="showRooms(this)">
         Rooms
       </button>
-      <button type="button" class="page-menu__container-button">
+      <button type="button" class="page-menu__container-button" onclick="showGuestReviews(this)">
         Guest Reviews
       </button>
     </div>
@@ -63,7 +63,7 @@
   </section>
   <section class="hotel-data">
     <div class="container">
-      <div class="hotel-data__container">
+      <div class="hotel-data__container" id="hotel-data-container">
         <div class="hotel-data__left-side-container">
           <h2 class="hotel-data__hotel-title">
             {{ hotel.hotel_name }}
@@ -162,6 +162,168 @@
           </h4>
           <div class="hotel-data__explore-container"></div>
         </div>
+      </div>
+      <div class="room-data__container" id="room-data-container">
+        <ul
+                class="room-data__rooms-list"
+                id="search-results-container"
+              >
+              {% for room in hotel.hotel_rooms.all %}
+              
+                <!-- <h4 class="room-availability__room-list-item-title__room"> 
+                  {{ room.name }} -->
+                <li class="room-data__rooms-item">
+                  {% if room.photo_1 %}
+                  <img
+                    src="{{ room.photo_1.url }}"
+                    alt="Room Photo"
+                    class="room-data__rooms-item-image"
+                  />
+                  {% endif %}
+                  <div class="room-data__rooms-item-info-container">
+                    <div
+                      class="room-data__rooms-item-info-title-container"
+                    >
+                      <h4 class="room-data__rooms-item-info-title">
+                        <a href="#" target="_blank">{{ room.name }}</a>
+                      </h4>
+
+                      {% if room.special_discount %}
+                      <div
+                        class="room-data__rooms-item-info-title-promo__active"
+                      >
+                        {{ hotel_result.special_discount }}
+                      </div>
+                      {% else %}
+                      <div
+                        class="page-content__search-results-item-info-title-promo__not-active"
+                      ></div>
+                      {% endif %}
+                    </div>
+                    <div
+                      class="page-content__search-results-item-info-rating-container"
+                    >
+                      <div
+                        class="page-content__search-results-item-info-rating-stars-container"
+                      >
+                        {% if hotel_result.hotel_rating >= 1 %}
+                        <img
+                          src="{% static 'images/core/icons/star.png' %}"
+                          alt="Star icon"
+                          class="page-content__search-results-item-info-rating-star-icon"
+                        />
+                        {% endif %} {% if hotel_result.hotel_rating >= 2 %}
+                        <img
+                          src="{% static 'images/core/icons/star.png' %}"
+                          alt="Star icon"
+                          class="page-content__search-results-item-info-rating-star-icon"
+                        />
+                        {% endif %} {% if hotel_result.hotel_rating >= 3 %}
+                        <img
+                          src="{% static 'images/core/icons/star.png' %}"
+                          alt="Star icon"
+                          class="page-content__search-results-item-info-rating-star-icon"
+                        />
+                        {% endif %} {% if hotel_result.hotel_rating >= 4 %}
+                        <img
+                          src="{% static 'images/core/icons/star.png' %}"
+                          alt="Star icon"
+                          class="page-content__search-results-item-info-rating-star-icon"
+                        />
+                        {% endif %} {% if hotel_result.hotel_rating >= 5 %}
+                        <img
+                          src="{% static 'images/core/icons/star.png' %}"
+                          alt="Star icon"
+                          class="page-content__search-results-item-info-rating-star-icon"
+                        />
+                        {% endif %}
+                      </div>
+                      <p
+                        class="page-content__search-results-item-info-rating-stars-text"
+                      >
+                        Guest rating: {{ hotel_result.user_rating }} ({{ hotel_result.amount_of_reviews }}
+                        Reviews)
+                      </p>
+                    </div>
+                    <div
+                      class="page-content__search-results-item-info-data-container"
+                    >
+                      <div
+                        class="page-content__search-results-item-info-data-container-left"
+                      >
+                        <p
+                          class="page-content__search-results-item-info-data-offer-title"
+                        >
+                          {{ hotel_result.hotel_search_info_title }}
+                        </p>
+                        <p
+                          class="page-content__search-results-item-info-data-offer-text"
+                        >
+                          {{ hotel_result.hotel_search_info_text }}
+                        </p>
+                        <button
+                          type="submit"
+                          class="page-content__search-results-item-info-data-see-availability"
+                        >
+                        <a href="{{ hotel_result.hotel_link }}" target="_blank">See availability</a>
+                          
+                        </button>
+                      </div>
+                      <div
+                        class="page-content__search-results-item-info-data-container-right"
+                      >
+                        {% if hotel_result.total_price_with_discount != 0 %}
+                        <div
+                          class="page-content__search-results-item-info-data-discount__active"
+                        >
+                          {{ hotel_result.price_discount }}% off
+                        </div>
+                        {% else %}
+                        <div
+                          class="page-content__search-results-item-info-data-discount__not-active"
+                        ></div>
+                        {% endif %}
+                        <p
+                          class="page-content__search-results-item-info-data-rooms-text"
+                        >
+                          {{ guests }} {{ duration }} days
+                        </p>
+                        {% if hotel_result.total_price_with_discount != 0 %}
+                        <p
+                          class="page-content__search-results-item-info-data-price-full"
+                        >
+                          US${{ hotel_result.total_price_with_discount }}
+                        </p>
+                        <p
+                          class="page-content__search-results-item-info-data-price-discount__active"
+                        >
+                          US${{ hotel_result.total_price }}
+                        </p>
+                        {% else %}
+                        <p
+                          class="page-content__search-results-item-info-data-price-full"
+                        >
+                          US${{ hotel_result.total_price }}
+                        </p>
+                        <div
+                          class="page-content__search-results-item-info-data-price-discount__not-active"
+                        ></div>
+                        {% endif %}
+
+                        <p
+                          class="page-content__search-results-item-info-data-taxes-text"
+                        >
+                          Includes taxes and fees
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                {% endfor %}
+              </ul>
+      </div>
+      <div class="reviews-data__container" id="reviews-data-container">
+        <!-- Content for Guest Reviews -->
       </div>
     </div>
   </section>
@@ -389,6 +551,37 @@
     {% include 'partials/_footer.html' %}
   </section>
 </main>
+
+<script>
+  function showOverview(button) {
+    setActiveButton(button);
+    document.getElementById("hotel-data-container").style.display = "flex";
+    document.getElementById("room-data-container").style.display = "none";
+    document.getElementById("reviews-data-container").style.display = "none";
+  }
+
+  function showRooms(button) {
+    setActiveButton(button);
+    document.getElementById("hotel-data-container").style.display = "none";
+    document.getElementById("room-data-container").style.display = "flex";
+    document.getElementById("reviews-data-container").style.display = "none";
+  }
+
+  function showGuestReviews(button) {
+    setActiveButton(button);
+    document.getElementById("hotel-data-container").style.display = "none";
+    document.getElementById("room-data-container").style.display = "none";
+    document.getElementById("reviews-data-container").style.display = "flex";
+  }
+
+  function setActiveButton(button) {
+    var buttons = document.getElementsByClassName("page-menu__container-button");
+    for (var i = 0; i < buttons.length; i++) {
+      buttons[i].classList.remove("active");
+    }
+    button.classList.add("active");
+  }
+</script>
 
 <script>
   window.addEventListener('DOMContentLoaded', (event) => {

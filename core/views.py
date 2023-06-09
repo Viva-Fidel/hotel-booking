@@ -220,8 +220,8 @@ def search_hotels(request):
                         datetime.strptime(checkin, '%d-%m-%Y')).days
     
             price_discount = cheapest_room.price_discount if cheapest_room else 0
-            special_discount = cheapest_room.special_discount if cheapest_room else 0
-    
+            special_discount = cheapest_room.special_discount if cheapest_room.special_discount != '' else 0
+
             total_price = cheapest_price_per_night * num_days
     
             if price_discount != 0:
@@ -529,7 +529,7 @@ def update_search_results(request):
                         datetime.strptime(checkin, '%d-%m-%Y')).days
     
             price_discount = cheapest_room.price_discount if cheapest_room else 0
-            special_discount = cheapest_room.special_discount if cheapest_room else 0
+            special_discount = cheapest_room.special_discount if cheapest_room.special_discount != '' else 0
     
             total_price = cheapest_price_per_night * num_days
     
