@@ -4,6 +4,7 @@ from django.urls import reverse
 from django.core.validators import MinValueValidator, MaxValueValidator
 from core.models import Counties
 from smart_selects.db_fields import ChainedForeignKey
+from django.utils.safestring import mark_safe
 
 import os
 
@@ -69,6 +70,11 @@ class Hotels(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.hotel_name)
+
+        # Add formatting tags to the description
+        formatted_description = self.hotel_description.strip().replace('\n', '<br>')
+        self.hotel_description = mark_safe(f'<p>{formatted_description}</p>')
+
         super().save(*args, **kwargs)
 
     def get_absolute_url(self):
@@ -210,9 +216,45 @@ class RoomType(models.Model):
         validators=[MinValueValidator(0), MaxValueValidator(100)], default=None)
     special_discount = models.CharField(
         max_length=50, help_text='Special discount (optional) in text', blank=True , default=None)
+    max_guests = models.IntegerField(default=0, editable=False)
+
+    def save(self, *args, **kwargs):
+        room_type_bed = self.roomtypebed_set.first()
+        if room_type_bed:
+            queen_bed_guests = room_type_bed.queen_bed_quantity * 2
+            sofa_bed_guests = room_type_bed.sofa_bed_quantity * 2
+            king_bed_guests = room_type_bed.king_bed_quantity * 2
+            twin_bed_guests = room_type_bed.twin_bed_quantity
+            full_bed_guests = room_type_bed.full_bed_quantity * 2
+
+            self.max_guests = (
+                queen_bed_guests + sofa_bed_guests + king_bed_guests + twin_bed_guests + full_bed_guests
+            )
+        else:
+            self.max_guests = 0
+
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.name
+    
+    def bed_information(self):
+        bed_info = []
+        if self.roomtypebed_set.exists():
+            bed_type_count = {
+                'queen bed': self.roomtypebed_set.first().queen_bed_quantity,
+                'sofa bed': self.roomtypebed_set.first().sofa_bed_quantity,
+                'king bed': self.roomtypebed_set.first().king_bed_quantity,
+                'twin bed': self.roomtypebed_set.first().twin_bed_quantity,
+                'full bed': self.roomtypebed_set.first().full_bed_quantity
+            }
+
+            for bed_type, count in bed_type_count.items():
+                if count > 0:
+                    plural_suffix = 's' if count > 1 else ''
+                    bed_info.append(f"{count} {bed_type}{plural_suffix}")
+
+        return " and ".join(bed_info) if bed_info else "No bed information"
 
 
 class RoomTypeBed(models.Model):
@@ -243,29 +285,16 @@ class Room(models.Model):
     )
     available = models.BooleanField(
         default=True, help_text='Is the room currently available?')
-    max_guests = models.IntegerField(default=0, editable=False)
-
-    
-    def save(self, *args, **kwargs):
-        room_type_bed = self.room_type.roomtypebed_set.first()
-        if room_type_bed:
-            queen_bed_guests = room_type_bed.queen_bed_quantity * 2
-            sofa_bed_guests = room_type_bed.sofa_bed_quantity * 2
-            king_bed_guests = room_type_bed.king_bed_quantity * 2
-            twin_bed_guests = room_type_bed.twin_bed_quantity
-            full_bed_guests = room_type_bed.full_bed_quantity * 2
-
-            self.max_guests = (
-                queen_bed_guests + sofa_bed_guests + king_bed_guests + twin_bed_guests + full_bed_guests
-            )
-        else:
-            self.max_guests = 0
-
-        super().save(*args, **kwargs)
-
+    max_guests = models.PositiveIntegerField(help_text='Maximum number of guests', default=0)
 
     class Meta:
         unique_together = ['room_type', 'room_number']
+
+    def save(self, *args, **kwargs):
+        if self.room_type:
+            self.max_guests = self.room_type.max_guests
+        super().save(*args, **kwargs)
+
 
     def __str__(self):
         return f'{self.room_type} - {self.room_number}'

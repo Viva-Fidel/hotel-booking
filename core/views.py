@@ -72,6 +72,7 @@ def index(request):
     checkin_formatted = checkin_date.strftime("%d-%m-%Y")
     checkout_formatted = checkout_date.strftime("%d-%m-%Y")
 
+
     # Create a dictionary to pass to the index.html template
     context = {'random_counties_list': random_counties_list,
                'popular_hotels': popular_hotels,
