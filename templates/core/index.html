@@ -49,7 +49,7 @@
         {% for county, county_info in random_counties_list.items %}
         <li class="counties-list__destinations-container">
           <a
-            href="{{ county | lower }}"
+          href="{{ hotel_search_url }}?destination={{ county }}&checkin={{ checkin_formatted }}&checkout={{ checkout_formatted }}&guests=1 guest · 1 room"
             class="counties-list__destinations-link"
           >
             <img
@@ -107,7 +107,7 @@
       <ul class="popular-hotels__destinations">
         {% for hotel in popular_hotels %}
         <li class="popular-hotels__destinations-item">
-          <a href="#" class="popular-hotels__destinations-link">
+          <a href="{% url 'hotel_detail' hotel.slug %}" class="popular-hotels__destinations-link">
             <img
               src="{{ hotel.hotel_cover_photo.url }}"
               alt=""
@@ -149,6 +149,33 @@
       />
     </div>
   </section>
+
+  <script>
+// Get the link element
+var link = document.querySelector('.counties-list__destinations-link');
+
+// Attach a click event listener to the link
+link.addEventListener('click', function(event) {
+  event.preventDefault(); // Prevent the default link behavior
+
+  // Extract the necessary parameters from the link's attributes
+  var destination = encodeURIComponent(link.getAttribute('href').split('?destination=')[1].split('&')[0]);
+  var checkin = encodeURIComponent(link.getAttribute('href').split('&checkin=')[1].split('&')[0]);
+  var checkout = encodeURIComponent(link.getAttribute('href').split('&checkout=')[1].split('&')[0]);
+  var guests = encodeURIComponent(link.getAttribute('href').split('&guests=')[1].split('&')[0]);
+  console.log(destination)
+
+  // Construct the URL with the parameters
+  var url = '/search/hotels/?destination=' + destination + '&checkin=' + checkin + '&checkout=' + checkout + '&guests=' + guests;
+
+  // Perform the GET request or redirect to the generated URL
+  // This depends on your specific application's requirements
+
+  // For example, you can redirect the user to the generated URL
+  window.location.href = url;
+});
+
+  </script>
 
   <!-- Script to redirect the user to the google play/appstore depending on the device when "download mobile app" photo is clicked -->
   <script>

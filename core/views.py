@@ -7,9 +7,10 @@ from django.db.models import Count
 from .models import Counties, Cover
 from hotels.models import Hotels, HotelsImage
 from blogs.models import Blogs
+from django.utils import timezone
 
 import random
-from datetime import datetime
+from datetime import datetime, timedelta
 from urllib.parse import urlencode
 
 
@@ -60,12 +61,25 @@ def index(request):
     # Get the first Cover object (if any)
     cover = Cover.objects.first()
 
+    # Get the current date
+    today = timezone.now().date()
+    
+    # Calculate the check-in and check-out dates
+    checkin_date = today + timedelta(days=7)
+    checkout_date = today + timedelta(days=14)
+    
+    # Format the dates as strings in the desired format
+    checkin_formatted = checkin_date.strftime("%d-%m-%Y")
+    checkout_formatted = checkout_date.strftime("%d-%m-%Y")
+
     # Create a dictionary to pass to the index.html template
     context = {'random_counties_list': random_counties_list,
                'popular_hotels': popular_hotels,
                'popular_hotels_images': popular_hotels_images,
                'blog_info': blog_info,
-               'cover': cover}
+               'cover': cover,
+               'checkin_formatted': checkin_formatted,
+        'checkout_formatted': checkout_formatted}
 
     # Render the index.html template with the context dictionary
     return render(request, 'core/index.html', context)
