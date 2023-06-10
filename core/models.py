@@ -9,7 +9,7 @@ from django.dispatch import receiver
 
 class Counties(models.Model):
     county_name = models.CharField(
-        max_length=25, verbose_name="County name")
+        max_length=25, verbose_name="County name", help_text='Add a county name')
     county_photo = models.ImageField(upload_to="images/core/county_photo")
 
     def __str__(self):
@@ -23,11 +23,11 @@ class Counties(models.Model):
 
 class Cover(models.Model):
     cover_title = models.CharField(
-        max_length=255, verbose_name="Cover title")
+        max_length=50, verbose_name="Cover title", help_text='Set a title for the cover in the main page')
     cover_text = models.TextField(
-        max_length=255, verbose_name="Cover text")
+        max_length=255, verbose_name="Cover text", help_text='Set a text for the cover in the main page')
     cover_photo = models.ImageField(
-        upload_to="images/core/cover_photo", verbose_name="Cover photo")
+        upload_to="images/core/cover_photo", verbose_name="Cover photo", help_text='Set a photo cover in the main page')
 
     def __str__(self):
         return self.cover_title

@@ -1,6 +1,7 @@
-from django.urls import path, include
-from . import views
+from django.urls import path
 from blogs.views import blog_detail
+
+from . import views
 
 
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
@@ -11,7 +12,8 @@ urlpatterns = [
     path('search/', views.search_address),
     path('search/hotels/', views.search_hotels, name='search_hotels'),
     path('blog/<slug:slug>/', blog_detail, name='blog_detail'),
-    path('update-search-results/', views.update_search_results, name='update_search_results'),
+    path('update-search-results/', views.update_search_results,
+         name='update_search_results'),
 
 ]
 

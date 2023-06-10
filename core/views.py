@@ -3,11 +3,11 @@ from django.urls import reverse
 from django.db.models import Q
 from django.http import JsonResponse
 from django.contrib.auth import logout
-from django.db.models import Count
+from django.utils import timezone
+
 from .models import Counties, Cover
 from hotels.models import Hotels, HotelsImage
 from blogs.models import Blogs
-from django.utils import timezone
 
 import random
 from datetime import datetime, timedelta
@@ -63,15 +63,14 @@ def index(request):
 
     # Get the current date
     today = timezone.now().date()
-    
+
     # Calculate the check-in and check-out dates
     checkin_date = today + timedelta(days=7)
     checkout_date = today + timedelta(days=14)
-    
+
     # Format the dates as strings in the desired format
     checkin_formatted = checkin_date.strftime("%d-%m-%Y")
     checkout_formatted = checkout_date.strftime("%d-%m-%Y")
-
 
     # Create a dictionary to pass to the index.html template
     context = {'random_counties_list': random_counties_list,
@@ -80,7 +79,7 @@ def index(request):
                'blog_info': blog_info,
                'cover': cover,
                'checkin_formatted': checkin_formatted,
-        'checkout_formatted': checkout_formatted}
+               'checkout_formatted': checkout_formatted}
 
     # Render the index.html template with the context dictionary
     return render(request, 'core/index.html', context)
@@ -120,7 +119,7 @@ def search_hotels(request):
     checkin = request.GET.get('checkin')
     checkout = request.GET.get('checkout')
     guests = request.GET.get('guests')
-    
+
     query_params = {
         'destination': destination,
         'checkin': checkin,
@@ -138,8 +137,9 @@ def search_hotels(request):
 
     # Create a Q object for searching hotels by destination and availability
     query = Q(hotel_county__county_name__contains=destination) & \
-            Q(room__available=True) & \
-            ~Q(room__bookings__check_in_date__lt=checkout_date, room__bookings__check_out_date__gt=checkin_date)
+        Q(room__available=True) & \
+        ~Q(room__bookings__check_in_date__lt=checkout_date,
+           room__bookings__check_out_date__gt=checkin_date)
 
     # Filter hotels by destination
     hotels = Hotels.objects.filter(query).distinct()
@@ -163,7 +163,7 @@ def search_hotels(request):
         {'value': '$200+', 'label': '$200+', 'count': 0},
     ]
 
-    facilities  = [
+    facilities = [
         {'value': 'Free wifi', 'label': 'Free wifi', 'count': 0},
         {'value': 'Air Conditioning', 'label': 'Air Conditioning', 'count': 0},
         {'value': 'Parking available', 'label': 'Parking available', 'count': 0},
@@ -177,15 +177,18 @@ def search_hotels(request):
         {'value': 'Room service', 'label': 'Room service', 'count': 0},
         {'value': 'Restaurant', 'label': 'Restaurant', 'count': 0},
         {'value': 'Pet friendly', 'label': 'Pet friendly', 'count': 0},
-        {'value': 'Facilities for disabled guests', 'label': 'Facilities for disabled guests', 'count': 0},
+        {'value': 'Facilities for disabled guests',
+            'label': 'Facilities for disabled guests', 'count': 0},
         {'value': 'Family rooms', 'label': 'Family rooms', 'count': 0},
         {'value': 'Spa', 'label': 'Spa', 'count': 0},
         {'value': 'Airport shuttle', 'label': 'Airport shuttle', 'count': 0},
-        {'value': 'Electric vehicle charging station', 'label': 'Electric vehicle charging station', 'count': 0},
+        {'value': 'Electric vehicle charging station',
+            'label': 'Electric vehicle charging station', 'count': 0},
         {'value': 'Free cancellation', 'label': 'Free cancellation', 'count': 0},
         {'value': 'Beach front', 'label': 'Beach front', 'count': 0},
         {'value': 'Jacuzzi', 'label': 'Hot tub/jacuzzi', 'count': 0},
-        {'value': 'Without credit card', 'label': 'Book without credit card', 'count': 0},
+        {'value': 'Without credit card',
+            'label': 'Book without credit card', 'count': 0},
         {'value': 'No prepayment', 'label': 'No prepayment', 'count': 0},
     ]
 
@@ -212,25 +215,29 @@ def search_hotels(request):
         rooms = hotel.room_set.all()
         total_capacity = sum(room.max_guests for room in rooms)
         if guests_count <= total_capacity:
-            cheapest_room = hotel.hotel_rooms.order_by('price_per_night').first()
+            cheapest_room = hotel.hotel_rooms.order_by(
+                'price_per_night').first()
             cheapest_price_per_night = cheapest_room.price_per_night if cheapest_room else 0
-            price_per_night = set(room.room_type.price_per_night for room in rooms)
+            price_per_night = set(
+                room.room_type.price_per_night for room in rooms)
 
             num_days = (datetime.strptime(checkout, '%d-%m-%Y') -
                         datetime.strptime(checkin, '%d-%m-%Y')).days
-    
+
             price_discount = cheapest_room.price_discount if cheapest_room else 0
             special_discount = cheapest_room.special_discount if cheapest_room.special_discount != '' else 0
 
-            total_price = cheapest_price_per_night * num_days * int(guests.split("·")[1].split()[0])
-    
+            total_price = cheapest_price_per_night * \
+                num_days * int(guests.split("·")[1].split()[0])
+
             if price_discount != 0:
                 total_price_with_discount = total_price - total_price/100*price_discount
             else:
                 total_price_with_discount = 0
-    
+
             hotel_search_info = hotel.hotel_search_info.first()
-            hotel_link = reverse('hotel_detail', args=[hotel.slug]) + '?' + urlencode(query_params)
+            hotel_link = reverse('hotel_detail', args=[
+                                 hotel.slug]) + '?' + urlencode(query_params)
 
             # Create a dictionary for each hotel's result
             hotel_result = {
@@ -273,7 +280,7 @@ def search_hotels(request):
                     'Hot tub/jacuzzi': hotel.hotel_facilities.first().hotel_has_jacuzzi if hotel.hotel_facilities.exists() else False,
                     'Book without credit card': hotel.hotel_facilities.first().hotel_has_without_credit_card if hotel.hotel_facilities.exists() else False,
                     'No prepayment': hotel.hotel_facilities.first().hotel_has_no_prepayment if hotel.hotel_facilities.exists() else False,
-                    },
+                },
                 'activities': {
                     'Fishing': hotel.hotel_activities.first().hotel_has_fishing if hotel.hotel_activities.exists() else False,
                     'Hiking': hotel.hotel_activities.first().hotel_has_hiking if hotel.hotel_activities.exists() else False,
@@ -289,9 +296,9 @@ def search_hotels(request):
                     'Skiing or snowboarding': hotel.hotel_activities.first().hotel_has_skiing if hotel.hotel_activities.exists() else False,
                     'Golfing': hotel.hotel_activities.first().hotel_has_golfing if hotel.hotel_activities.exists() else False,
                     'Surfing': hotel.hotel_activities.first().hotel_has_surfing if hotel.hotel_activities.exists() else False,
-                    },
-                }
-    
+                },
+            }
+
             # Append the dictionary to the list of hotel results
             hotel_results.append(hotel_result)
 
@@ -308,13 +315,13 @@ def search_hotels(request):
                 price_ranges[3]['count'] += 1
             else:
                 price_ranges[4]['count'] += 1
-    
+
         facilities_present = hotel_result['facilities']
         for facility in facilities:
             facility_value = facility['value']
             if facilities_present.get(facility_value, False):
                 facility['count'] += 1
-    
+
         activities_present = hotel_result['activities']
         for activity in activities:
             activity_value = activity['value']
@@ -325,20 +332,21 @@ def search_hotels(request):
 
     # Create a context dictionary with query parameters
     context = {
-            'destination': destination,
-            'num_hotels_found': num_hotels_found,
-            'duration': duration.days,
-            'checkin': checkin,
-            'checkout': checkout,
-            'guests': guests.split("·")[1].strip(),
-            'price_ranges': price_ranges,
-            'facilities': facilities,
-            'activities': activities,
-            'hotel_results': hotel_results
-        }
-    
+        'destination': destination,
+        'num_hotels_found': num_hotels_found,
+        'duration': duration.days,
+        'checkin': checkin,
+        'checkout': checkout,
+        'guests': guests.split("·")[1].strip(),
+        'price_ranges': price_ranges,
+        'facilities': facilities,
+        'activities': activities,
+        'hotel_results': hotel_results
+    }
+
     # Render the search results page with context
     return render(request, 'core/search_results.html', context)
+
 
 def update_search_results(request):
     # Get the search parameters from the query parameters
@@ -361,12 +369,12 @@ def update_search_results(request):
         'checkout': checkout,
         'guests': guests,
     }
-    
+
     price = price.split(",") if price else []
     facilities = facilities.split(",") if facilities else []
     activities = activities.split(",") if activities else []
 
-     # Extract amount of guests
+    # Extract amount of guests
     guests_parts = guests.split("·")
     guests_count = sum(int(part.split()[0]) for part in guests_parts)
 
@@ -376,14 +384,15 @@ def update_search_results(request):
 
     # Perform the database query based on the search parameters
     query = Q(hotel_county__county_name__contains=destination) & \
-            Q(room__available=True) & \
-            ~Q(room__bookings__check_in_date__lt=checkout_date, room__bookings__check_out_date__gt=checkin_date)
+        Q(room__available=True) & \
+        ~Q(room__bookings__check_in_date__lt=checkout_date,
+           room__bookings__check_out_date__gt=checkin_date)
 
     if hotel_name:
         query &= Q(hotel_name__icontains=hotel_name)
-    
+
     price_query = Q()  # Create an empty query for price ranges
-    
+
     if price:
         for price_range in price:
             if price_range == '$0-$50':
@@ -391,15 +400,17 @@ def update_search_results(request):
             elif price_range == '$50-$100':
                 price_query |= Q(hotel_rooms__price_per_night__range=(50, 100))
             elif price_range == '$100-$150':
-                price_query |= Q(hotel_rooms__price_per_night__range=(100, 150))
+                price_query |= Q(
+                    hotel_rooms__price_per_night__range=(100, 150))
             elif price_range == '$150-$200':
-                price_query |= Q(hotel_rooms__price_per_night__range=(150, 200))
+                price_query |= Q(
+                    hotel_rooms__price_per_night__range=(150, 200))
             elif price_range == '$200+':
                 price_query |= Q(hotel_rooms__price_per_night__gte=200)
-    
+
     if price_query:
         query &= price_query
-    
+
     if hotel_rating:
         hotel_rating = int(hotel_rating)
         query &= Q(hotel_star_rating__gte=hotel_rating)
@@ -415,7 +426,7 @@ def update_search_results(request):
                 activity_query &= field_query
         if activity_query is not None:
             query &= activity_query
-    
+
     if facilities:
         facility_query = None
         for facility in facilities:
@@ -427,7 +438,7 @@ def update_search_results(request):
                 facility_query &= field_query
         if facility_query is not None:
             query &= facility_query
-    
+
     if hotel_type:
         if hotel_type == 'Our top picks':
             query &= Q(is_top_pick=True)
@@ -442,7 +453,7 @@ def update_search_results(request):
 
      # Filter hotels by destination
     hotels = Hotels.objects.filter(query).distinct()
-    
+
     # Sort hotels based on sorting
     if sorting == 'Recommended' or sorting == '':
         hotels = hotels.order_by('-recommended_score')
@@ -470,7 +481,7 @@ def update_search_results(request):
         {'value': '$200+', 'label': '$200+', 'count': 0},
     ]
 
-    facilities  = [
+    facilities = [
         {'value': 'Free wifi', 'label': 'Free wifi', 'count': 0},
         {'value': 'Air Conditioning', 'label': 'Air Conditioning', 'count': 0},
         {'value': 'Parking available', 'label': 'Parking available', 'count': 0},
@@ -484,15 +495,18 @@ def update_search_results(request):
         {'value': 'Room service', 'label': 'Room service', 'count': 0},
         {'value': 'Restaurant', 'label': 'Restaurant', 'count': 0},
         {'value': 'Pet friendly', 'label': 'Pet friendly', 'count': 0},
-        {'value': 'Facilities for disabled guests', 'label': 'Facilities for disabled guests', 'count': 0},
+        {'value': 'Facilities for disabled guests',
+            'label': 'Facilities for disabled guests', 'count': 0},
         {'value': 'Family rooms', 'label': 'Family rooms', 'count': 0},
         {'value': 'Spa', 'label': 'Spa', 'count': 0},
         {'value': 'Airport shuttle', 'label': 'Airport shuttle', 'count': 0},
-        {'value': 'Electric vehicle charging station', 'label': 'Electric vehicle charging station', 'count': 0},
+        {'value': 'Electric vehicle charging station',
+            'label': 'Electric vehicle charging station', 'count': 0},
         {'value': 'Free cancellation', 'label': 'Free cancellation', 'count': 0},
         {'value': 'Beach front', 'label': 'Beach front', 'count': 0},
         {'value': 'Jacuzzi', 'label': 'Hot tub/jacuzzi', 'count': 0},
-        {'value': 'Without credit card', 'label': 'Book without credit card', 'count': 0},
+        {'value': 'Without credit card',
+            'label': 'Book without credit card', 'count': 0},
         {'value': 'No prepayment', 'label': 'No prepayment', 'count': 0},
     ]
 
@@ -519,28 +533,32 @@ def update_search_results(request):
         rooms = hotel.room_set.all()
         total_capacity = sum(room.max_guests for room in rooms)
         if guests_count <= total_capacity:
-            cheapest_room = hotel.hotel_rooms.order_by('price_per_night').first()
+            cheapest_room = hotel.hotel_rooms.order_by(
+                'price_per_night').first()
             cheapest_price_per_night = cheapest_room.price_per_night if cheapest_room else 0
-            price_per_night = list(set(room.room_type.price_per_night for room in rooms))
-            
+            price_per_night = list(
+                set(room.room_type.price_per_night for room in rooms))
+
             num_days = (datetime.strptime(checkout, '%d-%m-%Y') -
                         datetime.strptime(checkin, '%d-%m-%Y')).days
-    
+
             price_discount = cheapest_room.price_discount if cheapest_room else 0
             special_discount = cheapest_room.special_discount if cheapest_room.special_discount != '' else 0
-    
-            total_price = cheapest_price_per_night * num_days * int(guests.split("·")[1].split()[0])
-    
+
+            total_price = cheapest_price_per_night * \
+                num_days * int(guests.split("·")[1].split()[0])
+
             if price_discount != 0:
                 total_price_with_discount = total_price - total_price/100*price_discount
             else:
                 total_price_with_discount = 0
-    
+
             hotel_search_info = hotel.hotel_search_info.first()
 
             hotel_cover_photo_url = hotel.hotel_cover_photo.url
-            hotel_link = reverse('hotel_detail', args=[hotel.slug]) + '?' + urlencode(query_params)
-    
+            hotel_link = reverse('hotel_detail', args=[
+                                 hotel.slug]) + '?' + urlencode(query_params)
+
             # Create a dictionary for each hotel's result
 
             hotel_result = {
@@ -583,7 +601,7 @@ def update_search_results(request):
                     'Hot tub/jacuzzi': hotel.hotel_facilities.first().hotel_has_jacuzzi if hotel.hotel_facilities.exists() else False,
                     'Book without credit card': hotel.hotel_facilities.first().hotel_has_without_credit_card if hotel.hotel_facilities.exists() else False,
                     'No prepayment': hotel.hotel_facilities.first().hotel_has_no_prepayment if hotel.hotel_facilities.exists() else False,
-                    },
+                },
                 'activities': {
                     'Fishing': hotel.hotel_activities.first().hotel_has_fishing if hotel.hotel_activities.exists() else False,
                     'Hiking': hotel.hotel_activities.first().hotel_has_hiking if hotel.hotel_activities.exists() else False,
@@ -599,9 +617,9 @@ def update_search_results(request):
                     'Skiing or snowboarding': hotel.hotel_activities.first().hotel_has_skiing if hotel.hotel_activities.exists() else False,
                     'Golfing': hotel.hotel_activities.first().hotel_has_golfing if hotel.hotel_activities.exists() else False,
                     'Surfing': hotel.hotel_activities.first().hotel_has_surfing if hotel.hotel_activities.exists() else False,
-                    },
-                }
-    
+                },
+            }
+
             # Append the dictionary to the list of hotel results
             hotel_results.append(hotel_result)
 
@@ -618,13 +636,13 @@ def update_search_results(request):
                 price_ranges[3]['count'] += 1
             else:
                 price_ranges[4]['count'] += 1
-    
+
         facilities_present = hotel_result['facilities']
         for facility in facilities:
             facility_value = facility['value']
             if facilities_present.get(facility_value, False):
                 facility['count'] += 1
-    
+
         activities_present = hotel_result['activities']
         for activity in activities:
             activity_value = activity['value']
@@ -632,22 +650,20 @@ def update_search_results(request):
                 activity['count'] += 1
 
     hotel_results = hotel_results[:int(displayed_hotels)]
-    
-    
+
     # Create a context dictionary with query parameters
     context = {
-            'destination': destination,
-            'num_hotels_found': num_hotels_found,
-            'duration': duration.days,
-            'checkin': checkin,
-            'checkout': checkout,
-            'guests': guests.split("·")[1].strip(),
-            'price_ranges': price_ranges,
-            'facilities': facilities,
-            'activities': activities,
-            'hotel_results': hotel_results
-        }
+        'destination': destination,
+        'num_hotels_found': num_hotels_found,
+        'duration': duration.days,
+        'checkin': checkin,
+        'checkout': checkout,
+        'guests': guests.split("·")[1].strip(),
+        'price_ranges': price_ranges,
+        'facilities': facilities,
+        'activities': activities,
+        'hotel_results': hotel_results
+    }
 
     # Return the search results as JSON response
     return JsonResponse(context)
-
