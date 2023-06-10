@@ -222,7 +222,7 @@ def search_hotels(request):
             price_discount = cheapest_room.price_discount if cheapest_room else 0
             special_discount = cheapest_room.special_discount if cheapest_room.special_discount != '' else 0
 
-            total_price = cheapest_price_per_night * num_days
+            total_price = cheapest_price_per_night * num_days * int(guests.split("·")[1].split()[0])
     
             if price_discount != 0:
                 total_price_with_discount = total_price - total_price/100*price_discount
@@ -231,8 +231,6 @@ def search_hotels(request):
     
             hotel_search_info = hotel.hotel_search_info.first()
             hotel_link = reverse('hotel_detail', args=[hotel.slug]) + '?' + urlencode(query_params)
-
-
 
             # Create a dictionary for each hotel's result
             hotel_result = {
@@ -531,7 +529,7 @@ def update_search_results(request):
             price_discount = cheapest_room.price_discount if cheapest_room else 0
             special_discount = cheapest_room.special_discount if cheapest_room.special_discount != '' else 0
     
-            total_price = cheapest_price_per_night * num_days
+            total_price = cheapest_price_per_night * num_days * int(guests.split("·")[1].split()[0])
     
             if price_discount != 0:
                 total_price_with_discount = total_price - total_price/100*price_discount

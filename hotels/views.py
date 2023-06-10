@@ -2,16 +2,30 @@ from django.shortcuts import get_object_or_404, render
 from .models import Hotels
 
 import random
+from datetime import datetime
 
 
 def hotel_detail(request, slug):
     hotel = get_object_or_404(Hotels, slug=slug)
+
+    checkin = request.GET.get('checkin')
+    checkout = request.GET.get('checkout')
+    guests = request.GET.get('guests')
+
+    # Convert check-in and check-out strings to datetime objects
+    checkin_date = datetime.strptime(checkout, '%d-%m-%Y')
+    checkout_date = datetime.strptime(checkin, '%d-%m-%Y')
+
+    duration = (checkin_date - checkout_date).days
+    
+    
     facilities = hotel.hotel_facilities.all()
 
     facility_data = []
 
     hotel.hotel_popularity += 1
     hotel.save()
+
 
     for facility in facilities:
         if facility.hotel_has_free_wifi:
@@ -65,9 +79,22 @@ def hotel_detail(request, slug):
         facility_data = random.sample(facility_data, 6)
     
     address = str(hotel.hotel_street)+ ", " + str(hotel.hotel_city) + ", " + str(hotel.hotel_county) + " OR" 
+    
+    room_data = []
+    for room in hotel.hotel_rooms.all():
+        total_price = float(room.price_per_night) * duration * int(guests.split("·")[1].split()[0])
+        price_with_discount = total_price - (total_price * (room.price_discount / 100))
+        room_data.append({
+            'room': room,
+            'total_price': total_price,
+            'price_with_discount': price_with_discount
+        })
 
     context = {'hotel': hotel, 
+               'room_data': room_data,
                'facility_data': facility_data, 
                'address': address,
+               'guests': guests.split("·")[1].strip(),
+               'duration': duration,
             }
     return render(request, 'hotels/hotel_detail.html', context)
