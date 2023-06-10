@@ -44,7 +44,7 @@ def index(request):
             'hotel_count': hotel_count, 'county_photo': county_photo}
 
     # Get the latest 3 published blog posts
-    blog_info = Blogs.objects.filter(
+    blogs = Blogs.objects.filter(
         is_published=True).order_by('-time_create')[:3]
 
     # Get the 4 most popular published hotels
@@ -76,7 +76,7 @@ def index(request):
     context = {'random_counties_list': random_counties_list,
                'popular_hotels': popular_hotels,
                'popular_hotels_images': popular_hotels_images,
-               'blog_info': blog_info,
+               'blogs': blogs,
                'cover': cover,
                'checkin_formatted': checkin_formatted,
                'checkout_formatted': checkout_formatted}
@@ -96,18 +96,18 @@ def search_address(request):
     # Get the search query from the GET request
     address = request.GET.get('address')
 
-    # Initialize an empty list to store the real addresses
+    # Initialize an empty list to store the filtered addresses
     payload = []
 
     # Check if the search query is not empty
     if address:
         # Filter the counties that contain the search query in their name
-        real_addresses = Counties.objects.filter(
+        filtered_addresses = Counties.objects.filter(
             county_name__icontains=address)[:5]
 
         # Add the county names to the payload list
-        for real_address in real_addresses:
-            payload.append(real_address.county_name)
+        for filtered_address in filtered_addresses:
+            payload.append(filtered_address.county_name)
 
     # Return a JSON response with the status code and payload data
     return JsonResponse({'status': 200, 'data': payload})

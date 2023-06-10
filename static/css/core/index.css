@@ -96,51 +96,51 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   color: #333333;
 }
 
-.counties-list__destinations {
+.counties-list__destinations-list {
   display: flex;
   flex-wrap: wrap;
   padding-inline-start: 0px;
   margin-top: 0px;
 }
 
-.counties-list__destinations-container {
+.counties-list__destinations-item-container {
   display: flex;
   flex-direction: column;
 }
 
-.counties-list__destinations-container:not(:last-child) {
+.counties-list__destinations-item-container:not(:last-child) {
   margin-right: 20px;
 }
 
-.counties-list__destinations-container a {
+.counties-list__destinations-item-container a {
   font-weight: 600;
   font-size: 20px;
   line-height: 24px;
   color: #181818;
 }
 
-.counties-list__destinations-photo {
+.counties-list__destinations-item-photo {
   margin-top: 30px;
   width: 295px;
   height: 220px;
   border-radius: 8px;
 }
 
-.counties-list__destinations-info {
+.counties-list__destinations-item-info {
   margin-top: 14px;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-.ccounties-list__destinations-info-name {
+.ccounties-list__destinations-item-info-name {
   font-weight: 600;
   font-size: 20px;
   line-height: 24px;
   color: #181818;
 }
 
-.counties-list__destinations-info-amount {
+.counties-list__destinations-item-info-amount {
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;
@@ -157,7 +157,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   margin-block-end: 10px;
 }
 
-.blog__posts {
+.blog__posts-list {
   margin-top: 24px;
   display: flex;
   flex-wrap: wrap;
@@ -174,7 +174,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   margin-right: 20px;
 }
 
-.blog__posts-photo {
+.blog__posts-item-photo {
   width: 100%;
   height: 100%;
   background: linear-gradient(
@@ -184,7 +184,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   );
 }
 
-.blog__posts-content {
+.blog__posts-item-content {
   color: #fff;
   position: absolute;
   left: 20px;
@@ -194,7 +194,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   margin-block-start: 0px;
 }
 
-.blog__posts-content-title {
+.blog__posts-item-content-title {
   text-shadow: 0 1px 0 black;
   font-weight: 600;
   font-size: 20px;
@@ -205,7 +205,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   padding: 10px;
 }
 
-.blog__posts-content-text {
+.blog__posts-item-content-text {
   text-shadow: 0 1px 0 black;
   font-weight: 400;
   font-size: 16px;
@@ -228,7 +228,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   margin-block-end: 0px;
 }
 
-.popular-hotels__destinations {
+.popular-hotels__destinations-list {
   display: flex;
   flex-wrap: wrap;
   padding-inline-start: 0px;
@@ -244,28 +244,28 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   margin-right: 20px;
 }
 
-.popular-hotels__destinations-photo {
+.popular-hotels__destinations-item-photo {
   margin-top: 24px;
   width: 295px;
   height: 220px;
   border-radius: 8px;
 }
 
-.popular-hotels__destinations-info {
+.popular-hotels__destinations-item-info {
   margin-top: 14px;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-.popular-hotels__destinations-info-name {
+.popular-hotels__destinations-item-info-name {
   font-weight: 600;
   font-size: 20px;
   line-height: 24px;
   color: #181818;
 }
 
-.popular-hotels__destinations-info-amount {
+.popular-hotels__destinations-item-info-amount {
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;

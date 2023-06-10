@@ -45,24 +45,24 @@
         >Plan and book our perfect trip with expert advice, travel tips,
         destination information and inspiration from us</span
       >
-      <ul class="counties-list__destinations">
+      <ul class="counties-list__destinations-list">
         {% for county, county_info in random_counties_list.items %}
-        <li class="counties-list__destinations-container">
+        <li class="counties-list__destinations-item-container">
           <a
           href="{{ hotel_search_url }}?destination={{ county }}&checkin={{ checkin_formatted }}&checkout={{ checkout_formatted }}&guests=1 guest · 1 room"
-            class="counties-list__destinations-link"
+            class="counties-list__destinations-item-link"
+            id="county-link"
           >
             <img
               src="{{ county_info.county_photo.url }}"
-              alt="County
-            photo"
-              class="counties-list__destinations-photo"
+              alt="County photo"
+              class="counties-list__destinations-item-photo"
             />
-            <div class="counties-list__destinations-info">
-              <span class="counties-list__destinations-info-name"
+            <div class="counties-list__destinations-item-info">
+              <span class="counties-list__destinations-item-info-name"
                 >{{ county }}</span
               >
-              <span class="counties-list__destinations-info-amount">
+              <span class="counties-list__destinations-item-info-amount">
                 {% if county_info.hotel_count == 1 %} 
                 {{ county_info.hotel_count}} property {% else %} 
                 {{ county_info.hotel_count }} properties
@@ -79,18 +79,18 @@
   <section class="blog">
     <div class="container">
       <h3 class="blog__title">Get inspiration for your next trip</h3>
-      <ul class="blog__posts">
-        {% for blog in blog_info %}
+      <ul class="blog__posts-list">
+        {% for blog in blogs %}
         <li class="blog__posts-item">
           <a href="{{ blog.get_absolute_url }}" class="blog__posts-link">
             <img
               src="{{ blog.blog_photo.url }}"
               alt="Blog photo"
-              class="blog__posts-photo"
+              class="blog__posts-item-photo"
             />
-            <div class="blog__posts-content">
-              <h5 class="blog__posts-content-title">{{ blog.blog_title }}</h5>
-              <p class="blog__posts-content-text">
+            <div class="blog__posts-item-content">
+              <h5 class="blog__posts-item-content-title">{{ blog.blog_title }}</h5>
+              <p class="blog__posts-item-content-text">
                 {{ blog.blog_text |truncatewords:12 }}
               </p>
             </div>
@@ -104,23 +104,23 @@
   <section class="popular-hotels">
     <div class="container">
       <h3 class="popular-hotels__title">Popular hotels</h3>
-      <ul class="popular-hotels__destinations">
+      <ul class="popular-hotels__destinations-list">
         {% for hotel in popular_hotels %}
         <li class="popular-hotels__destinations-item">
           <a href="{% url 'hotel_detail' hotel.slug %}" class="popular-hotels__destinations-link">
             <img
               src="{{ hotel.hotel_cover_photo.url }}"
               alt=""
-              class="popular-hotels__destinations-photo"
+              class="popular-hotels__destinations-item-photo"
             />
-            <div class="popular-hotels__destinations-info">
-              <span class="popular-hotels__destinations-info-name"
+            <div class="popular-hotels__destinations-item-info">
+              <span class="popular-hotels__destinations-item-info-name"
                 >{{ hotel.hotel_name }}</span
               >
               {% if hotel.hotel_rooms.count == 1 %}
-        <span class="popular-hotels__destinations-info-amount">1 room</span>
+        <span class="popular-hotels__destinations-item-info-amount">1 room</span>
     {% else %}
-        <span class="popular-hotels__destinations-info-amount">{{ hotel.hotel_rooms.count }} rooms</span>
+        <span class="popular-hotels__destinations-item-info-amount">{{ hotel.hotel_rooms.count }} rooms</span>
     {% endif %}
             </div>
           </a>
@@ -134,7 +134,7 @@
     <div class="container">
       <a href="/" onclick="redirectToApp()">
         <img
-          src="{% static 'images/photos/app/promo_app.jpg' %}"
+          src="{% static 'images/core/photos/promo_app.jpg' %}"
           alt=""
           class="download-app-promo__photo"
       /></a>
@@ -143,74 +143,21 @@
   <section class="motto">
     <div class="container">
       <img
-        src="{% static 'images/photos/motto/motto.jpg' %}"
+        src="{% static 'images/core/photos/motto.jpg' %}"
         alt=""
         class="motto__photo"
       />
     </div>
   </section>
 
-  <script>
-// Get the link element
-var link = document.querySelector('.counties-list__destinations-link');
 
-// Attach a click event listener to the link
-link.addEventListener('click', function(event) {
-  event.preventDefault(); // Prevent the default link behavior
 
-  // Extract the necessary parameters from the link's attributes
-  var destination = encodeURIComponent(link.getAttribute('href').split('?destination=')[1].split('&')[0]);
-  var checkin = encodeURIComponent(link.getAttribute('href').split('&checkin=')[1].split('&')[0]);
-  var checkout = encodeURIComponent(link.getAttribute('href').split('&checkout=')[1].split('&')[0]);
-  var guests = encodeURIComponent(link.getAttribute('href').split('&guests=')[1].split('&')[0]);
-  console.log(destination)
-
-  // Construct the URL with the parameters
-  var url = '/search/hotels/?destination=' + destination + '&checkin=' + checkin + '&checkout=' + checkout + '&guests=' + guests;
-
-  // Perform the GET request or redirect to the generated URL
-  // This depends on your specific application's requirements
-
-  // For example, you can redirect the user to the generated URL
-  window.location.href = url;
-});
-
-  </script>
-
-  <!-- Script to redirect the user to the google play/appstore depending on the device when "download mobile app" photo is clicked -->
-  <script>
-    function redirectToApp() {
-      // Set default app URL
-      var appUrl = "/";
-
-      // Get user agent and convert to lower case
-      var userAgent = navigator.userAgent.toLowerCase();
-
-      // If user agent contains "iphone" or "ipad", redirect to App Store for iOS
-      if (
-        userAgent.indexOf("iphone") !== -1 ||
-        userAgent.indexOf("ipad") !== -1
-      ) {
-        window.location.href = "https://apps.apple.com/ru/app/";
-      }
-
-      // If user agent contains "android", redirect to Google Play Store for Android
-      else if (userAgent.indexOf("android") !== -1) {
-        window.location.href = "https://play.google.com/store/apps/";
-      }
-
-      // If user agent contains "windows", redirect to the default app URL
-      else if (userAgent.indexOf("windows") !== -1) {
-        window.location.href = appUrl;
-      }
-
-      // For all other user agents, redirect to the default app URL
-      else {
-        window.location.href = appUrl;
-      }
-    }
-  </script>
 </main>
+<!-- Script to generate GET request to search for hotels using just county name -->
+<script src="{% static 'js/core/county_link_generator.js' %}"></script>
+<!-- Script to redirect the user to the google play/appstore depending on the device when "download mobile app" photo is clicked -->
+<script src="{% static 'js/core/redirect_to_app.js' %}"></script>
+
 {% endblock %}
 
 <!-- Adding footer -->

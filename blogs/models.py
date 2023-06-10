@@ -10,9 +10,9 @@ import os
 
 
 class Blogs(models.Model):
-    blog_title = models.CharField(max_length=255, verbose_name="Title")
-    blog_text = models.TextField(verbose_name="Text")
-    blog_photo = models.ImageField(upload_to="images/blogs")
+    blog_title = models.CharField(max_length=50, verbose_name="Title", help_text='Set title for the text')
+    blog_text = models.TextField(verbose_name="Text", help_text='Write text for the article')
+    blog_photo = models.ImageField(upload_to="images/blogs", help_text='Add photo for the article')
     time_create = models.DateTimeField(
         auto_now_add=True, verbose_name="Date of creation")
     time_update = models.DateTimeField(auto_now=True, verbose_name="Updated")
