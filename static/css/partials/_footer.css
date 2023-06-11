@@ -9,12 +9,12 @@
   height: 70px;
 }
 
-.footer-top ul {
+.footer-top__list {
   margin-block-start: 0px;
   margin-block-end: 60px;
 }
 
-.footer-top h4 {
+.footer-top__item-title {
   font-weight: 500;
   font-size: 16px;
   line-height: 19px;
@@ -24,11 +24,15 @@
   margin-block-end: 20px;
 }
 
-.footer-top li {
+.footer-top__list li {
   margin-bottom: 10px;
 }
 
-.footer-top a {
+.footer-top__item-link_blue {
+  color: #2f80ed !important;
+}
+
+.footer-top__item-link {
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;
@@ -36,9 +40,6 @@
   color: #4f4f4f;
 }
 
-.footer-top .footer-top__explore-list-see-more {
-  color: #2f80ed;
-}
 
 .footer-bottom {
   width: 100%;

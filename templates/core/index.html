@@ -38,31 +38,31 @@
     <div class="container">{% include 'partials/_warning.html' %}</div>
   </section>
 
-  <section class="counties-list">
+  <section class="counties">
     <div class="container">
-      <h3 class="counties-list__title">Enjoy your dream vacation</h3>
-      <span class="counties-list__text"
+      <h3 class="counties__title title">Enjoy your dream vacation</h3>
+      <span class="counties__text"
         >Plan and book our perfect trip with expert advice, travel tips,
         destination information and inspiration from us</span
       >
-      <ul class="counties-list__destinations-list">
+      <ul class="counties__list list">
         {% for county, county_info in random_counties_list.items %}
-        <li class="counties-list__destinations-item-container">
+        <li class="counties__item item">
           <a
           href="{{ hotel_search_url }}?destination={{ county }}&checkin={{ checkin_formatted }}&checkout={{ checkout_formatted }}&guests=1 guest · 1 room"
-            class="counties-list__destinations-item-link"
+            class="counties__item-link link"
             id="county-link"
           >
             <img
               src="{{ county_info.county_photo.url }}"
               alt="County photo"
-              class="counties-list__destinations-item-photo"
+              class="counties__item-photo photo"
             />
-            <div class="counties-list__destinations-item-info">
-              <span class="counties-list__destinations-item-info-name"
+            <div class="counties__item-text-container text-container">
+              <span class="counties__item-text-name text-name"
                 >{{ county }}</span
               >
-              <span class="counties-list__destinations-item-info-amount">
+              <span class="counties__item-text-amount text-amount">
                 {% if county_info.hotel_count == 1 %} 
                 {{ county_info.hotel_count}} property {% else %} 
                 {{ county_info.hotel_count }} properties
@@ -78,19 +78,19 @@
 
   <section class="blog">
     <div class="container">
-      <h3 class="blog__title">Get inspiration for your next trip</h3>
-      <ul class="blog__posts-list">
+      <h3 class="blog__title title">Get inspiration for your next trip</h3>
+      <ul class="blog__list list">
         {% for blog in blogs %}
-        <li class="blog__posts-item">
-          <a href="{{ blog.get_absolute_url }}" class="blog__posts-link">
+        <li class="blog__item">
+          <a href="{{ blog.get_absolute_url }}" class="blog__item-link">
             <img
               src="{{ blog.blog_photo.url }}"
               alt="Blog photo"
-              class="blog__posts-item-photo"
+              class="blog__item-photo"
             />
-            <div class="blog__posts-item-content">
-              <h5 class="blog__posts-item-content-title">{{ blog.blog_title }}</h5>
-              <p class="blog__posts-item-content-text">
+            <div class="blog__content">
+              <h5 class="blog__content-title">{{ blog.blog_title }}</h5>
+              <p class="blog__content-text">
                 {{ blog.blog_text |truncatewords:12 }}
               </p>
             </div>
@@ -103,24 +103,24 @@
 
   <section class="popular-hotels">
     <div class="container">
-      <h3 class="popular-hotels__title">Popular hotels</h3>
-      <ul class="popular-hotels__destinations-list">
+      <h3 class="popular-hotels__title title">Popular hotels</h3>
+      <ul class="popular-hotels__list list">
         {% for hotel in popular_hotels %}
-        <li class="popular-hotels__destinations-item">
-          <a href="{% url 'hotel_detail' hotel.slug %}" class="popular-hotels__destinations-link">
+        <li class="popular-hotels__item item">
+          <a href="{% url 'hotel_detail' hotel.slug %}" class="popular-hotels__item-link link">
             <img
               src="{{ hotel.hotel_cover_photo.url }}"
               alt=""
-              class="popular-hotels__destinations-item-photo"
+              class="popular-hotels__item-photo photo"
             />
-            <div class="popular-hotels__destinations-item-info">
-              <span class="popular-hotels__destinations-item-info-name"
+            <div class="popular-hotels__text-container text-container">
+              <span class="popular-hotels__text-name text-name"
                 >{{ hotel.hotel_name }}</span
               >
               {% if hotel.hotel_rooms.count == 1 %}
-        <span class="popular-hotels__destinations-item-info-amount">1 room</span>
+        <span class="popular-hotels__text-amount text-amount">1 room</span>
     {% else %}
-        <span class="popular-hotels__destinations-item-info-amount">{{ hotel.hotel_rooms.count }} rooms</span>
+        <span class="popular-hotels__text-amount text-amount">{{ hotel.hotel_rooms.count }} rooms</span>
     {% endif %}
             </div>
           </a>

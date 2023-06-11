@@ -29,6 +29,65 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   width: 60px;
 }
 
+.title{
+  font-weight: 600;
+  font-size: 28px;
+  line-height: 33px;
+  color: #181818;
+}
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  padding-inline-start: 0px;
+  margin-top: 0px;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+}
+
+.item:not(:last-child) {
+  margin-right: 20px;
+}
+
+.link {
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 24px;
+  color: #181818;
+}
+
+.photo {
+  margin-top: 30px;
+  width: 295px;
+  height: 220px;
+  border-radius: 8px;
+}
+
+.text-container {
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.text-name {
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 24px;
+  color: #181818;
+}
+
+.text-amount {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  letter-spacing: 0.02em;
+  color: #181818;
+}
+
 .cover-photo {
   padding-top: 12px;
   position: relative;
@@ -77,16 +136,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   transform: translate(50%, 50%);
 }
 
-.counties-list__title {
+.counties__title {
   margin-top: 50px;
-  font-weight: 600;
-  font-size: 28px;
-  line-height: 33px;
-  color: #181818;
   margin-block-end: 16px;
 }
 
-.counties-list__text {
+.counties__text {
   display: block;
   max-width: 610px;
   font-weight: 400;
@@ -96,85 +151,22 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   color: #333333;
 }
 
-.counties-list__destinations-list {
-  display: flex;
-  flex-wrap: wrap;
-  padding-inline-start: 0px;
-  margin-top: 0px;
-}
-
-.counties-list__destinations-item-container {
-  display: flex;
-  flex-direction: column;
-}
-
-.counties-list__destinations-item-container:not(:last-child) {
-  margin-right: 20px;
-}
-
-.counties-list__destinations-item-container a {
-  font-weight: 600;
-  font-size: 20px;
-  line-height: 24px;
-  color: #181818;
-}
-
-.counties-list__destinations-item-photo {
-  margin-top: 30px;
-  width: 295px;
-  height: 220px;
-  border-radius: 8px;
-}
-
-.counties-list__destinations-item-info {
-  margin-top: 14px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.ccounties-list__destinations-item-info-name {
-  font-weight: 600;
-  font-size: 20px;
-  line-height: 24px;
-  color: #181818;
-}
-
-.counties-list__destinations-item-info-amount {
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 17px;
-  letter-spacing: 0.02em;
-  color: #181818;
-}
-
 .blog__title {
   margin-top: 60px;
-  font-weight: 600;
-  font-size: 28px;
-  line-height: 33px;
-  color: #181818;
-  margin-block-end: 10px;
+  margin-block-end: 24px;
 }
 
-.blog__posts-list {
-  margin-top: 24px;
-  display: flex;
-  flex-wrap: wrap;
-  padding-inline-start: 0px;
-}
-
-.blog__posts-item {
+.blog__item {
   position: relative;
   width: 400px;
   height: 280px;
 }
 
-.blog__posts-item:not(:last-child) {
+.blog__item:not(:last-child) {
   margin-right: 20px;
 }
 
-.blog__posts-item-photo {
+.blog__item-photo {
   width: 100%;
   height: 100%;
   background: linear-gradient(
@@ -184,7 +176,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   );
 }
 
-.blog__posts-item-content {
+.blog__content {
   color: #fff;
   position: absolute;
   left: 20px;
@@ -192,9 +184,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   text-align: left;
   bottom: 20px;
   margin-block-start: 0px;
+  text-shadow: 0 1px 0 black;
 }
 
-.blog__posts-item-content-title {
+.blog__content-title {
   text-shadow: 0 1px 0 black;
   font-weight: 600;
   font-size: 20px;
@@ -205,72 +198,20 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   padding: 10px;
 }
 
-.blog__posts-item-content-text {
+.blog__content-text {
   text-shadow: 0 1px 0 black;
   font-weight: 400;
   font-size: 16px;
   line-height: 140%;
   letter-spacing: 0.02em;
   color: #ffffff;
-  margin-block-start: 0px;
-  margin-block-end: 0px;
   background-color: rgba(0, 0, 0, 0.5); 
   padding: 10px; 
 }
 
 .popular-hotels__title {
   margin-top: 60px;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 28px;
-  line-height: 33px;
-  color: #181818;
   margin-block-end: 0px;
-}
-
-.popular-hotels__destinations-list {
-  display: flex;
-  flex-wrap: wrap;
-  padding-inline-start: 0px;
-  margin-top: 0px;
-  margin-block-end: 0px;
-}
-
-.popular-hotels__destinations-item {
-  display: flex;
-  flex-direction: column;
-}
-.popular-hotels__destinations-item:not(:last-child) {
-  margin-right: 20px;
-}
-
-.popular-hotels__destinations-item-photo {
-  margin-top: 24px;
-  width: 295px;
-  height: 220px;
-  border-radius: 8px;
-}
-
-.popular-hotels__destinations-item-info {
-  margin-top: 14px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.popular-hotels__destinations-item-info-name {
-  font-weight: 600;
-  font-size: 20px;
-  line-height: 24px;
-  color: #181818;
-}
-
-.popular-hotels__destinations-item-info-amount {
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 17px;
-  letter-spacing: 0.02em;
-  color: #181818;
 }
 
 .download-app-promo__photo {

@@ -50,7 +50,7 @@ function changeCount(type, operation) {
 
 // Event listener for the search button click
 document
-  .getElementsByClassName("hotel-search-form__submit-buttonn")[0]
+  .getElementsByClassName("hotel-search-form__submit-button")[0]
   .addEventListener("click", function (event) {
     // Get the guest count values
     var adults = parseInt(document.getElementById("adults-count").textContent);
