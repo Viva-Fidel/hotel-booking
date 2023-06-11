@@ -29,25 +29,25 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   width: 60px;
 }
 
-.booking-search {
+.cover-photo {
   padding-top: 12px;
   position: relative;
 }
 
-.booking-search__cover-photo-container {
+.cover-photo__container {
   position: relative;
   text-align: center;
   margin-bottom: 82px;
 }
 
-.booking-search__cover-photo {
+.cover-photo__photo {
   max-width: 1240px;
   max-height: 500px;
   border-radius: 10px;
   filter: brightness(70%);
 }
 
-.booking-search__cover-photo-title {
+.cover-photo__title {
   position: absolute;
   bottom: 200px;
   left: 315px;
@@ -59,7 +59,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   text-align: center;
 }
 
-.booking-search__cover-photo-text {
+.cover-photo__text {
   position: absolute;
   bottom: 130px;
   left: 295px;
@@ -72,7 +72,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   color: #ffffff;
 }
 
-.booking-search-form{
+.hotel-search-form {
   bottom: 0;
   transform: translate(50%, 50%);
 }

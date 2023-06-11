@@ -17,18 +17,18 @@
 />
 
 <main class="main">
-  <section class="booking-search">
+  <section class="cover-photo">
     <div class="container">
-      <div class="booking-search__cover-photo-container">
+      <div class="cover-photo__container">
         <img
           src="{{ cover.cover_photo.url }}"
           alt="Cover photo"
-          class="booking-search__cover-photo"
+          class="cover-photo__photo"
         />
-        <h2 class="booking-search__cover-photo-title">
+        <h2 class="cover-photo__title">
           {{ cover.cover_title }}
         </h2>
-        <h4 class="booking-search__cover-photo-text">{{ cover.cover_text }}</h4>
+        <h4 class="cover-photo__text">{{ cover.cover_text }}</h4>
       </div>
 
       {% include 'partials/_hotels_search_form.html' %}

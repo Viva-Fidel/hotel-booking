@@ -5,10 +5,10 @@ function changeCount(type, operation) {
   var count = parseInt(countEl.innerHTML);
   // Get the minus and plus buttons for the current type
   var minusButton = document.querySelector(
-    `button.booking-search-form__drop-down-menu-button-minus[onclick="changeCount('${type}', 'minus')"]`
+    `button.guests-drop-down-menu__button_minus[onclick="changeCount('${type}', 'minus')"]`
   );
   var plusButton = document.querySelector(
-    `button.booking-search-form__drop-down-menu-button-plus[onclick="changeCount('${type}', 'plus')"]`
+    `button.guests-drop-down-menu__button_plus[onclick="changeCount('${type}', 'plus')"]`
   );
 
   // Decrease the count if operation is minus and count is greater than zero
@@ -50,7 +50,7 @@ function changeCount(type, operation) {
 
 // Event listener for the search button click
 document
-  .getElementsByClassName("booking-search-form__submit-button")[0]
+  .getElementsByClassName("hotel-search-form__submit-buttonn")[0]
   .addEventListener("click", function (event) {
     // Get the guest count values
     var adults = parseInt(document.getElementById("adults-count").textContent);

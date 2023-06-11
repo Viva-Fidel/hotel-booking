@@ -1,6 +1,6 @@
 const guest = document.getElementById("guests"); // Get the element with the id "guests"
   const guestdropdownMenu = document.getElementById(
-    "guests-input-container-dropdown-menu"
+    "guests-drop-down-menu"
   ); // Get the element with the id "guests-input-container-dropdown-menu"
 
   guest.addEventListener("click", function () {

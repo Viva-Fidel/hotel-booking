@@ -1,4 +1,4 @@
-new Autocomplete("#booking-search-form__item-geo", {
+new Autocomplete("#hotel-search-form__item-geo", {
   // The search function takes user input and returns a Promise that resolves with an array of results
   search: (input) => {
     const url = "/search/?address=" + input.trim();

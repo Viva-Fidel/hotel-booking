@@ -26,13 +26,13 @@
   <body>
     <div class="container">
       <header class="header">
-        <a href="{% url 'home' %}" class="header__logo-link">
+        <a href="{% url 'home' %}" class="header__link">
           <img
             src="{% static '/images/base/logos/airplane_logo_blue.svg' %}"
-            class="header__logo-image"
+            class="header__image"
             alt="Website logo"
           />
-          <span class="header__logo-text">my Dream Place</span>
+          <span class="header__text">my Dream Place</span>
         </a>
 
         {% block navigation %} 

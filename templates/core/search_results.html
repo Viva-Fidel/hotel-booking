@@ -9,7 +9,7 @@
     <link
       rel="icon"
       type="image/x-icon"
-      href="{% static 'images/core/favicon/favicon.ico' %}"
+      href="{% static 'images/base/favicon/favicon.ico' %}"
     />
     <link
       rel="stylesheet"
@@ -21,10 +21,6 @@
       type="text/css"
       href="{% static 'css/core/search_results.css' %}"
     />
-    <!-- <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-    /> -->
   </head>
 
   <body>
@@ -33,7 +29,7 @@
         <div class="header__background">
           <a href="{% url 'home' %}" class="header__logo-link">
             <img
-              src="{% static 'images/logos/alternative_logo.svg' %}"
+              src="{% static 'images/core/logos/airplane_logo_white.svg' %}"
               class="header__logo-image"
               alt="Website logo"
             />
@@ -46,23 +42,23 @@
                 <a href="{% url 'home' %}" class="header-menu__link">Home</a>
               </li>
               <li class="header-menu__item">
-                <a href="/discover" class="header-menu__link">Discover</a>
+                <a href="#" class="header-menu__link">Discover</a>
               </li>
               <li class="header-menu__item">
-                <a href="/activities" class="header-menu__link">Activities</a>
+                <a href="#" class="header-menu__link">Activities</a>
               </li>
               <li class="header-menu__item">
-                <a href="/about" class="header-menu__link">About</a>
+                <a href="#" class="header-menu__link">About</a>
               </li>
               <li class="header-menu__item">
-                <a href="/contact" class="header-menu__link">Contact</a>
+                <a href="#" class="header-menu__link">Contact</a>
               </li>
             </ul>
           </nav>
           {% if user.is_authenticated %}
           <div class="header-user-profile-container">
             <img
-              src="{% static 'images/core/icons/notification.svg' %}"
+              src="{% static 'images/core/icons/notification_white.svg' %}"
               alt="User notification"
               class="header-user-profile-container__notifications-icon"
             />
@@ -71,21 +67,21 @@
                 src="{{ user.avatar.url }}"
                 class="header-user-profile-container_user-photo"
                 alt="User Image"
-                id="dropdown-trigger"
+                id="user-profile-dropdown-trigger"
               />
               <div
                 class="header-user-profile-container__dropdown-menu"
-                id="dropdown-menu"
+                id="user-profile-dropdown-menu"
               >
                 <div
                   class="header-user-profile-container__dropdown-menu-item-container"
                 >
                   <a
-                    href="/account/"
+                    href="#"
                     class="header-user-profile-container__dropdown-menu-item-link"
                   >
                     <img
-                      src="{% static 'images/partials/icons/account.svg' %}"
+                      src="{% static 'images/partials/icons/_navigation/account_gray.svg' %}"
                       alt="Account icon"
                       class="header-user-profile-container__dropdown-menu-link-item-icon"
                     />
@@ -99,11 +95,11 @@
                   class="header-user-profile-container__dropdown-menu-item-container"
                 >
                   <a
-                    href="/reservations/"
+                    href="#"
                     class="header-user-profile-container__dropdown-menu-item-link"
                   >
                     <img
-                      src="{% static 'images/partials/icons/trips.svg' %}"
+                      src="{% static 'images/partials/icons/_navigation/trips_gray.svg' %}"
                       alt="Account icon"
                       class="header-user-profile-container__dropdown-menu-link-item-icon"
                     />
@@ -117,11 +113,11 @@
                   class="header-user-profile-container__dropdown-menu-item-container"
                 >
                   <a
-                    href="/rewards/"
+                    href="#"
                     class="header-user-profile-container__dropdown-menu-item-link"
                   >
                     <img
-                      src="{% static 'images/partials/icons/wallet.svg' %}"
+                      src="{% static 'images/partials/icons/_navigation/wallet_gray.svg' %}"
                       alt="Account icon"
                       class="header-user-profile-container__dropdown-menu-link-item-icon"
                     />
@@ -139,7 +135,7 @@
                     class="header-user-profile-container__dropdown-menu-item-link"
                   >
                     <img
-                      src="{% static 'images/partials/icons/signout.svg' %}"
+                      src="{% static 'images/partials/icons/_navigation/signout_gray.svg' %}"
                       alt="Account icon"
                       class="header-user-profile-container__dropdown-menu-link-item-icon"
                     />
@@ -185,7 +181,7 @@
                     <b>Search by property name</b>
                   </h4>
                   <img
-                    src="{% static 'images/core/icons/search.svg' %}"
+                    src="{% static 'images/core/icons/search_gray.svg' %}"
                     alt="Guests icon"
                     class="page-content__filter-search-icon"
                   />
@@ -219,19 +215,6 @@
                     <span>{{ price.count }}</span>
                   </li>
                   {% endfor %}
-                  <!-- <div
-                    class="page-content__budget-per-day-filter-set-budget-switch-container"
-                  >
-                    <label for="set-budget">Set your own budget</label>
-                    <label
-                      class="page-content__budget-per-day-filter-set-budget-switch"
-                    >
-                      <input type="checkbox" />
-                      <span
-                        class="page-content__budget-per-day-filter-set-budget-switch-slider"
-                      ></span>
-                    </label>
-                  </div> -->
                 </ul>
               </div>
               <div class="page-content__filter-container">
@@ -588,28 +571,7 @@
 
 {% if user.is_authenticated %}
 <!-- Script to activate drop down menu when user clicks on the avatar -->
-<script>
-  // Get the avatar and dropdown menu elements by their IDs
-  const avatar = document.getElementById("dropdown-trigger");
-  const dropdownMenu = document.getElementById("dropdown-menu");
-
-  // Add a click event listener to the avatar element
-  avatar.addEventListener("click", function () {
-    // Toggle the "show" class on the dropdown menu element to show or hide it
-    dropdownMenu.classList.toggle("show");
-  });
-
-  // Add a click event listener to the document object
-  document.addEventListener("click", function (event) {
-    // Check if the click event occurred inside the avatar or dropdown menu elements
-    const isClickInside =
-      avatar.contains(event.target) || dropdownMenu.contains(event.target);
-    // If the click event occurred outside of the avatar or dropdown menu elements, hide the dropdown menu
-    if (!isClickInside) {
-      dropdownMenu.classList.remove("show");
-    }
-  });
-</script>
+<script src="{% static 'js/partials/_navigation/user_drop_down_menu.js' %}"></script>
 {% endif %}
 
 
@@ -628,47 +590,9 @@
     document.getElementById('guests').value = guests;
   });
 
-  // Rest of the code remains the same
 </script>
 
-<!-- <script>
-  const dropDownList = document.querySelector(
-    ".page-content__sort-by-drop-down-item-list"
-  );
-  const dropDownIcon = document.querySelector(
-    ".page-content__sort-by-container-icon"
-  );
-  const sortByContainer = document.querySelector(
-    ".page-content__sort-by-container"
-  );
-  const sortByChoice = document.querySelector(
-    ".page-content__sort-by-container-choice"
-  );
 
-  // Hide the drop-down list on page load
-  dropDownList.style.display = "none";
-
-  // Toggle the drop-down list when the icon is clicked
-  dropDownIcon.addEventListener("click", () => {
-    if (dropDownList.style.display === "none") {
-      dropDownList.style.display = "flex";
-      dropDownIcon.classList.add("rotated");
-    } else {
-      dropDownList.style.display = "none";
-      dropDownIcon.classList.remove("rotated");
-    }
-  });
-
-  // Update the sort-by choice when an item is clicked
-  dropDownList.addEventListener("click", (event) => {
-    const selectedItem = event.target.closest("li");
-    if (selectedItem) {
-      sortByChoice.textContent = selectedItem.textContent.trim();
-      dropDownList.style.display = "none";
-      dropDownIcon.classList.remove("rotated");
-    }
-  });
-</script> -->
 
 <script>
   $(document).ready(function () {

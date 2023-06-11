@@ -1,7 +1,7 @@
   // Selecting the HTML elements for the check-in and check-out date inputs
   const checkIn = document.getElementById("checkin");
   const checkOut = document.getElementById("checkout");
-  const submitButton = document.querySelector(".booking-search-form__submit-button");
+  const submitButton = document.querySelector(".hotel-search-form__submit-button");
 
   // Setting the maximum date for the check-out input to one year from today
   const maxDate = new Date();

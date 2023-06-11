@@ -18,19 +18,19 @@
 />
 
 <form
-  class="booking-search-form"
+  class="hotel-search-form"
   method="get"
   action="{% url 'search_hotels' %}"
 >
-  <div class="booking-search-form__item booking-search-form__item__geo" id="booking-search-form__item-geo">
+  <div class="hotel-search-form__item hotel-search-form__item_geo" id="hotel-search-form__item-geo">
     <img
       src="{% static 'images/partials/icons/_hotels_search_form/geo_gray.svg' %}"
       alt="Geolocation icon"
-      class="booking-search-form__item-icon"
+      class="hotel-search-form__item-icon"
     />
     <input
       type="text"
-      class="booking-search-form__geo-input"
+      class="hotel-search-form__geo-input"
       id="destination"
       name="destination"
       placeholder="Where are you going?"
@@ -39,11 +39,11 @@
     <ul class="autocomplete-result-list"></ul>
   </div>
 
-  <div class="booking-search-form__item booking-search-form__item__calendar">
+  <div class="hotel-search-form__item hotel-search-form__item_calendar">
     <img
       src="{% static 'images/partials/icons/_hotels_search_form/calendar_gray.svg' %}"
       alt="Calendar icon"
-      class="booking-search-form__item-icon"
+      class="hotel-search-form__item-icon"
     />
     <input
       type="text"
@@ -53,11 +53,11 @@
       required
     />
   </div>
-  <div class="booking-search-form__item booking-search-form__item__calendar">
+  <div class="hotel-search-form__item hotel-search-form__item_calendar">
     <img
       src="{% static 'images/partials/icons/_hotels_search_form/calendar_gray.svg' %}"
       alt="Calendar icon"
-      class="booking-search-form__item-icon"
+      class="hotel-search-form__item-icon"
     />
     <input
       type="text"
@@ -67,11 +67,11 @@
       required
     />
   </div>
-  <div class="booking-search-form__item booking-search-form__item__guests" onload="setGuests()">
+  <div class="hotel-search-form__item hotel-search-form__item_guests" onload="setGuests()">
     <img
       src="{% static 'images/partials/icons/_hotels_search_form/guests_gray.svg' %}"
       alt="Guests icon"
-      class="booking-search-form__item-icon"
+      class="hotel-search-form__item-icon"
     />
     <input
       type="text"
@@ -81,15 +81,15 @@
       readonly
     />
     <div
-      class="booking-search-form__drop-down-menu"
-      id="guests-input-container-dropdown-menu"
+      class="guests-drop-down-menu"
+      id="guests-drop-down-menu"
     >
-      <div class="booking-search-form__drop-down-menu-item">
-        <span class="booking-search-form__drop-down-menu-label">Adults</span>
-        <div class="booking-search-form__drop-down-menu-choice_container">
+      <div class="guests-drop-down-menu__container">
+        <span class="guests-drop-down-menu__label">Adults</span>
+        <div class="guests-drop-down-menu__buttons-container">
           <button
             type="button"
-            class="booking-search-form__drop-down-menu-button-minus"
+            class="guests-drop-down-menu__button guests-drop-down-menu__button_minus"
             onclick="changeCount('adults', 'minus')"
             disabled
           >
@@ -97,25 +97,25 @@
           </button>
           <span
             id="adults-count"
-            class="booking-search-form__drop-down-menu-count"
+            class="guests-drop-down-menu__counter"
             onchange="updateGuestsInput()"
             >1</span
           >
           <button
             type="button"
-            class="booking-search-form__drop-down-menu-button-plus"
+            class="guests-drop-down-menu__button guests-drop-down-menu__button_plus"
             onclick="changeCount('adults', 'plus')"
           >
             +
           </button>
         </div>
       </div>
-      <div class="booking-search-form__drop-down-menu-item">
-        <span class="booking-search-form__drop-down-menu-label">Children</span>
-        <div class="booking-search-form__drop-down-menu-choice_container">
+      <div class="guests-drop-down-menu__container">
+        <span class="guests-drop-down-menu__label">Children</span>
+        <div class="guests-drop-down-menu__buttons-container">
           <button
             type="button"
-            class="booking-search-form__drop-down-menu-button-minus"
+            class="guests-drop-down-menu__button guests-drop-down-menu__button_minus"
             onclick="changeCount('children', 'minus')"
             disabled
           >
@@ -123,25 +123,25 @@
           </button>
           <span
             id="children-count"
-            class="booking-search-form__drop-down-menu-count"
+            class="guests-drop-down-menu__counter"
             onchange="updateGuestsInput()"
             >0</span
           >
           <button
             type="button"
-            class="booking-search-form__drop-down-menu-button-plus"
+            class="guests-drop-down-menu__button guests-drop-down-menu__button_plus"
             onclick="changeCount('children', 'plus')"
           >
             +
           </button>
         </div>
       </div>
-      <div class="booking-search-form__drop-down-menu-item">
-        <span class="booking-search-form__drop-down-menu-label">Rooms</span>
-        <div class="booking-search-form__drop-down-menu-choice_container">
+      <div class="guests-drop-down-menu__container">
+        <span class="guests-drop-down-menu__label">Rooms</span>
+        <div class="guests-drop-down-menu__buttons-container">
           <button
             type="button"
-            class="booking-search-form__drop-down-menu-button-minus"
+            class="guests-drop-down-menu__button guests-drop-down-menu__button_minus"
             onclick="changeCount('rooms', 'minus')"
             disabled
           >
@@ -149,13 +149,13 @@
           </button>
           <span
             id="rooms-count"
-            class="booking-search-form__drop-down-menu-count"
+            class="guests-drop-down-menu__counter"
             onchange="updateGuestsInput()"
             >1</span
           >
           <button
             type="button"
-            class="booking-search-form__drop-down-menu-button-plus"
+            class="guests-drop-down-menu__button guests-drop-down-menu__button_plus"
             onclick="changeCount('rooms', 'plus')"
           >
             +
@@ -164,7 +164,7 @@
       </div>
     </div>
   </div>
-  <button type="submit" class="booking-search-form__submit-button">
+  <button type="submit" class="hotel-search-form__submit-button">
     Search
   </button>
 </form>

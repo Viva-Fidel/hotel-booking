@@ -73,14 +73,14 @@ h1, h2, h3, h4, h5, h6, p {
   background: #ffffff;
 }
 
-.header__logo-link {
+.header__link {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 24px;
 }
 
-.header__logo-image {
+.header__image {
   width: 24px;
   height: 24px;
   flex: none;
@@ -88,7 +88,7 @@ h1, h2, h3, h4, h5, h6, p {
   flex-grow: 0;
 }
 
-.header__logo-text {
+.header__text {
   font-weight: 500;
   font-size: 18px;
   color: #1b1f2d;

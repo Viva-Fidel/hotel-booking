@@ -1,4 +1,4 @@
-.booking-search-form {
+.hotel-search-form {
   margin: 0 auto;
   display: flex;
   justify-content: space-evenly;
@@ -14,22 +14,22 @@
   padding: 12px 10px;
 }
 
-.booking-search-form__item {
+.hotel-search-form__item {
   display: flex;
   justify-content: center;
   position: relative;
   margin-right: 12px;
 }
 
-.booking-search-form__item__geo input {
+.hotel-search-form__item_geo input {
   width: 260px;
 }
 
-.booking-search-form__item__calendar input{
+.hotel-search-form__item_calendar input{
   width: 170px;
 }
 
-.booking-search-form__item__guests input{
+.hotel-search-form__item_guests input{
   width: 210px;
 }
 
@@ -37,7 +37,7 @@
   cursor: pointer;
 }
 
-.booking-search-form__item-icon {
+.hotel-search-form__item-icon {
   position: absolute;
   left: 12px;
   top: 50%;
@@ -46,11 +46,7 @@
   height: 20px;
 }
 
-.booking-form-group__input {
-  padding-left: 42px;
-}
-
-.booking-search-form__drop-down-menu {
+.guests-drop-down-menu {
   display: none;
   position: absolute;
   z-index: 300;
@@ -64,11 +60,11 @@
   border-radius: 10px;
 }
 
-.booking-search-form__drop-down-menu.show {
+.guests-drop-down-menu.show {
   display: flex;
 }
 
-.booking-search-form__drop-down-menu-item {
+.guests-drop-down-menu__container {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -76,19 +72,19 @@
   padding: 10px 10px 10px 14px;
 }
 
-.booking-search-form__drop-down-menu-choice_container {
+.guests-drop-down-menu__buttons-container {
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 80px;
 }
 
-.booking-search-form__drop-down-menu-count {
+.guests-drop-down-menu__counter {
   margin: 0;
 }
 
-.booking-search-form__drop-down-menu-button-minus,
-.booking-search-form__drop-down-menu-button-plus {
+.guests-drop-down-menu__button_minus,
+.guests-drop-down-menu__button_plus {
   width: 24px;
   height: 24px;
   background-color: #2f80ed;
@@ -99,8 +95,8 @@
   transition: background-color 0.3s ease-in-out;
 }
 
-.booking-search-form__drop-down-menu-label,
-.booking-search-form__drop-down-menu-choice_container {
+.guests-drop-down-menu__label,
+.guests-drop-down-menu__buttons-container {
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;
@@ -108,23 +104,23 @@
   color: #181818;
 }
 
-.booking-search-form__drop-down-menu-button-minus:disabled,
-.booking-search-form__drop-down-menu-button-plus:disabled {
+.guests-drop-down-menu__button_minus:disabled,
+.guests-drop-down-menu__button_plus:disabled {
   background-color: #a6a6a6;
   cursor: default;
 }
 
-.booking-search-form__drop-down-menu-button-minus:focus,
-.booking-search-form__drop-down-menu-button-plus:focus {
+.guests-drop-down-menu__button_minus:focus,
+.guests-drop-down-menu__button_plus:focus {
   outline: none;
 }
 
-.booking-search-form__drop-down-menu-button-minus:active,
-.booking-search-form__drop-down-menu-button-plus:active {
+.guests-drop-down-menu__button_minus:active,
+.guests-drop-down-menu__button_plus:active {
   background-color: #005ea1;
 }
 
-.booking-search-form__submit-button {
+.hotel-search-form__submit-button {
   background: #2f80ed;
   border: 1px solid #2f80ed;
   border-radius: 6px;
@@ -138,7 +134,7 @@
   cursor: pointer;
 }
 
-.booking-search-form__submit-button:hover {
+.hotel-search-form__submit-button:hover {
   background: #2969bf;
   border: 1px solid #2969bf;
 }
