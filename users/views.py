@@ -25,7 +25,9 @@ def set_new_password(request, uidb64, token):
     except (TypeError, ValueError, OverflowError, MyUser.DoesNotExist):
         # If an error occurs, set the user to None
         user = None
-
+    
+    print(token)
+    
     # If a valid user is found and the token is valid
     if user and PasswordResetTokenGenerator().check_token(user, token):
         if request.method == "POST":
@@ -36,6 +38,7 @@ def set_new_password(request, uidb64, token):
             # Create a form object with the provided password fields
             form = PassowrdCheckForm(
                 {'password1': password1, 'password2': password2})
+            
             # If the form is valid
             if form.is_valid():
                 # Set the user's password to the provided password
