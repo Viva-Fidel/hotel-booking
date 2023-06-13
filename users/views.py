@@ -26,8 +26,6 @@ def set_new_password(request, uidb64, token):
         # If an error occurs, set the user to None
         user = None
     
-    print(token)
-    
     # If a valid user is found and the token is valid
     if user and PasswordResetTokenGenerator().check_token(user, token):
         if request.method == "POST":

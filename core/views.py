@@ -338,10 +338,10 @@ def search_hotels(request):
         'checkin': checkin,
         'checkout': checkout,
         'guests': guests.split("·")[1].strip(),
-        'price_ranges': price_ranges,
+        'prices': price_ranges,
         'facilities': facilities,
         'activities': activities,
-        'hotel_results': hotel_results
+        'hotels': hotel_results
     }
 
     # Render the search results page with context

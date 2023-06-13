@@ -27,13 +27,13 @@
     <header class="header">
       <div class="container">
         <div class="header__background">
-          <a href="{% url 'home' %}" class="header__logo-link">
+          <a href="{% url 'home' %}" class="header__link">
             <img
               src="{% static 'images/core/logos/airplane_logo_white.svg' %}"
-              class="header__logo-image"
+              class="header__image"
               alt="Website logo"
             />
-            <span class="header__logo-text">my Dream Place</span>
+            <span class="header__text">my Dream Place</span>
           </a>
 
           <nav class="header-menu">
@@ -151,12 +151,12 @@
           {% else %}
 
           <div class="header-button-container">
-            <a href="/register" class="register-link"
+            <a href="{% url 'registration' %}" class="header-button-container__register-link"
               ><button class="header-button-container__register-button">
                 Register
               </button></a
             >
-            <a href="/signin" class="signin-link"
+            <a href="{% url 'signin' %}" class="header-button-container__register-link"
               ><button class="header-button-container__signin-button">
                 Sign In
               </button></a
@@ -174,42 +174,42 @@
             <div class="page-content__left-side">
               <div class="page-content__filters-container">
                 <div
-                  class="page-content__filter-search-container"
-                  id="page-content__filter-search-geo"
+                  class="filter-search__container"
+                  id="filter-search-geo"
                 >
-                  <h4 class="page-content__filter-search-title">
-                    <b>Search by property name</b>
+                  <h4 class="filter-search__title filter_title">
+                    Search by property name
                   </h4>
                   <img
                     src="{% static 'images/core/icons/search_gray.svg' %}"
                     alt="Guests icon"
-                    class="page-content__filter-search-icon"
+                    class="filter-search__icon"
                   />
                   <input
                     type="text"
-                    class="page-content__filter-search-input"
+                    class="filter-search__input"
                     placeholder="e.g. Hilton"
                     name="hotel-search-input"
                     id="hotel-search-input"
                   />
                 </div>
               </div>
-              <h4 class="page-content__filter-by-title">Filter by</h4>
-              <div class="page-content__filter-container">
-                <div class="page-content__filter-container-title">
+              <h4 class="filter-by__title">Filter by</h4>
+              <div class="filter__container">
+                <div class="filter__title">
                   <b>Your budget per day</b>
                 </div>
                 <ul
-                  class="page-content__filter-choice-list"
-                  id="price-choice-list"
+                  class="filter__list"
+                  id="price-list"
                 >
-                  {% for price in price_ranges %}
-                  <li>
+                  {% for price in prices %}
+                  <li class="filter__item">
                     <input
                       type="checkbox"
                       name="price-range"
                       value="{{ price.value }}"
-                      class="page-content__filter-choice-list-item__price-range"
+                      class="filter__item_price"
                     />
                     {{ price.label }}
                     <span>{{ price.count }}</span>
@@ -217,106 +217,106 @@
                   {% endfor %}
                 </ul>
               </div>
-              <div class="page-content__filter-container">
-                <div class="page-content__filter-container-title">Rating</div>
-                <div class="page-content__filter-choice-list">
-                  <span class="page-content__filter-container-text"
+              <div class="filter__container">
+                <div class="filter__title">Rating</div>
+                <div class="filter__list">
+                  <span class="filter__text"
                     >Show only ratings more than</span
                   >
                   <div
-                    class="page-content__filter-by-rating-choice-stars-container"
+                    class="stars__container"
                   >
                     <button
                       type="button"
-                      class="page-content__filter-by-rating-choice-stars-button page-content__filter-by-rating-choice-stars-button-left"
+                      class="stars__star-button stars__star-button_left"
                     >
                       1
                       <img
                         src="{% static 'images/core/icons/star.png' %}"
                         alt="Star icon"
-                        class="page-content__filter-by-rating-choice-stars-button-star-icon"
+                        class="stars__star-icon"
                       />
                     </button>
                     <button
                       type="button"
-                      class="page-content__filter-by-rating-choice-stars-button"
+                      class="stars__star-button"
                     >
                       2<img
                         src="{% static 'images/core/icons/star.png' %}"
                         alt="Star icon"
-                        class="page-content__filter-by-rating-choice-stars-button-star-icon"
+                        class="stars__star-icon"
                       />
                     </button>
                     <button
                       type="button"
-                      class="page-content__filter-by-rating-choice-stars-button"
+                      class="stars__star-button"
                     >
                       3<img
                         src="{% static 'images/core/icons/star.png' %}"
                         alt="Star icon"
-                        class="page-content__filter-by-rating-choice-stars-button-star-icon"
+                        class="stars__star-icon"
                       />
                     </button>
                     <button
                       type="button"
-                      class="page-content__filter-by-rating-choice-stars-button"
+                      class="stars__star-button"
                     >
                       4<img
                         src="{% static 'images/core/icons/star.png' %}"
                         alt="Star icon"
-                        class="page-content__filter-by-rating-choice-stars-button-star-icon"
+                        class="stars__star-icon"
                       />
                     </button>
                     <button
                       type="button"
-                      class="page-content__filter-by-rating-choice-stars-button page-content__filter-by-rating-choice-stars-button-right"
+                      class="stars__star-button stars__star-button_right"
                     >
                       5<img
                         src="{% static 'images/core/icons/star.png' %}"
                         alt="Star icon"
-                        class="page-content__filter-by-rating-choice-stars-button-star-icon"
+                        class="stars__star-icon"
                       />
                     </button>
                   </div>
                 </div>
               </div>
-              <div class="page-content__filter-container">
-                <div class="page-content__filter-container-title">
+              <div class="filter__container">
+                <div class="filter__title">
                   Facilities
                 </div>
-                <div
-                  class="page-content__filter-choice-list"
+                <ul
+                  class="filter__list"
                   id="facilities-choice-list"
                 >
                   {% for facility in facilities %}
-                  <li>
+                  <li class="filter__item">
                     <input
                       type="checkbox"
                       name="facility-range"
                       value="{{ facility.value }}"
-                      class="page-content__filter-choice-list__facility-range"
+                      class="filter__item-facility"
                     />
                     {{ facility.label }}
                     <span>{{ facility.count }}</span>
                   </li>
                   {% endfor %}
-                </div>
+                </ul>
               </div>
-              <div class="page-content__filter-container">
-                <div class="page-content__filter-container-title">
+              <div class="filter__container">
+                <div class="filter__title">
                   Activities
                 </div>
                 <ul
-                  class="page-content__filter-choice-list"
+                  class="filter__list"
                   id="activities-choice-list"
                 >
                   {% for activity in activities %}
-                  <li>
+                  <li class="filter__item">
                     <input
                       type="checkbox"
                       name="activity-range"
                       value="{{ activity.value }}"
-                      class="page-content__filter-choice-list__activity-range"
+                      class="filter__item-activity"
                     />
                     {{ activity.label }}
                     <span>{{ activity.count }}</span>
@@ -326,218 +326,214 @@
               </div>
             </div>
             <div class="page-content__right-side">
-              <h3 class="page-content__search-results-title">
+              <h3 class="search-results__title">
                 {{ destination }}:
                 <span id="num-hotels-found">{{ num_hotels_found }}</span> search
                 results found
               </h3>
-              <div class="page-content__allocation-type-filter-container">
+              <div class="allocation-type-filter__container">
                 <button
                   type="submit"
-                  class="page-content__allocation-type-filter-button page-content__allocation-type-filter-button-left"
+                  class="allocation-type-filter__button allocation-type-filter__button_left"
                 >
                   Our top picks
                 </button>
                 <button
                   type="submit"
-                  class="page-content__allocation-type-filter-button"
+                  class="allocation-type-filter__button"
                 >
                   Hotel and apartments
                 </button>
                 <button
                   type="submit"
-                  class="page-content__allocation-type-filter-button"
+                  class="allocation-type-filter__button"
                 >
                   Residence
                 </button>
                 <button
                   type="submit"
-                  class="page-content__allocation-type-filter-button"
+                  class="allocation-type-filter__button"
                 >
                   Resort
                 </button>
                 <button
                   type="submit"
-                  class="page-content__allocation-type-filter-button page-content__allocation-type-filter-button-right"
+                  class="allocation-type-filter__button allocation-type-filter__button-right"
                 >
                   Shared Space
                 </button>
-                <div class="page-content__sort-by-container">
-                  <span class="page-content__sort-by-container-text"
+                <div class="sort-by__container">
+                  <span class="sort-by__text"
                     >Sort by:</span
                   >
                   <img
                     src="{% static 'images/core/icons/arrow-down.svg' %}"
                     alt="Arrow icon"
-                    class="page-content__sort-by-container-icon"
+                    class="sort-by__icon"
                     id="sort-by-drop-down"
                   />
-                  <span class="page-content__sort-by-container-choice"
+                  <span class="sort-by__default-text"
                     >Recommended</span
                   >
-                  <ul class="page-content__sort-by-drop-down-item-list">
-                    <li class="page-content__sort-by-drop-down-item">
-                      <span>Recommended</span>
+                  <ul class="sort-by__list">
+                    <li class="sort-by__item">
+                      <span class="sort-by__item-text">Recommended</span>
                     </li>
-                    <li class="page-content__sort-by-drop-down-item">
-                      <span>Stars (high to low)</span>
+                    <li class="psort-by__item">
+                      <span class="sort-by__item-text">Stars (high to low)</span>
                     </li>
 
-                    <li class="page-content__sort-by-drop-down-item">
-                      <span>Stars (low to high)</span>
+                    <li class="sort-by__item">
+                      <span class="sort-by__item-text">Stars (low to high)</span>
                     </li>
-                    <li class="page-content__sort-by-drop-down-item">
-                      <span>Top reviewed</span>
+                    <li class="sort-by__item">
+                      <span class="sort-by__item-text">Top reviewed</span>
                     </li>
                   </ul>
                 </div>
               </div>
               <ul
-                class="page-content__search-results-list"
+                class="search-results__list"
                 id="search-results-container"
               >
-                {% for hotel_result in hotel_results %}
-                <li class="page-content__search-results-item">
+                {% for hotel in hotels %}
+                <li class="search-results__item">
                   <img
-                    src="{{ hotel_result.hotel_cover_photo.url }}"
-                    alt="{{ hotel_result.hotel_name }}"
-                    class="page-content__search-results-item-image"
+                    src="{{ hotel.hotel_cover_photo.url }}"
+                    alt="{{ hotel.hotel_name }}"
+                    class="search-results__item-image"
                   />
-                  <div class="page-content__search-results-item-info-container">
+                  <div class="hotel-info__container">
                     <div
-                      class="page-content__search-results-item-info-title-container"
+                      class="hotel-info__title-container"
                     >
-                      <h4 class="page-content__search-results-item-info-title">
-                        <a href="{{ hotel_result.hotel_link }}" target="_blank">{{ hotel_result.hotel_name }}</a>
+                      <h4 class="hotel-info__title">
+                        <a href="{{ hotel.hotel_link }}" class="hotel-info__link" target="_blank">{{ hotel.hotel_name }}</a>
                       </h4>
 
-                      {% if hotel_result.special_discount != 0 %}
+                      {% if hotel.special_discount != 0 %}
                       <div
-                        class="page-content__search-results-item-info-title-promo__active"
+                        class="hotel-info__promo_active"
                       >
-                        {{ hotel_result.special_discount }}
+                        {{ hotel.special_discount }}
                       </div>
                       {% else %}
                       <div
-                        class="page-content__search-results-item-info-title-promo__not-active"
+                        class="hotel-info__promo_not-active"
                       ></div>
                       {% endif %}
                     </div>
                     <div
-                      class="page-content__search-results-item-info-rating-container"
+                      class="hotel-info__rating-container"
                     >
                       <div
-                        class="page-content__search-results-item-info-rating-stars-container"
+                        class="hotel-info__rating-stars-container"
                       >
-                        {% if hotel_result.hotel_rating >= 1 %}
+                        {% if hotel.hotel_rating >= 1 %}
                         <img
                           src="{% static 'images/core/icons/star.png' %}"
                           alt="Star icon"
-                          class="page-content__search-results-item-info-rating-star-icon"
+                          class="hotel-info__rating-stars-star-icon"
                         />
-                        {% endif %} {% if hotel_result.hotel_rating >= 2 %}
+                        {% endif %} {% if hotel.hotel_rating >= 2 %}
                         <img
                           src="{% static 'images/core/icons/star.png' %}"
                           alt="Star icon"
-                          class="page-content__search-results-item-info-rating-star-icon"
+                          class="hotel-info__rating-stars-star-icon"
                         />
-                        {% endif %} {% if hotel_result.hotel_rating >= 3 %}
+                        {% endif %} {% if hotel.hotel_rating >= 3 %}
                         <img
                           src="{% static 'images/core/icons/star.png' %}"
                           alt="Star icon"
-                          class="page-content__search-results-item-info-rating-star-icon"
+                          class="hotel-info__rating-stars-star-icon"
                         />
-                        {% endif %} {% if hotel_result.hotel_rating >= 4 %}
+                        {% endif %} {% if hotel.hotel_rating >= 4 %}
                         <img
                           src="{% static 'images/core/icons/star.png' %}"
                           alt="Star icon"
-                          class="page-content__search-results-item-info-rating-star-icon"
+                          class="hotel-info__rating-stars-star-icon"
                         />
-                        {% endif %} {% if hotel_result.hotel_rating >= 5 %}
+                        {% endif %} {% if hotel.hotel_rating >= 5 %}
                         <img
                           src="{% static 'images/core/icons/star.png' %}"
                           alt="Star icon"
-                          class="page-content__search-results-item-info-rating-star-icon"
+                          class="hotel-info__rating-stars-star-icon"
                         />
                         {% endif %}
                       </div>
                       <p
-                        class="page-content__search-results-item-info-rating-stars-text"
+                        class="hotel-info__rating-stars-text"
                       >
-                        Guest rating: {{ hotel_result.user_rating }} ({{ hotel_result.amount_of_reviews }}
+                        Guest rating: {{ hotel.user_rating }} ({{ hotel.amount_of_reviews }}
                         Reviews)
                       </p>
                     </div>
                     <div
-                      class="page-content__search-results-item-info-data-container"
+                      class="hotel-info__description-container"
                     >
                       <div
-                        class="page-content__search-results-item-info-data-container-left"
+                        class="hotel-info__description-container-left"
                       >
                         <p
-                          class="page-content__search-results-item-info-data-offer-title"
+                          class="hotel-info__description-container-left-title"
                         >
-                          {{ hotel_result.hotel_search_info_title }}
+                          {{ hotel.hotel_search_info_title }}
                         </p>
                         <p
-                          class="page-content__search-results-item-info-data-offer-text"
+                          class="hotel-info__description-container-left-text"
                         >
-                          {{ hotel_result.hotel_search_info_text }}
+                          {{ hotel.hotel_search_info_text }}
                         </p>
                         <button
                           type="submit"
-                          class="page-content__search-results-item-info-data-see-availability"
+                          class="hotel-info__description-container-left-button"
                         >
-                        <a href="{{ hotel_result.hotel_link }}" target="_blank">See availability</a>
+                        <a href="{{ hotel.hotel_link }}" class="hotel-info__description-container-left-link" target="_blank">See availability</a>
                           
                         </button>
                       </div>
                       <div
-                        class="page-content__search-results-item-info-data-container-right"
+                        class="hotel-info__description-container-right"
                       >
-                        {% if hotel_result.special_discount != 0 %}
+                        {% if hotel.special_discount != 0 %}
                         <div
-                          class="page-content__search-results-item-info-data-discount__active"
+                          class="hotel-info__description-container-right-discount hotel-info__description-container-right-discount_active"
                         >
-                          {{ hotel_result.price_discount }}% off
+                          {{ hotel.price_discount }}% off
                         </div>
                         {% else %}
                         <div
-                          class="page-content__search-results-item-info-data-discount__not-active"
+                          class="hotel-info__description-container-right-discount hotel-info__description-container-right-discount_not-active"
                         ></div>
                         {% endif %}
                         <p
-                          class="page-content__search-results-item-info-data-rooms-text"
+                          class="hotel-info__description-container-right-duration-text"
                         >
                           {{ guests }} {{ duration }} days
                         </p>
-                        {% if hotel_result.total_price_with_discount != 0 %}
+                        {% if hotel.total_price_with_discount != 0 %}
                         <p
-                          class="page-content__search-results-item-info-data-price-full"
+                          class="hotel-info__description-container-right-price-full"
                         >
-                          US${{ hotel_result.total_price_with_discount }}
+                          US${{ hotel.total_price_with_discount }}
                         </p>
                         <p
-                          class="page-content__search-results-item-info-data-price-discount__active"
+                          class="hotel-info__description-container-right-price-discount hotel-info__description-container-right-price-discount_active"
                         >
-                          US${{ hotel_result.total_price }}
+                          US${{ hotel.total_price }}
                         </p>
                         {% else %}
                         <p
-                          class="page-content__search-results-item-info-data-price-full"
+                          class="hotel-info__description-container-right-price-full"
                         >
-                          US${{ hotel_result.total_price }}
+                          US${{ hotel.total_price }}
                         </p>
                         <div
-                          class="page-content__search-results-item-info-data-price-discount__not-active"
+                          class="hotel-info__description-container-right-price-discount hotel-info__description-container-right-price-discount_not-active"
                         ></div>
                         {% endif %}
-
-                        <!-- <div
-                          class="page-content__search-results-item-info-data-price-container"
-                        > -->
                         <p
-                          class="page-content__search-results-item-info-data-taxes-text"
+                          class="hotel-info__description-container-right-price-taxes"
                         >
                           Includes taxes and fees
                         </p>
@@ -547,7 +543,7 @@
                 </li>
                 {% endfor %}
               </ul>
-              <div class="more-results__button-container">
+              <div class="more-results__container">
                 <button type="button" class="more-results__button">
                   Load more results
                 </button>
