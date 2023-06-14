@@ -337,13 +337,13 @@ input {
   height: 26px;
 }
 
-.room-data__rooms-item-info-data-container {
+.room-data__info-general-container {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
 
-.room-data__rooms-item-info-data-container-column-left {
+.room-data__info-general-container-left {
   width: 380px;
   display: flex;
   flex-direction: column;
@@ -354,25 +354,23 @@ input {
   color: #4f4f4f;
 }
 
-.room-data__rooms-item-info-data-container-row__room {
+.room-data__room {
   display: flex;
   align-items: center;
   margin-top: 10px;
 }
 
-.room-data__rooms-item-text-icon__room {
+.room-data__room-icon {
   width: 20px;
   height: 20px;
 }
 
-.room-data__rooms-item-text__room {
-  margin-block-start: 0px;
-  margin-block-end: 0px;
+.room-data__room-text {
   margin-left: 10px;
 }
 
-.room-data__rooms-item-see-availability {
-  margin-top: 18px;
+.room-data__room-see-availability-button {
+  margin-top: 41px;
   padding: 10px 18px;
   width: 137px;
   height: 40px;
@@ -386,23 +384,24 @@ input {
   cursor: pointer;
 }
 
-.room-data__rooms-item-see-availability:hover {
+.room-data__room-see-availability-button:hover {
   background: #2969bf;
   border: 1px solid #2969bf;
 }
 
-.room-data__rooms-item-see-availability a {
+.room-data__room-see-availability-button a {
   color: #ffffff;
 }
 
-.room-data__rooms-item-info-data-container-right {
+.room-data__info-general-container-right {
   margin-top: 18px;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  justify-content: flex-end;
 }
 
-.room-data__search-results-item-info-data-discount__active {
+.room-data__discount-text_active {
   width: 54px;
   height: 26px;
   background: #219653;
@@ -418,14 +417,12 @@ input {
   align-items: center;
 }
 
-.room-data__earch-results-item-info-data-discount__not-active {
+.room-data__discount-text_not-active {
   width: 54px;
   height: 26px;
 }
 
-.room-data__search-results-item-info-data-rooms-text {
-  margin-block-start: 0px;
-  margin-block-end: 0px;
+.room-data__guests-text {
   margin-top: 6px;
   font-style: normal;
   font-weight: 300;
@@ -435,31 +432,7 @@ input {
   color: #333333;
 }
 
-.room-data__search-results-item-info-data-price-container {
-  margin-top: 6px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  height: 24px;
-}
-
-.room-data__search-results-item-info-data-price-discount__active {
-  margin-block-start: 0px;
-  margin-block-end: 0px;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 17px;
-  letter-spacing: 0.01em;
-  text-decoration-line: line-through;
-  color: #eb5757;
-}
-
-.room-data__search-results-item-info-data-price-discount__not-active {
-  height: 17px;
-}
-
-.room-data__search-results-item-info-data-price-full {
+.room-data__price-full-text {
   margin-block-start: 0px;
   margin-block-end: 0px;
   font-style: normal;
@@ -474,7 +447,23 @@ input {
   margin-left: 8px;
 }
 
-.room-data__earch-results-item-info-data-taxes-text {
+.room-data__price-discount_active-text {
+  margin-block-start: 0px;
+  margin-block-end: 0px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  letter-spacing: 0.01em;
+  text-decoration-line: line-through;
+  color: #eb5757;
+}
+
+.room-data__price-discount_not-active-text {
+  height: 17px;
+}
+
+
+.room-data__taxes-text {
   margin-block-start: 0px;
   margin-block-end: 0px;
   margin-top: 6px;

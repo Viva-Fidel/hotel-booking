@@ -173,7 +173,7 @@
                 <li class="room-data__item">
                   {% if data.room.photo_1 %}
                   <img
-                    src="{{ room_entry.room.photo_1.url }}"
+                    src="{{ data.room.photo_1.url }}"
                     alt="Room Photo"
                     class="room-data__item-image"
                   />
@@ -199,99 +199,99 @@
                       {% endif %}
                     </div>
                     <div
-                      class="room-data__rooms-item-info-data-container"
+                      class="room-data__info-general-container"
                     >
                       <div
-                        class="room-data__rooms-item-info-data-container-column-left"
+                        class="room-data__info-general-container-left"
                       >
                         <div
-                          class="room-data__rooms-item-info-data-container-row__room"
+                          class="room-data__room"
                         >
                           <img
                             src="{% static 'images/hotels/icons/bag_gray.svg' %}"
                             alt="Room area icon"
-                            class="room-data__rooms-item-text-icon__room"
+                            class="room-data__room-icon"
                           />
-                          <p class="room-data__rooms-item-text__room">
+                          <p class="room-data__room-text">
                             {{ data.room.area }} sq ft
                           </p>
                         </div>
                         <div
-                          class="room-data__rooms-item-info-data-container-row__room"
+                          class="room-data__room"
                         >
                           <img
                             src="{% static 'images/hotels/icons/lifebuoy_gray.svg' %}"
                             alt="Room area icon"
-                            class="room-data__rooms-item-text-icon__room"
+                            class="room-data__room-icon"
                           />
-                          <p class="room-data__rooms-item-text__room">
+                          <p class="room-data__room-text">
                             Sleeps {{ data.room.max_guests }}
                           </p>
                         </div>
                         <div
-                          class="room-data__rooms-item-info-data-container-row__room"
+                          class="room-data__room"
                         >
                           <img
                             src="{% static 'images/hotels/icons/like_gray.svg' %}"
                             alt="Room area icon"
-                            class="room-data__rooms-item-text-icon__room"
+                            class="room-data__room-icon"
                           />
-                          <p class="room-data__rooms-item-text__room">
+                          <p class="room-data__room-text">
                             {{ data.room.bed_information }}
                           </p>
                         </div>
                         
                         <button
                           type="submit"
-                          class="room-data__rooms-item-see-availability"
+                          class="room-data__room-see-availability-button"
                         >
                         <a href="#">Reserve suite</a>
                           
                         </button>
                       </div> 
                       <div
-                        class="room-data__rooms-item-info-data-container-right"
+                        class="room-data__info-general-container-right"
                       >
                         {% if data.room.price_discount != 0 %}
                         <div
-                          class="room-data__search-results-item-info-data-discount__active"
+                          class="room-data__discount-text room-data__discount-text_active"
                         >
                           {{ data.room.price_discount }}% off
                         </div>
                         {% else %}
                         <div
-                          class="room-data__search-results-item-info-data-discount__not-active"
+                          class="room-data__discount-text room-data__discount-text_not-active"
                         ></div>
                         {% endif %}
                         <p
-                          class="room-data__search-results-item-info-data-rooms-text"
+                          class="room-data__guests-text"
                         >
                           {{ guests }} {{ duration }} days
                         </p>
                         {% if data.room.price_discount != 0 %}
                         <p
-                          class="room-data__search-results-item-info-data-price-full"
+                          class="room-data__price-full-text"
                         >
                           US${{ data.price_with_discount }}
                         </p>
                         <p
-                          class="room-data__search-results-item-info-data-price-discount__active"
+                          class="room-data__price-discount-text room-data__price-discount-text_active"
                         >
                           US${{ data.total_price }}
                         </p>
                         {% else %}
                         <p
-                          class="room-data__search-results-item-info-data-price-full"
+                          class="room-data__price-full-text"
                         >
                           US${{ data.total_price }}
                         </p>
                         <div
-                          class="room-data__search-results-item-info-data-price-discount__not-active"
+                          class="room-data__price-discount-text room-data__price-discount-text_not-active"
                         ></div>
                         {% endif %}
 
                         <p
-                          class="room-data__search-results-item-info-data-taxes-text"
+                          class="room-data__taxes-text"
                         >
                           Includes taxes and fees
                         </p>
@@ -532,36 +532,8 @@
   </section>
 </main>
 
-<script>
-  function showOverview(button) {
-    setActiveButton(button);
-    document.getElementById("hotel-data-container").style.display = "flex";
-    document.getElementById("room-data-container").style.display = "none";
-    document.getElementById("reviews-data-container").style.display = "none";
-  }
-
-  function showRooms(button) {
-    setActiveButton(button);
-    document.getElementById("hotel-data-container").style.display = "none";
-    document.getElementById("room-data-container").style.display = "flex";
-    document.getElementById("reviews-data-container").style.display = "none";
-  }
-
-  function showGuestReviews(button) {
-    setActiveButton(button);
-    document.getElementById("hotel-data-container").style.display = "none";
-    document.getElementById("room-data-container").style.display = "none";
-    document.getElementById("reviews-data-container").style.display = "flex";
-  }
-
-  function setActiveButton(button) {
-    var buttons = document.getElementsByClassName("page-menu__button");
-    for (var i = 0; i < buttons.length; i++) {
-      buttons[i].classList.remove("active");
-    }
-    button.classList.add("active");
-  }
-</script>
+<!-- Scrip to manipulate buttons and switch page data -->
+<script src="{% static 'js/hotels/switch_page_data.js' %}"></script>
 
 <script>
   window.addEventListener('DOMContentLoaded', (event) => {
