@@ -17,20 +17,20 @@ input {
   margin-bottom: 24px;
 }
 
-.hotel-photos__container-left-photo {
+.hotel-photos__left-photo {
   width: 820px;
   height: 452px;
   border-radius: 5px;
 }
 
-.hotel-photos__container-right-photos {
+.hotel-photos__right-photos-container {
   display: flex;
   flex-direction: column;
   margin-left: 20px;
   justify-content: space-between;
 }
 
-.hotel-photos__container-right-photo {
+.hotel-photos__right-photo {
   width: 400px;
   height: 218px;
   border-radius: 5px;
@@ -46,7 +46,7 @@ input {
   color: #333333;
 }
 
-.page-menu__container-button {
+.page-menu__button {
   padding: 10px 14px;
   margin-right: 14px;
   background-color: transparent;
@@ -54,7 +54,7 @@ input {
   cursor: pointer;
 }
 
-.page-menu__container-button.active {
+.page-menu__button.active {
   border-bottom: 3px solid #2f80ed;
 }
 
@@ -82,7 +82,7 @@ input {
   margin-block-end: 0px;
 }
 
-.hotel-data__hotel-rating-container {
+.hotel-data__rating-container {
   margin-top: 7px;
   max-height: 20px;
   display: flex;
@@ -90,24 +90,24 @@ input {
   align-items: center;
 }
 
-.hotel-data__hotel-rating-stars-container {
+.hotel-data__rating-stars-container {
   display: flex;
   flex-direction: row;
   height: 20px;
   width: 90px;
 }
 
-.hotel-data__hotel-rating-stars-star-icon {
+.hotel-data__rating-stars-star-icon {
   height: 20px;
   width: 20px;
 }
 
-.hotel-data__hotel-rating-stars-star-icon-half {
+.hotel-data__rating-stars-star-icon-half {
   height: 20px;
   width: 10px;
 }
 
-.hotel-data__hotel-rating-container-text {
+.hotel-data__rating-stars-text {
   font-weight: 400;
   font-size: 14px;
   line-height: 140%;
@@ -116,18 +116,18 @@ input {
   margin-left: 12px;
 }
 
-.hotel-data__hotel-address-container {
+.hotel-data__address-container {
   display: flex;
   align-items: center;
   margin-top: 12px;
 }
 
-.hotel-data__hotel-address-icon {
+.hotel-data__address-icon {
   width: 20px;
   height: 20px;
 }
 
-.hotel-data__hotel-address-text {
+.hotel-data__address-text {
   font-weight: 400;
   font-size: 14px;
   line-height: 140%;
@@ -138,44 +138,43 @@ input {
   margin-left: 6px;
 }
 
-.hotel-data__general-hotel-data-container {
+.hotel-data__general-container {
   background: #ffffff;
   border-radius: 6px;
   width: 810px;
   margin-top: 31px;
 }
 
-.hotel-data__general-hotel-data-title {
+.title {
   font-weight: 500;
   font-size: 18px;
   line-height: 21px;
   letter-spacing: 0.01em;
   color: #181818;
-  margin-block-start: 0px;
-  margin-block-end: 0px;
+}
+
+.hotel-data__general-title {
   margin-top: 24px;
   margin-left: 30px;
 }
 
-.hotel-data__general-hotel-data-overview-text {
+.hotel-data__general-text {
   font-weight: 400;
   font-size: 16px;
   line-height: 140%;
   letter-spacing: 0.02em;
   color: #4f4f4f;
-  margin-block-start: 0px;
-  margin-block-end: 0px;
   margin-top: 20px;
   margin-left: 30px;
   margin-right: 40px;
 }
 
-.hotel-data__general-hotel-data-border {
+.hotel-data__general-border {
   border: 1px solid #e0e0e0;
   margin-top: 44px;
 }
 
-.hotel-data__general-hotel-data-facilities-column-container {
+.hotel-data__facilities-column-container {
   display: flex;
   flex-direction: column;
   margin-left: 30px;
@@ -183,12 +182,12 @@ input {
   margin-bottom: 40px;
 }
 
-.hotel-data__general-hotel-data-facilities-row-container {
+.hotel-data__facilities-row-container {
   display: flex;
   flex-direction: row;
 }
 
-.hotel-data__general-hotel-data-facilities-row-item {
+.hotel-data__facilities-item {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -196,12 +195,12 @@ input {
   width: 320px;
 }
 
-.hotel-data__general-hotel-data-facilities-row-icon {
+.hotel-data__facilities-item-icon {
   width: 20px;
   height: 20px;
 }
 
-.hotel-data__general-hotel-data-facilities-row-text {
+.hotel-data__facilities-item-text {
   font-weight: 400;
   font-size: 15px;
   line-height: 140%;
@@ -226,6 +225,8 @@ input {
 }
 
 .hotel-data__explore-title {
+  margin-bottom: 22px;
+  margin-top: 35px;
   font-weight: 500;
   font-size: 18px;
   line-height: 21px;
@@ -242,39 +243,36 @@ input {
   flex-direction: column;
 }
 
-.hotel-data__explore-container-item {
+.hotel-data__explore-item {
   display: flex;
   align-items: center;
   margin-top: 12px;
 }
 
-.hotel-data__explore-container-item-icon {
+.hotel-data__explore-item-icon {
   width: 20px;
   height: 20px;
 }
 
-.hotel-data__explore-container-item-text {
+.hotel-data__explore-item-text {
   font-weight: 400;
   font-size: 14px;
   line-height: 140%;
   letter-spacing: 0.02em;
   color: #4f4f4f;
   margin-left: 8px;
-  margin-top: 12px;
-  margin-block-start: 0px;
-  margin-block-end: 0px;
 }
 
 .room-data__container {
   display: none;
 }
 
-.room-data__rooms-list {
+.room-data__list {
   margin-top: 40px;
   padding-inline-start: 0px;
 }
 
-.room-data__rooms-item {
+.room-data__item {
   max-width: 915px;
   max-height: 240px;
   background: #ffffff;
@@ -285,14 +283,14 @@ input {
   align-items: center;
 }
 
-.room-data__rooms-item-image {
+.room-data__item-image {
   width: 285px;
   height: 200px;
   margin: 20px;
   border-radius: 5px;
 }
 
-.room-data__rooms-item-info-container {
+.room-data__info-container {
   width: 562px;
   height: 192px;
   margin: 24px;
@@ -300,7 +298,7 @@ input {
   flex-direction: column;
 }
 
-.room-data__rooms-item-info-title-container {
+.room-data__info-title-container {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -308,20 +306,18 @@ input {
   width: 100%;
 }
 
-.room-data__rooms-item-info-title {
+.room-data__info-title {
   font-weight: 500;
   font-size: 20px;
   line-height: 24px;
   letter-spacing: 0.01em;
-  margin-block-start: 0px;
-  margin-block-end: 0px;
 }
 
-.room-data__rooms-item-info-title a {
+.room-data__info-link{
   color: #1a1a1a;
 }
 
-.room-data__rooms-item-info-title-promo__active {
+.room-data__info-title-promo_active {
   width: 190px;
   height: 26px;
   background: #eb5757;
@@ -336,7 +332,7 @@ input {
   align-items: center;
 }
 
-.room-data__rooms-item-info-title-promo__not-active {
+.room-data__info-title-promo_not-active {
   width: 190px;
   height: 26px;
 }

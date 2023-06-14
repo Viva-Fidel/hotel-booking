@@ -28,18 +28,18 @@
         <img
           src="{{ hotel.general_images.all.0.image.url }}"
           alt="Hotel photo"
-          class="hotel-photos__container-left-photo"
+          class="hotel-photos__left-photo"
         />
-        <div class="hotel-photos__container-right-photos">
+        <div class="hotel-photos__right-photos-container">
           <img
             src="{{ hotel.general_images.all.1.image.url }}"
             alt="Hotel photo"
-            class="hotel-photos__container-right-photo"
+            class="hotel-photos__right-photo"
           />
           <img
             src="{{ hotel.general_images.all.2.image.url }}"
             alt="Hotel photo"
-            class="hotel-photos__container-right-photo"
+            class="hotel-photos__right-photo"
           />
         </div>
         {% endif %}
@@ -49,13 +49,13 @@
   <section class="page-menu">
     <div class="container">
     <div class="page-menu__container">
-      <button type="button" class="page-menu__container-button active" onclick="showOverview(this)">
+      <button type="button" class="page-menu__button active" onclick="showOverview(this)">
         Overview
       </button>
-      <button type="button" class="page-menu__container-button" onclick="showRooms(this)">
+      <button type="button" class="page-menu__button" onclick="showRooms(this)">
         Rooms
       </button>
-      <button type="button" class="page-menu__container-button" onclick="showGuestReviews(this)">
+      <button type="button" class="page-menu__button" onclick="showGuestReviews(this)">
         Guest Reviews
       </button>
     </div>
@@ -68,8 +68,8 @@
           <h2 class="hotel-data__hotel-title">
             {{ hotel.hotel_name }}
           </h2>
-          <div class="hotel-data__hotel-rating-container">
-            <div class="hotel-data__hotel-rating-stars-container">
+          <div class="hotel-data__rating-container">
+            <div class="hotel-data__rating-stars-container">
               {% if hotel.hotel_star_rating >= 1 %}
               <img
                 src="{% static 'images/core/icons/star.png' %}"
@@ -80,71 +80,71 @@
               <img
                 src="{% static 'images/core/icons/star.png' %}"
                 alt="Star icon"
-                class="hotel-data__hotel-rating-stars-star-icon"
+                class="hotel-data__rating-stars-star-icon"
               />
               {% endif %} {% if hotel.hotel_star_rating >= 3 %}
               <img
                 src="{% static 'images/core/icons/star.png' %}"
                 alt="Star icon"
-                class="hotel-data__hotel-rating-stars-star-icon"
+                class="hotel-data__rating-stars-star-icon"
               />
               {% endif %} {% if hotel.hotel_star_rating >= 4 %}
               <img
                 src="{% static 'images/core/icons/star.png' %}"
                 alt="Star icon"
-                class="hotel-data__hotel-rating-stars-star-icon"
+                class="hotel-data__rating-stars-star-icon"
               />
               {% endif %} {% if hotel.hotel_star_rating >= 5 %}
               <img
                 src="{% static 'images/core/icons/star.png' %}"
                 alt="Star icon"
-                class="hotel-data__hotel-rating-stars-star-icon"
+                class="hotel-data__rating-stars-star-icon"
               />
               {% endif %}
             </div>
-            <p class="hotel-data__hotel-rating-container-text">
+            <p class="hotel-data__rating-stars-text">
               Guest rating: {{ hotel.user_rating }} 
               ({{hotel.amount_of_reviews}} Reviews)
             </p>
           </div>
-          <div class="hotel-data__hotel-address-container">
+          <div class="hotel-data__address-container">
             <img
-              src="{% static 'images/core/icons/geo_color.svg' %}"
+              src="{% static 'images/core/icons/geo_blue.svg' %}"
               alt="Gelocation icon"
-              class="hotel-data__hotel-address-icon"
+              class="hotel-data__address-icon"
             />
-            <p class="hotel-data__hotel-address-text">
+            <p class="hotel-data__address-text">
               {{ hotel.hotel_street }}, {{ hotel.hotel_city }}, 
               {{ hotel.hotel_county }}, OR {{ hotel.hotel_zip_code }}
             </p>
           </div>
-          <div class="hotel-data__general-hotel-data-container">
-            <h4 class="hotel-data__general-hotel-data-title">
+          <div class="hotel-data__general-container">
+            <h4 class="hotel-data__general-title title">
               Overview
             </h4>
-            <div class="hotel-data__general-hotel-data-overview-text">
+            <div class="hotel-data__general-text">
               {{ hotel.hotel_description|safe }}
             </div>
-            <div class="hotel-data__general-hotel-data-border"></div>
-            <h4 class="hotel-data__general-hotel-data-title">
+            <div class="hotel-data__general-border"></div>
+            <h4 class="hotel-data__general-title title">
               Top facilities
             </h4>
-            <div class="hotel-data__general-hotel-data-facilities-column-container">
+            <div class="hotel-data__facilities-column-container">
               {% for facility in facility_data %} {% if forloop.counter0|divisibleby:2 %}
               <div
-                class="hotel-data__general-hotel-data-facilities-row-container"
+                class="hotel-data__facilities-row-container"
               >
                 {% endif %}
                 <div
-                  class="hotel-data__general-hotel-data-facilities-row-item"
+                  class="hotel-data__facilities-item"
                 >
                   <img
                     src="{{ facility.icon }}"
                     alt="{{ facility.name }}"
-                    class="hotel-data__general-hotel-data-facilities-row-icon"
+                    class="hotel-data__facilities-item-icon"
                   />
                   <p
-                    class="hotel-data__general-hotel-data-facilities-row-text"
+                    class="hotel-data__facilities-item-text"
                   >
                     {{ facility.name }}
                   </p>
@@ -165,36 +165,36 @@
       </div>
       <div class="room-data__container" id="room-data-container">
         <ul
-                class="room-data__rooms-list"
+                class="room-data__list"
                 id="search-results-container"
               >
-              {% for room_entry in room_data %}
+              {% for data in room_data %}
               
-                <li class="room-data__rooms-item">
-                  {% if room_entry.room.photo_1 %}
+                <li class="room-data__item">
+                  {% if data.room.photo_1 %}
                   <img
                     src="{{ room_entry.room.photo_1.url }}"
                     alt="Room Photo"
-                    class="room-data__rooms-item-image"
+                    class="room-data__item-image"
                   />
                   {% endif %}
-                  <div class="room-data__rooms-item-info-container">
+                  <div class="room-data__info-container">
                     <div
-                      class="room-data__rooms-item-info-title-container"
+                      class="room-data__info-title-container"
                     >
-                      <h4 class="room-data__rooms-item-info-title">
-                        <a href="#" target="_blank">{{ room_entry.room.name }}</a>
+                      <h4 class="room-data__info-title">
+                        <a href="#" class="room-data__info-link" target="_blank">{{ data.room.name }}</a>
                       </h4>
 
-                      {% if room_entry.room.special_discount != '' %}
+                      {% if data.room.special_discount != '' %}
                       <div
-                        class="room-data__rooms-item-info-title-promo__active"
+                        class="room-data__info-title-promo room-data__info-title-promo_active"
                       >
-                        {{ room_entry.room.special_discount }}
+                        {{ data.room.special_discount }}
                       </div>
                       {% else %}
                       <div
-                        class="room-data__rooms-item-info-title-promo__not-active"
+                        class="room-data__info-title-promo room-data__info-title-promo_not-active"
                       ></div>
                       {% endif %}
                     </div>
@@ -213,7 +213,7 @@
                             class="room-data__rooms-item-text-icon__room"
                           />
                           <p class="room-data__rooms-item-text__room">
-                            {{ room_entry.room.area }} sq ft
+                            {{ data.room.area }} sq ft
                           </p>
                         </div>
                         <div
@@ -225,7 +225,7 @@
                             class="room-data__rooms-item-text-icon__room"
                           />
                           <p class="room-data__rooms-item-text__room">
-                            Sleeps {{ room_entry.room.max_guests }}
+                            Sleeps {{ data.room.max_guests }}
                           </p>
                         </div>
                         <div
@@ -237,7 +237,7 @@
                             class="room-data__rooms-item-text-icon__room"
                           />
                           <p class="room-data__rooms-item-text__room">
-                            {{ room_entry.room.bed_information }}
+                            {{ data.room.bed_information }}
                           </p>
                         </div>
                         
@@ -252,11 +252,11 @@
                       <div
                         class="room-data__rooms-item-info-data-container-right"
                       >
-                        {% if room_entry.room.price_discount != 0 %}
+                        {% if data.room.price_discount != 0 %}
                         <div
                           class="room-data__search-results-item-info-data-discount__active"
                         >
-                          {{ room_entry.room.price_discount }}% off
+                          {{ data.room.price_discount }}% off
                         </div>
                         {% else %}
                         <div
@@ -268,22 +268,22 @@
                         >
                           {{ guests }} {{ duration }} days
                         </p>
-                        {% if room_entry.room.price_discount != 0 %}
+                        {% if data.room.price_discount != 0 %}
                         <p
                           class="room-data__search-results-item-info-data-price-full"
                         >
-                          US${{ room_entry.price_with_discount }}
+                          US${{ data.price_with_discount }}
                         </p>
                         <p
                           class="room-data__search-results-item-info-data-price-discount__active"
                         >
-                          US${{ room_entry.total_price }}
+                          US${{ data.total_price }}
                         </p>
                         {% else %}
                         <p
                           class="room-data__search-results-item-info-data-price-full"
                         >
-                          US${{ room_entry.total_price }}
+                          US${{ data.total_price }}
                         </p>
                         <div
                           class="room-data__search-results-item-info-data-price-discount__not-active"
@@ -555,7 +555,7 @@
   }
 
   function setActiveButton(button) {
-    var buttons = document.getElementsByClassName("page-menu__container-button");
+    var buttons = document.getElementsByClassName("page-menu__button");
     for (var i = 0; i < buttons.length; i++) {
       buttons[i].classList.remove("active");
     }
@@ -622,18 +622,18 @@
                   var business = answer.businessesAtLocation[i].entityName;
                   var exploreItemContainer = document.createElement("div");
                   exploreItemContainer.className =
-                    "hotel-data__explore-container-item";
+                    "hotel-data__explore-item";
 
                   var iconImg = document.createElement("img");
                   iconImg.src =
                     "{% static 'images/hotels/icons/geo_gray.svg' %}";
                   iconImg.alt = "Geolocation icon";
                   iconImg.className =
-                    "hotel-data__explore-container-item-icon";
+                    "hotel-data__explore-item-icon";
 
                   var textP = document.createElement("p");
                   textP.className =
-                    "hotel-data__explore-container-item-text";
+                    "hotel-data__explore-item-text";
                   textP.textContent = business;
 
                   exploreItemContainer.appendChild(iconImg);
