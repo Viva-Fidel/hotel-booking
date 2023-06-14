@@ -21,6 +21,7 @@
       type="text/css"
       href="{% static 'css/core/search_results.css' %}"
     />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   </head>
 
   <body>
@@ -209,7 +210,7 @@
                       type="checkbox"
                       name="price-range"
                       value="{{ price.value }}"
-                      class="filter__item_price"
+                      class="filter__item-price"
                     />
                     {{ price.label }}
                     <span>{{ price.count }}</span>
@@ -286,7 +287,7 @@
                 </div>
                 <ul
                   class="filter__list"
-                  id="facilities-choice-list"
+                  id="facilities-list"
                 >
                   {% for facility in facilities %}
                   <li class="filter__item">
@@ -308,7 +309,7 @@
                 </div>
                 <ul
                   class="filter__list"
-                  id="activities-choice-list"
+                  id="activities-list"
                 >
                   {% for activity in activities %}
                   <li class="filter__item">
@@ -379,7 +380,7 @@
                     <li class="sort-by__item">
                       <span class="sort-by__item-text">Recommended</span>
                     </li>
-                    <li class="psort-by__item">
+                    <li class="sort-by__item">
                       <span class="sort-by__item-text">Stars (high to low)</span>
                     </li>
 
@@ -394,7 +395,7 @@
               </div>
               <ul
                 class="search-results__list"
-                id="search-results-container"
+                id="search-results-list"
               >
                 {% for hotel in hotels %}
                 <li class="search-results__item">
@@ -563,437 +564,17 @@
   </body>
 </html>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
 {% if user.is_authenticated %}
 <!-- Script to activate drop down menu when user clicks on the avatar -->
 <script src="{% static 'js/partials/_navigation/user_drop_down_menu.js' %}"></script>
 {% endif %}
 
-
-<script>
-  window.addEventListener('DOMContentLoaded', (event) => {
-    const params = new URLSearchParams(window.location.search); // Get the query parameters from the URL
-    const destination = params.get('destination'); // Get the value of the 'destination' parameter
-    const checkin = params.get('checkin'); // Get the value of the 'checkin' parameter
-    const checkout = params.get('checkout'); // Get the value of the 'checkout' parameter
-    const guests = params.get('guests'); // Get the value of the 'guests' parameter
-
-    // Set the values of the input fields using the retrieved query parameters
-    document.getElementById('destination').value = destination;
-    document.getElementById('checkin').value = checkin;
-    document.getElementById('checkout').value = checkout;
-    document.getElementById('guests').value = guests;
-  });
-
-</script>
-
+<!-- Pass data to search form -->
+<script src="{% static 'js/core/pass_data_to_search_form.js' %}"></script>
 
 
 <script>
-  $(document).ready(function () {
-  // Define variables to store the selected values
-  let selectedPrices = null;
-  let hotelRating = null;
-  let selectedFacilities = null;
-  let selectedActivities = null;
-  let hotelType = null;
-  let sorting = null; 
-  let displayedHotels = 8;
-
-  $(".more-results__button").click(function () {
-    // Increase the number of displayed hotels by 4
-    displayedHotels += 4;
-
-    // Call the updateSearchResults function with the updated number of displayed hotels
-    updateSearchResults();
-  });
-
-  // Add event listener to the hotel name input field
-  $("#hotel-search-input").keypress(function (event) {
-    if (event.which === 13) {
-      // Enter key code
-      event.preventDefault();
-      updateSearchResults();
-    }
-  });
-
-  const allocationButtons = document.querySelectorAll(".page-content__allocation-type-filter-button");
-
-    allocationButtons.forEach((button) => {
-      button.addEventListener("click", () => {
-        if (button.classList.contains("selected")) {
-          button.classList.remove("selected");
-        } else {
-          allocationButtons.forEach((otherButton) => {
-            otherButton.classList.remove("selected");
-          });
-          button.classList.add("selected");
-        }
-        hotelType = getHotelType();
-        updateSearchResults();
-      });
-    });
-
-    function getHotelType() {
-      const selectedButton = document.querySelector(
-        ".page-content__allocation-type-filter-button.selected"
-      );
-      if (selectedButton) {
-        return selectedButton.textContent.trim();
-      }
-      return null;
-    }
-
-
-
-  $(document).on(
-    "change",
-    ".page-content__filter-choice-list__facility-range",
-    function () {
-      selectedFacilities = [];
-      $(".page-content__filter-choice-list__facility-range").each(function () {
-        if ($(this).is(":checked")) {
-          selectedFacilities.push($(this).val());
-        }
-      });
-      updateSearchResults();
-    }
-  );
-
-  $(document).on(
-    "change",
-    ".page-content__filter-choice-list__activity-range",
-    function () {
-      selectedActivities = [];
-      $(".page-content__filter-choice-list__activity-range").each(function () {
-        if ($(this).is(":checked")) {
-          selectedActivities.push($(this).val());
-        }
-      });
-      updateSearchResults();
-    }
-  );
-
-  $(document).on(
-    "change",
-    ".page-content__filter-choice-list-item__price-range",
-    function () {
-      selectedPrices = [];
-      $(".page-content__filter-choice-list-item__price-range").each(function () {
-        if ($(this).is(":checked")) {
-          selectedPrices.push($(this).val());
-        }
-      });
-      updateSearchResults();
-    }
-  );
-
-  const starButtons = document.querySelectorAll(
-    ".page-content__filter-by-rating-choice-stars-button"
-  );
-
-  starButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      if (button.classList.contains("selected")) {
-        button.classList.remove("selected");
-      } else {
-        starButtons.forEach((otherButton) => {
-          otherButton.classList.remove("selected");
-        });
-        button.classList.add("selected");
-      }
-      hotelRating = getSelectedRating();
-      updateSearchResults();
-    });
-  });
-
-  function getSelectedRating() {
-    const selectedButton = document.querySelector(
-      ".page-content__filter-by-rating-choice-stars-button.selected"
-    );
-    if (selectedButton) {
-      return parseInt(selectedButton.textContent.trim());
-    }
-    return null;
-  }
-
-  const dropDownList = document.querySelector(".page-content__sort-by-drop-down-item-list");
-  const dropDownIcon = document.querySelector(".page-content__sort-by-container-icon");
-  const sortByContainer = document.querySelector(".page-content__sort-by-container");
-  const sortByChoice = document.querySelector(".page-content__sort-by-container-choice");
-
-  // Hide the drop-down list on page load
-  dropDownList.style.display = "none";
-
-  // Toggle the drop-down list when the icon is clicked
-  dropDownIcon.addEventListener("click", () => {
-    if (dropDownList.style.display === "none") {
-      dropDownList.style.display = "flex";
-      dropDownIcon.classList.add("rotated");
-    } else {
-      dropDownList.style.display = "none";
-      dropDownIcon.classList.remove("rotated");
-    }
-  });
-
-  // Update the sort-by choice when an item is clicked
-  dropDownList.addEventListener("click", (event) => {
-    const selectedItem = event.target.closest("li");
-    if (selectedItem) {
-      sortByChoice.textContent = selectedItem.textContent.trim();
-      dropDownList.style.display = "none";
-      dropDownIcon.classList.remove("rotated");
-      sorting = sortByChoice.textContent; // Set the sorting value based on the selected item
-      updateSearchResults();
-    }
-  });
-
-  function updateSearchResults() {
-      // Get the search parameters from the URL
-      var searchParams = new URLSearchParams(window.location.search);
-      var destination = searchParams.get("destination");
-      var checkin = searchParams.get("checkin");
-      var checkout = searchParams.get("checkout");
-      var guests = searchParams.get("guests");
-      var hotelName = $("#hotel-search-input").val();
-
-      // Create the AJAX request
-      $.ajax({
-        url: "/update-search-results/",
-        type: "GET",
-        data: {
-          destination: destination,
-          checkin: checkin,
-          checkout: checkout,
-          guests: guests,
-          hotel_name: hotelName,
-          price: (selectedPrices || []).join(","),
-          hotel_rating: hotelRating,
-          facilities: (selectedFacilities || []).join(","),
-          activities: (selectedActivities || []).join(","),
-          hotel_type: hotelType,
-          sorting: sorting,
-          displayed_hotels: displayedHotels,
-        },
-        dataType: "json",
-        success: function (response) {
-          // Parse the JSON response
-          var data = response;
-          var duration = data.duration;
-          var guests = data.guests;
-          var numHotelsFound = data.num_hotels_found;
-          var priceRanges = data.price_ranges;
-          var facilities = data.facilities;
-          var activities = data.activities;
-          var hotelResults = data.hotel_results;
-
-          var checkedStatePrice = {};
-          $("input[name='price-range']").each(function () {
-            checkedStatePrice[$(this).val()] = $(this).is(":checked");
-          });
-          var checkedStateFacility = {};
-          $("input[name='facility-range']").each(function () {
-            checkedStateFacility[$(this).val()] = $(this).is(":checked");
-          });
-
-          var checkedStateActivity = {};
-          $("input[name='activity-range']").each(function () {
-            checkedStateActivity[$(this).val()] = $(this).is(":checked");
-          });
-          
-          $; // Update the price range list
-          $("#price-choice-list").empty();
-          priceRanges.forEach(function (price) {
-            var checked = checkedStatePrice[price.value] ? "checked" : "";
-            var listItem = `
-    <li>
-      <input
-        type="checkbox"
-        name="price-range"
-        value="${price.value}"
-        class="page-content__filter-choice-list-item__price-range"
-        ${checked}
-      />
-      ${price.label}
-      <span>${price.count}</span>
-    </li>
-  `;
-            $("#price-choice-list").append(listItem);
-          });
-
-          $("#facilities-choice-list").empty();
-          facilities.forEach(function (facility) {
-            var checked = checkedStateFacility[facility.value] ? "checked" : "";
-            var listItem = `
-    <li>
-      <input
-        type="checkbox"
-        name="facility-range"
-        value="${facility.value}"
-        class="page-content__filter-choice-list__facility-range"
-        ${checked}
-      />
-      ${facility.label}
-      <span>${facility.count}</span>
-    </li>
-  `;
-            $("#facilities-choice-list").append(listItem);
-          });
-
-          $("#activities-choice-list").empty();
-
-          activities.forEach(function (activity) {
-            var checked = checkedStateActivity[activity.value] ? "checked" : "";
-            var listItem = `
-              <li>
-                <input
-                  type="checkbox"
-                  name="activity-range"
-                  value="${activity.value}"
-                  class="page-content__filter-choice-list__activity-range"
-        ${checked}
-                />
-                ${activity.label}
-                <span>${activity.count}</span>
-              </li>
-            `;
-
-            // Append the list item to the price range list
-            $("#activities-choice-list").append(listItem);
-          });
-
-          // Clear the existing search results
-          $("#search-results-container").empty();
-
-          if (hotelResults.length > 0) {
-            // Loop through the hotel results and append the updated HTML
-            hotelResults.forEach(function (hotelResult) {
-              var html = "";
-
-              // Generate the HTML for each hotel result
-              html += `
-                <li class="page-content__search-results-item">
-                  <img
-                    src="${hotelResult.hotel_cover_photo}"
-                    alt="${hotelResult.hotel_name}"
-                    class="page-content__search-results-item-image"
-                  />
-                  <div class="page-content__search-results-item-info-container">
-                    <div class="page-content__search-results-item-info-title-container">
-                      <h4 class="page-content__search-results-item-info-title">
-                        <a href="${hotelResult.hotel_link}" target="_blank">${hotelResult.hotel_name}</a>
-                      </h4>
-                      ${
-                        hotelResult.special_discount != 0
-                          ? `
-                            <div class="page-content__search-results-item-info-title-promo__active">
-                              ${hotelResult.special_discount}
-                            </div>
-                          `
-                          : `
-                            <div class="page-content__search-results-item-info-title-promo__not-active"></div>
-                          `
-                      }
-                    </div>
-
-                    <div class="page-content__search-results-item-info-rating-container">
-                      <div class="page-content__search-results-item-info-rating-stars-container">
-                        
-                      </div>
-                      <p class="page-content__search-results-item-info-rating-stars-text">
-                        Guest rating: ${hotelResult.user_rating} (${hotelResult.amount_of_reviews} Reviews)
-                      </p>
-                    </div>
-
-                    <div class="page-content__search-results-item-info-data-container">
-                      <div class="page-content__search-results-item-info-data-container-left">
-                        <p class="page-content__search-results-item-info-data-offer-title">
-                          ${hotelResult.hotel_search_info_title}
-                        </p>
-                        <p class="page-content__search-results-item-info-data-offer-text">
-                          ${hotelResult.hotel_search_info_text}
-                        </p>
-                        <button type="submit" class="page-content__search-results-item-info-data-see-availability">
-                          <a href=${hotelResult.hotel_link} target="_blank">See availability</a>
-                        </button>
-                      </div>
-                      <div class="page-content__search-results-item-info-data-container-right">
-                        ${
-                          hotelResult.total_price_with_discount != 0
-                            ? `
-                              <div class="page-content__search-results-item-info-data-discount__active">
-                                ${hotelResult.price_discount}% off
-                              </div>
-                            `
-                            : `
-                              <div class="page-content__search-results-item-info-data-discount__not-active"></div>
-                            `
-                        }
-                        <p class="page-content__search-results-item-info-data-rooms-text">
-                          ${guests} ${duration} days
-                        </p>
-                        ${
-                          hotelResult.total_price_with_discount != 0
-                            ? `
-                              <p class="page-content__search-results-item-info-data-price-full">
-                                US$${hotelResult.total_price_with_discount}
-                              </p>
-                              <p class="page-content__search-results-item-info-data-price-discount__active">
-                                US$${hotelResult.total_price}
-                              </p>
-                            `
-                            : `
-                              <p class="page-content__search-results-item-info-data-price-full">
-                                US$${hotelResult.total_price}
-                              </p>
-                              <div class="page-content__search-results-item-info-data-price-discount__not-active"></div>
-                            `
-                        }
-                        <p class="page-content__search-results-item-info-data-taxes-text">
-                          Includes taxes and fees
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-              `;
-
-              // Append star icons based on hotel rating
-              var $hotelResultItem = $(html);
-              $("#search-results-container").append($hotelResultItem);
-
-              // Append star icons based on hotel rating
-              var $ratingStarsContainer = $hotelResultItem.find(
-                ".page-content__search-results-item-info-rating-stars-container"
-              );
-              for (var i = 0; i < hotelResult.hotel_rating; i++) {
-                $ratingStarsContainer.append(
-                  $("<img>")
-                    .attr("src", '{% static "images/core/icons/star.png" %}')
-                    .attr("alt", "Star icon")
-                    .addClass(
-                      "page-content__search-results-item-info-rating-star-icon"
-                    )
-                );
-              }
-            });
-
-            $("#num-hotels-found").text(numHotelsFound);
-          } else {
-            // No hotel results found, display a message
-            var message = `
-              <li class="page-content__search-results-no-results">
-                <p>No hotels found for the specified search parameters.</p>
-              </li>
-            `;
-
-            // Append the message to the search results container
-            $("#search-results-container").append(message);
-            $("#num-hotels-found").text(numHotelsFound);
-          }
-        },
-      });
-    }
-  });
-</script>
+  var staticUrl = "{% static '' %}";
+  </script>
+<!-- Script to handle logic for filtering hotel search results -->
+<script src="{% static 'js/core/hotel_search_filters.js' %}"></script>

@@ -263,9 +263,9 @@ def search_hotels(request):
                     'Business Services': hotel.hotel_facilities.first().hotel_has_business_services if hotel.hotel_facilities.exists() else False,
                     'Swimming pool': hotel.hotel_facilities.first().hotel_has_swimming_pool if hotel.hotel_facilities.exists() else False,
                     'Top rated in area': hotel.hotel_facilities.first().hotel_has_top_rated_in_area if hotel.hotel_facilities.exists() else False,
-                    'Flat-screen TV': hotel.hotel_facilities.first().hotel_has_flat_screen_tv if hotel.hotel_facilities.exists() else False,
-                    '24-hour front desk': hotel.hotel_facilities.first().hotel_has_24_hour_front_desk if hotel.hotel_facilities.exists() else False,
-                    'Non-smoking rooms': hotel.hotel_facilities.first().hotel_has_non_smoking_rooms if hotel.hotel_facilities.exists() else False,
+                    'Flat screen TV': hotel.hotel_facilities.first().hotel_has_flat_screen_tv if hotel.hotel_facilities.exists() else False,
+                    '24 hour front desk': hotel.hotel_facilities.first().hotel_has_24_hour_front_desk if hotel.hotel_facilities.exists() else False,
+                    'Non smoking rooms': hotel.hotel_facilities.first().hotel_has_non_smoking_rooms if hotel.hotel_facilities.exists() else False,
                     'Fitness center': hotel.hotel_facilities.first().hotel_has_fitness_center if hotel.hotel_facilities.exists() else False,
                     'Room service': hotel.hotel_facilities.first().hotel_has_room_service if hotel.hotel_facilities.exists() else False,
                     'Restaurant': hotel.hotel_facilities.first().hotel_has_restaurant if hotel.hotel_facilities.exists() else False,
@@ -277,8 +277,8 @@ def search_hotels(request):
                     'Electric vehicle charging station': hotel.hotel_facilities.first().hotel_has_electric_vehicle_charging_station if hotel.hotel_facilities.exists() else False,
                     'Free cancellation': hotel.hotel_facilities.first().hotel_has_free_cancellation if hotel.hotel_facilities.exists() else False,
                     'Beach front': hotel.hotel_facilities.first().hotel_has_beach_front if hotel.hotel_facilities.exists() else False,
-                    'Hot tub/jacuzzi': hotel.hotel_facilities.first().hotel_has_jacuzzi if hotel.hotel_facilities.exists() else False,
-                    'Book without credit card': hotel.hotel_facilities.first().hotel_has_without_credit_card if hotel.hotel_facilities.exists() else False,
+                    'Jacuzzi': hotel.hotel_facilities.first().hotel_has_jacuzzi if hotel.hotel_facilities.exists() else False,
+                    'Without credit card': hotel.hotel_facilities.first().hotel_has_without_credit_card if hotel.hotel_facilities.exists() else False,
                     'No prepayment': hotel.hotel_facilities.first().hotel_has_no_prepayment if hotel.hotel_facilities.exists() else False,
                 },
                 'activities': {
@@ -584,9 +584,9 @@ def update_search_results(request):
                     'Business Services': hotel.hotel_facilities.first().hotel_has_business_services if hotel.hotel_facilities.exists() else False,
                     'Swimming pool': hotel.hotel_facilities.first().hotel_has_swimming_pool if hotel.hotel_facilities.exists() else False,
                     'Top rated in area': hotel.hotel_facilities.first().hotel_has_top_rated_in_area if hotel.hotel_facilities.exists() else False,
-                    'Flat-screen TV': hotel.hotel_facilities.first().hotel_has_flat_screen_tv if hotel.hotel_facilities.exists() else False,
-                    '24-hour front desk': hotel.hotel_facilities.first().hotel_has_24_hour_front_desk if hotel.hotel_facilities.exists() else False,
-                    'Non-smoking rooms': hotel.hotel_facilities.first().hotel_has_non_smoking_rooms if hotel.hotel_facilities.exists() else False,
+                    'Flat screen TV': hotel.hotel_facilities.first().hotel_has_flat_screen_tv if hotel.hotel_facilities.exists() else False,
+                    '24 hour front desk': hotel.hotel_facilities.first().hotel_has_24_hour_front_desk if hotel.hotel_facilities.exists() else False,
+                    'Non smoking rooms': hotel.hotel_facilities.first().hotel_has_non_smoking_rooms if hotel.hotel_facilities.exists() else False,
                     'Fitness center': hotel.hotel_facilities.first().hotel_has_fitness_center if hotel.hotel_facilities.exists() else False,
                     'Room service': hotel.hotel_facilities.first().hotel_has_room_service if hotel.hotel_facilities.exists() else False,
                     'Restaurant': hotel.hotel_facilities.first().hotel_has_restaurant if hotel.hotel_facilities.exists() else False,
@@ -598,8 +598,8 @@ def update_search_results(request):
                     'Electric vehicle charging station': hotel.hotel_facilities.first().hotel_has_electric_vehicle_charging_station if hotel.hotel_facilities.exists() else False,
                     'Free cancellation': hotel.hotel_facilities.first().hotel_has_free_cancellation if hotel.hotel_facilities.exists() else False,
                     'Beach front': hotel.hotel_facilities.first().hotel_has_beach_front if hotel.hotel_facilities.exists() else False,
-                    'Hot tub/jacuzzi': hotel.hotel_facilities.first().hotel_has_jacuzzi if hotel.hotel_facilities.exists() else False,
-                    'Book without credit card': hotel.hotel_facilities.first().hotel_has_without_credit_card if hotel.hotel_facilities.exists() else False,
+                    'Jacuzzi': hotel.hotel_facilities.first().hotel_has_jacuzzi if hotel.hotel_facilities.exists() else False,
+                    'Without credit card': hotel.hotel_facilities.first().hotel_has_without_credit_card if hotel.hotel_facilities.exists() else False,
                     'No prepayment': hotel.hotel_facilities.first().hotel_has_no_prepayment if hotel.hotel_facilities.exists() else False,
                 },
                 'activities': {
@@ -650,7 +650,7 @@ def update_search_results(request):
                 activity['count'] += 1
 
     hotel_results = hotel_results[:int(displayed_hotels)]
-
+    
     # Create a context dictionary with query parameters
     context = {
         'destination': destination,
