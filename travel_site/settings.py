@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'hotels.apps.HotelsConfig',
     'blogs.apps.BlogsConfig',
     'users',
+    'reservation'
 ]
 
 MIDDLEWARE = [

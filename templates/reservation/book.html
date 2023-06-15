@@ -1,0 +1,78 @@
+{% extends 'base.html' %} {% load static %}
+
+<!-- Amending page title -->
+{% block title %} | Book {{ hotel.hotel_name }} {% endblock %}
+
+<!-- Adding navigation block -->
+{% block navigation %} {% include 'partials/_navigation.html' %} {% endblock %}
+
+<!-- Adding main content -->
+{% block content %}
+<!-- Connectiong page CSS styles -->
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'css/reservation/book.css' %}"
+/>
+
+<!-- Connecting styles for phone input -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css">
+
+<section class="reservation">
+    <div class="container">
+        <h2 class="reservation__title">Secure your reservation</h2>
+        {% include 'partials/_warning.html' %}
+        <div class="reservation__menu-container">
+        <div class="reservation__left-container">
+            <div class="reservation__room-container">
+                <div class="reservation__room-header">
+                    <img src="{% static 'images/reservation/icons/user_white.svg' %}" alt="User icon" class="reservation__room-header-icon">
+                    <span class="reservation__room-header-room-amount-text">Room 1</span>
+                    <p class="reservation__room-header-guests-amount-text">2 adults, 1 double bed and 1 twin bed, Non-smoking</p>
+                </div>
+                <div class="reservation__room-body-container">
+                    <div class="reservation__room-body-full-name-container">
+                        <div class="reservation__room-body-name">
+                            <p class="reservation__room-body-name-text reservation-text">First name</p>
+                            <input type="text" class="reservation__room-body-name-input room-body-full-input">
+                        </div>
+                        <div class="reservation__room-body-surname">
+                            <p class="reservation__room-body-surname-text reservation-text">Last name</p>
+                            <input type="text" class="reservation__room-body-surname-input room-body-full-input">
+                        </div>
+                    </div>
+                    <div class="reservation__room-body-phone-container">
+                        <p class="reservation__room-body-phone-text reservation-text">Mobile number</p>
+                        <input type="tel" id="phone-input">
+                    </div>
+                    <div class="reservation__room-body-alerts-container">
+                        <input type="checkbox" class="reservation__room-body-alerts-checkbox" name="receiveAlerts">
+                        <span class="reservation__room-body-alerts-text">Receive text alerts about this trip</span>
+                      </div>
+                </div>
+            </div>
+            <div class="reservation__payment-container">
+                <div class="reservation__payment-header">
+                    <img src="{% static 'images/reservation/icons/payment_white.svg' %}" alt="Payment icon" class="reservation__payment-header-icon">
+                    <p class="reservation__payment-header-text">Payment options</p>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+<script>
+    var phoneInput = document.querySelector("#phone-input");
+    var iti = window.intlTelInput(phoneInput, {
+      initialCountry: "us",
+      preferredCountries: ["us", "ca", "gb", "mx"], 
+      separateDialCode: true,
+      utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"
+    });
+  </script>
+
+{% endblock %}

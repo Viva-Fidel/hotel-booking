@@ -99,12 +99,3 @@ def hotel_detail(request, slug):
                'duration': duration,
             }
     return render(request, 'hotels/hotel_detail.html', context)
-
-
-def get_api_data(request):
-    # Make an API request using the API key
-    api_key = 'AjAwHqGhcSbLyvJnuBVtFctMKHyTKDPz2qx_PF1sYsQuplSMNqWhc91XBldPI1L0'
-    response = {'api_key': api_key}
-
-    # Return the API response as JSON
-    return JsonResponse(response)

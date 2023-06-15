@@ -1,0 +1,153 @@
+input {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 140%;
+  letter-spacing: 0.02em;
+  color: #4f4f4f;
+  border: none;
+  outline-color: #2f80ed;
+  background: #f2f2f2;
+  padding: 12px;
+  border-radius: 4px;
+}
+
+.reservation {
+  background: #f2f2f2;
+}
+
+.reservation__title {
+  font-weight: 600;
+  font-size: 32px;
+  line-height: 38px;
+  letter-spacing: 0.01em;
+  color: #1a1a1a;
+  padding-top: 60px;
+  margin-bottom: 30px;
+}
+
+.reservation__menu-container {
+  padding-top: 30px;
+}
+
+.reservation__left-container {
+  width: 810px;
+}
+
+.reservation__room-container {
+  background: #ffffff;
+  border-radius: 6px;
+}
+
+.reservation__room-header {
+  height: 60px;
+  background: #2f80ed;
+  border-radius: 6px 6px 0px 0px;
+  display: flex;
+  flex-direction: row;
+}
+
+.reservation__room-header-icon {
+  padding: 16px 0px 16px 20px;
+}
+
+.reservation__room-header-room-amount-text {
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 24px;
+  letter-spacing: 0.01em;
+  color: #ffffff;
+  padding: 18px 0px 18px 16px;
+}
+
+.reservation__room-header-guests-amount-text {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.01em;
+  color: #ffffff;
+  padding: 18px 0px 18px 18px;
+}
+
+.reservation__room-body-container {
+  display: flex;
+  flex-direction: column;
+  margin-left: 32px;
+}
+
+.reservation__room-body-full-name-container {
+  display: flex;
+  flex-direction: row;
+  margin-top: 32px;
+}
+
+.reservation__room-body-name {
+  margin-right: 20px;
+}
+
+.reservation-text {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 140%;
+  letter-spacing: 0.02em;
+  color: #181818;
+  margin-bottom: 4px;
+}
+
+.room-body-full-input {
+  width: 240px;
+  height: 44px;
+}
+
+.reservation__room-body-phone-container {
+  margin-top: 20px;
+}
+
+.reservation__room-body-alerts-container {
+  margin-top: 20px;
+  margin-bottom: 40px;
+  display: flex;
+  align-items: center;
+}
+
+.reservation__room-body-alerts-checkbox {
+  width: 20px;
+  height: 20px;
+  border: 1px solid #bdbdbd;
+  border-radius: 5px;
+}
+
+.reservation__room-body-alerts-text {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  letter-spacing: 0.02em;
+  color: #181818;
+  margin-left: 8px;
+}
+
+.reservation__payment-container {
+  margin-top: 30px;
+  background: #ffffff;
+  border-radius: 6px;
+}
+
+.reservation__payment-header {
+  height: 60px;
+  background: #2f80ed;
+  border-radius: 6px 6px 0px 0px;
+  display: flex;
+  flex-direction: row;
+}
+
+.reservation__payment-header-icon {
+  padding: 16px 0px 16px 20px;
+}
+
+.reservation__payment-header-text {
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 24px;
+  letter-spacing: 0.01em;
+  color: #ffffff;
+  padding: 18px 0px 18px 18px;
+}
