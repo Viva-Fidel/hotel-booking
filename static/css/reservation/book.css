@@ -151,3 +151,92 @@ input {
   color: #ffffff;
   padding: 18px 0px 18px 18px;
 }
+
+.reservation__payment-options-container {
+  box-shadow: 0px 1px 0px #e0e0e0;
+}
+
+.reservation__payment-options-button {
+  padding: 10px 14px;
+  margin-right: 14px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  letter-spacing: 0.02em;
+  color: #333333;
+}
+
+.reservation__payment-options-button.active {
+  border-bottom: 3px solid #2f80ed;
+}
+
+.reservation__payment-body-container {
+  display: flex;
+  flex-direction: column;
+  margin-left: 32px;
+}
+
+.reservation__payment-body-card-icons-container {
+  display: flex;
+  margin-top: 32px;
+}
+
+.reservation__payment-body-card-icon-background {
+  background: #f2f2f2;
+  border-radius: 5px;
+  width: 60px;
+  height: 40px;
+  margin-right: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.reservation__payment-body-card-name-container {
+  margin-top: 26px;
+}
+
+.reservation__payment-body-card-number-container {
+  margin-top: 20px;
+}
+
+.card-input {
+  width: 500px;
+  height: 44px;
+}
+
+.reservation__payment-body-exp-date-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+.reservation__payment-body-exp-date-inputs-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.reservation__payment-body-exp-date-input {
+  width: 150px;
+  height: 42px;
+  margin-right: 12px;
+}
+
+.reservation__payment-body-codes-container {
+  display: flex;
+  flex-direction: row;
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
+
+.reservation__payment-body-code-container{
+    margin-right: 20px;
+}
+
+.code-input {
+  width: 240px;
+  height: 44px;
+}

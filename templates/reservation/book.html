@@ -57,6 +57,59 @@
                     <p class="reservation__payment-header-text">Payment options</p>
 
                 </div>
+                <div class="reservation__payment-options-container">
+                    <button type="button" class="reservation__payment-options-button active" onclick="showOverview(this)">
+                        Debit/Credit Card
+                      </button>
+                      <button type="button" class="reservation__payment-options-button" onclick="showRooms(this)">
+                        Paypal
+                      </button>
+                      <button type="button" class="reservation__payment-options-button" onclick="showGuestReviews(this)">
+                        Bank transfer
+                      </button>
+                </div>
+                <div class="reservation__payment-body-container">
+                    <div class="reservation__payment-body-card-icons-container">
+                        <div class="reservation__payment-body-card-icon-background">
+                            <img src="{% static 'images/reservation/icons/master_card.svg' %}" alt="Master card icon" class="reservation__payment-body-card-icon">
+                        </div>
+                        <div class="reservation__payment-body-card-icon-background">
+                            <img src="{% static 'images/reservation/icons/visa.svg' %}" alt="Master card icon" class="reservation__payment-body-card-icon">
+                        </div>
+                        <div class="reservation__payment-body-card-icon-background">
+                            <img src="{% static 'images/reservation/icons/amx.svg' %}" alt="Master card icon" class="reservation__payment-body-card-icon">
+                        </div>
+                        <div class="reservation__payment-body-card-icon-background">
+                            <img src="{% static 'images/reservation/icons/discover.svg' %}" alt="Master card icon" class="reservation__payment-body-card-icon">
+
+                        </div>
+                    </div>
+                    <div class="reservation__payment-body-card-name-container">
+                        <p class="reservation__payment-body-card-name-text reservation-text">Name on card</p>
+                            <input type="text" class="reservation__payment-body-card-name-input card-input">
+                    </div>
+                    <div class="reservation__payment-body-card-number-container">
+                        <p class="reservation__payment-body-card-number-text reservation-text">Debit/Credit card number</p>
+                            <input type="text" class="reservation__payment-body-card-number-input card-input">
+                    </div>
+                    <div class="reservation__payment-body-exp-date-container">
+                        <p class="reservation__payment-body-exp-date-text reservation-text">Expiration Date</p>
+                        <div class="reservation__payment-body-exp-date-inputs-container">
+                            <input type="number" class="reservation__payment-body-exp-date-input" placeholder="Month"  name="monthInput" id="monthInput" min="1" max="12">
+                            <input type="number" class="reservation__payment-body-exp-date-input" placeholder="Year" name="yearInput" id="yearInput" min="2023" max="2033">
+                        </div>
+                   </div>
+                   <div class="reservation__payment-body-codes-container">
+                    <div class="reservation__payment-body-code-container">
+                        <p class="reservation__payment-body-code-text reservation-text">Security Code</p>
+                        <input type="text" class="reservation__payment-body-code-input code-input">
+                    </div>
+                    <div class="reservation__payment-body-code-container">
+                        <p class="reservation__payment-body-code-text reservation-text">Billing Zip code</p>
+                        <input type="text" class="reservation__payment-body-code-input code-input">
+                    </div>
+               </div>
+                </div>
 
             </div>
         </div>
