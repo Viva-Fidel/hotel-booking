@@ -313,7 +313,7 @@ input {
   letter-spacing: 0.01em;
 }
 
-.room-data__info-link{
+.room-data__info-link {
   color: #1a1a1a;
 }
 
@@ -462,7 +462,6 @@ input {
   height: 17px;
 }
 
-
 .room-data__taxes-text {
   margin-block-start: 0px;
   margin-block-end: 0px;
@@ -480,19 +479,19 @@ input {
 
 .room-search {
   background: #f2f2f2;
+  padding-bottom: 18px;
 }
 
-.room-list{
+.room-list {
   background: #f2f2f2;
 }
 
-
-.room-availability__room-list-container {
+.room-list__container {
   display: flex;
   padding-bottom: 100px;
 }
 
-.room-availability__room-list-item__promo {
+.room-list__promo {
   width: 400px;
   height: 340px;
   background: linear-gradient(180deg, #4796ff 0%, #2366bf 100%);
@@ -501,30 +500,30 @@ input {
   margin-right: 5px;
 }
 
-.room-availability__room-list-item-icon-logo__promo {
+.room-list__promo-icon-logo {
   position: absolute;
   left: 28px;
   top: 72px;
 }
 
-.room-availability__room-list-item-icon-promo-text__promo {
+.room-list__promo-icon-text {
   position: absolute;
   left: 28px;
   top: 124px;
 }
 
-.room-availability__room-list-item-icon-traveller__promo {
+.room-list__promo-icon-traveller {
   position: absolute;
   left: 154px;
   top: 35px;
 }
 
-.room-availability__room-list-container-item__room {
+.room-list__rooms-container {
   display: flex;
   border-radius: 6px;
 }
 
-.room-availability__room-list-item__room {
+.room-list__room-container {
   display: flex;
   flex-direction: column;
   margin-left: 15px;
@@ -532,13 +531,13 @@ input {
   background: #ffffff;
 }
 
-.room-availability__room-list-item-photo__room {
+.room-list__room-photo {
   width: 400px;
   height: 200px;
   border-radius: 6px;
 }
 
-.room-availability__room-list-item-title__room {
+.room-list__room-title {
   font-weight: 500;
   font-size: 18px;
   line-height: 21px;
@@ -548,11 +547,9 @@ input {
   color: #1a1a1a;
   padding-top: 20px;
   margin-left: 20px;
-  margin-block-start: 0px;
-  margin-block-end: 0px;
 }
 
-.room-availability__room-list-item-text-container-column__room {
+.room-list__room-text-container-column {
   display: flex;
   flex-direction: column;
   font-weight: 400;
@@ -565,24 +562,24 @@ input {
   margin-bottom: 24px;
 }
 
-.room-availability__room-list-item-text-container-row__room {
+.room-list__room-text-container-row {
   display: flex;
   align-items: center;
   margin-top: 10px;
 }
 
-.room-availability__room-list-item-text__room {
+.room-list__room-text {
   margin-block-start: 0px;
   margin-block-end: 0px;
   margin-left: 10px;
 }
 
-.room-availability__room-list-item-text-icon__room {
+.room-list__room-text-icon {
   width: 20px;
   height: 20px;
 }
 
-.room-availability__reserve-button {
+.room-list__reserve-button {
   width: 340px;
   height: 44px;
   background: #2f80ed;
