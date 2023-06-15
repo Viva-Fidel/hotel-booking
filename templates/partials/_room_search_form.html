@@ -2,13 +2,7 @@
 <link
   rel="stylesheet"
   type="text/css"
-  href="{% static 'css/partials/_hotels_search_form.css' %}"
-/>
-
-<!-- Connecting styles for autocomplete JS search script -->
-<link
-  rel="stylesheet"
-  href="{% static 'node_modules/@trevoreyre/autocomplete-js/dist/style.css' %}"
+  href="{% static 'css/partials/_room_search_form.css' %}"
 />
 
 <!-- Connecting styles for JS calendar script -->
@@ -17,33 +11,19 @@
   href="{% static 'node_modules/flatpickr/dist/flatpickr.min.css' %}"
 />
 
-<form
-  class="hotel-search-form"
+
+<h4 class="room-search__title">Available rooms</h4>
+      <form
+  class="room-search__form"
   method="get"
   action="{% url 'search_hotels' %}"
 >
-  <div class="hotel-search-form__item hotel-search-form__item_geo" id="hotel-search-form__item-geo">
-    <img
-      src="{% static 'images/partials/icons/_hotels_search_form/geo_gray.svg' %}"
-      alt="Geolocation icon"
-      class="hotel-search-form__item-icon"
-    />
-    <input
-      type="text"
-      class="hotel-search-form__geo-input"
-      id="destination"
-      name="destination"
-      placeholder="Where are you going?"
-      required
-    />
-    <ul class="autocomplete-result-list"></ul>
-  </div>
 
-  <div class="hotel-search-form__item hotel-search-form__item_calendar">
+  <div class="room-search__item room-search__item_calendar">
     <img
-      src="{% static 'images/partials/icons/_hotels_search_form/calendar_gray.svg' %}"
+      src="{% static 'images/partials/icons/_room_search_from/calendar_gray.svg' %}"
       alt="Calendar icon"
-      class="hotel-search-form__item-icon"
+      class="room-search__item-icon"
     />
     <input
       type="text"
@@ -53,11 +33,11 @@
       required
     />
   </div>
-  <div class="hotel-search-form__item hotel-search-form__item_calendar">
+  <div class="room-search__item room-search__item_calendar">
     <img
-      src="{% static 'images/partials/icons/_hotels_search_form/calendar_gray.svg' %}"
+      src="{% static 'images/partials/icons/_room_search_from/calendar_gray.svg' %}"
       alt="Calendar icon"
-      class="hotel-search-form__item-icon"
+      class="room-search__item-icon"
     />
     <input
       type="text"
@@ -67,11 +47,11 @@
       required
     />
   </div>
-  <div class="hotel-search-form__item hotel-search-form__item_guests" onload="setGuests()">
+  <div class="room-search__item room-search__item_guests" onload="setGuests()">
     <img
-      src="{% static 'images/partials/icons/_hotels_search_form/guests_gray.svg' %}"
+      src="{% static 'images/partials/icons/_room_search_from/guests_gray.svg' %}"
       alt="Guests icon"
-      class="hotel-search-form__item-icon"
+      class="room-search__item-icon"
     />
     <input
       type="text"
@@ -164,21 +144,17 @@
       </div>
     </div>
   </div>
-  <button type="submit" class="hotel-search-form__submit-button">
-    Search
+  <button type="submit" class="room-search-form__submit-button">
+    Check Availability
   </button>
 </form>
 
-<!-- Autocomplete script to search destinations -->
-<script src="{% static 'node_modules/@trevoreyre/autocomplete-js/dist/autocomplete.min.js' %}"></script>
-<script src="{% static 'js/partials/_hotels_search_form/county_autocomplete.js' %}"></script>
-
 <!-- Script to showing calendar to choose check in and check out dates -->
 <script src="{% static 'node_modules/flatpickr/dist/flatpickr.js' %}"></script>
-<script src="{% static 'js/partials/_hotels_search_form/calendar.js' %}"></script>
+<script src="{% static 'js/partials/_room_search_form/calendar.js' %}"></script>
 
 <!-- Script to show or hide drop down menu for choosing amount of guests -->
-<script src="{% static 'js/partials/_hotels_search_form/guests_dropdown.js' %}"></script>
+<script src="{% static 'js/partials/_room_search_form/guests_dropdown.js' %}"></script>
 
 <!-- Script to choose guests amount -->
-<script src="{% static 'js/partials/_hotels_search_form/guests_dropdown_choice.js' %}"></script>
+<script src="{% static 'js/partials/_room_search_form/guests_dropdown_choice.js' %}"></script>
