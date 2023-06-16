@@ -16,116 +16,370 @@
 />
 
 <!-- Connecting styles for phone input -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css">
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css"
+/>
 
 <section class="reservation">
-    <div class="container">
-        <h2 class="reservation__title">Secure your reservation</h2>
-        {% include 'partials/_warning.html' %}
-        <div class="reservation__menu-container">
-        <div class="reservation__left-container">
-            <div class="reservation__room-container">
-                <div class="reservation__room-header">
-                    <img src="{% static 'images/reservation/icons/user_white.svg' %}" alt="User icon" class="reservation__room-header-icon">
-                    <span class="reservation__room-header-room-amount-text">Room 1</span>
-                    <p class="reservation__room-header-guests-amount-text">2 adults, 1 double bed and 1 twin bed, Non-smoking</p>
-                </div>
-                <div class="reservation__room-body-container">
-                    <div class="reservation__room-body-full-name-container">
-                        <div class="reservation__room-body-name">
-                            <p class="reservation__room-body-name-text reservation-text">First name</p>
-                            <input type="text" class="reservation__room-body-name-input room-body-full-input">
-                        </div>
-                        <div class="reservation__room-body-surname">
-                            <p class="reservation__room-body-surname-text reservation-text">Last name</p>
-                            <input type="text" class="reservation__room-body-surname-input room-body-full-input">
-                        </div>
-                    </div>
-                    <div class="reservation__room-body-phone-container">
-                        <p class="reservation__room-body-phone-text reservation-text">Mobile number</p>
-                        <input type="tel" id="phone-input">
-                    </div>
-                    <div class="reservation__room-body-alerts-container">
-                        <input type="checkbox" class="reservation__room-body-alerts-checkbox" name="receiveAlerts">
-                        <span class="reservation__room-body-alerts-text">Receive text alerts about this trip</span>
-                      </div>
-                </div>
+  <div class="container">
+    <h2 class="reservation__title">Secure your reservation</h2>
+    {% include 'partials/_warning.html' %}
+    <div class="reservation__menu-container">
+      <div class="reservation__left-container">
+        <div class="reservation__room-container">
+          <div class="reservation__room-header">
+            <img
+              src="{% static 'images/reservation/icons/user_white.svg' %}"
+              alt="User icon"
+              class="reservation__room-header-icon"
+            />
+            <span class="reservation__room-header-room-amount-text"
+              >Room 1</span
+            >
+            <p class="reservation__room-header-guests-amount-text">
+              2 adults, 1 double bed and 1 twin bed, Non-smoking
+            </p>
+          </div>
+          <div class="reservation__room-body-container">
+            <div class="reservation__room-body-full-name-container">
+              <div class="reservation__room-body-name">
+                <p class="reservation__room-body-name-text reservation-text">
+                  First name
+                </p>
+                <input
+                  type="text"
+                  class="reservation__room-body-name-input room-body-full-input"
+                />
+              </div>
+              <div class="reservation__room-body-surname">
+                <p class="reservation__room-body-surname-text reservation-text">
+                  Last name
+                </p>
+                <input
+                  type="text"
+                  class="reservation__room-body-surname-input room-body-full-input"
+                />
+              </div>
             </div>
-            <div class="reservation__payment-container">
-                <div class="reservation__payment-header">
-                    <img src="{% static 'images/reservation/icons/payment_white.svg' %}" alt="Payment icon" class="reservation__payment-header-icon">
-                    <p class="reservation__payment-header-text">Payment options</p>
-
-                </div>
-                <div class="reservation__payment-options-container">
-                    <button type="button" class="reservation__payment-options-button active" onclick="showOverview(this)">
-                        Debit/Credit Card
-                      </button>
-                      <button type="button" class="reservation__payment-options-button" onclick="showRooms(this)">
-                        Paypal
-                      </button>
-                      <button type="button" class="reservation__payment-options-button" onclick="showGuestReviews(this)">
-                        Bank transfer
-                      </button>
-                </div>
-                <div class="reservation__payment-body-container">
-                    <div class="reservation__payment-body-card-icons-container">
-                        <div class="reservation__payment-body-card-icon-background">
-                            <img src="{% static 'images/reservation/icons/master_card.svg' %}" alt="Master card icon" class="reservation__payment-body-card-icon">
-                        </div>
-                        <div class="reservation__payment-body-card-icon-background">
-                            <img src="{% static 'images/reservation/icons/visa.svg' %}" alt="Master card icon" class="reservation__payment-body-card-icon">
-                        </div>
-                        <div class="reservation__payment-body-card-icon-background">
-                            <img src="{% static 'images/reservation/icons/amx.svg' %}" alt="Master card icon" class="reservation__payment-body-card-icon">
-                        </div>
-                        <div class="reservation__payment-body-card-icon-background">
-                            <img src="{% static 'images/reservation/icons/discover.svg' %}" alt="Master card icon" class="reservation__payment-body-card-icon">
-
-                        </div>
-                    </div>
-                    <div class="reservation__payment-body-card-name-container">
-                        <p class="reservation__payment-body-card-name-text reservation-text">Name on card</p>
-                            <input type="text" class="reservation__payment-body-card-name-input card-input">
-                    </div>
-                    <div class="reservation__payment-body-card-number-container">
-                        <p class="reservation__payment-body-card-number-text reservation-text">Debit/Credit card number</p>
-                            <input type="text" class="reservation__payment-body-card-number-input card-input">
-                    </div>
-                    <div class="reservation__payment-body-exp-date-container">
-                        <p class="reservation__payment-body-exp-date-text reservation-text">Expiration Date</p>
-                        <div class="reservation__payment-body-exp-date-inputs-container">
-                            <input type="number" class="reservation__payment-body-exp-date-input" placeholder="Month"  name="monthInput" id="monthInput" min="1" max="12">
-                            <input type="number" class="reservation__payment-body-exp-date-input" placeholder="Year" name="yearInput" id="yearInput" min="2023" max="2033">
-                        </div>
-                   </div>
-                   <div class="reservation__payment-body-codes-container">
-                    <div class="reservation__payment-body-code-container">
-                        <p class="reservation__payment-body-code-text reservation-text">Security Code</p>
-                        <input type="text" class="reservation__payment-body-code-input code-input">
-                    </div>
-                    <div class="reservation__payment-body-code-container">
-                        <p class="reservation__payment-body-code-text reservation-text">Billing Zip code</p>
-                        <input type="text" class="reservation__payment-body-code-input code-input">
-                    </div>
-               </div>
-                </div>
-
+            <div class="reservation__room-body-phone-container">
+              <p class="reservation__room-body-phone-text reservation-text">
+                Mobile number
+              </p>
+              <input type="tel" id="phone-input" />
             </div>
+            <div class="reservation__room-body-alerts-container">
+              <input
+                type="checkbox"
+                class="reservation__room-body-alerts-checkbox"
+                name="receiveAlerts"
+              />
+              <span class="reservation__room-body-alerts-text"
+                >Receive text alerts about this trip</span
+              >
+            </div>
+          </div>
         </div>
+        <div class="reservation__payment-container">
+          <div class="reservation__payment-header">
+            <img
+              src="{% static 'images/reservation/icons/payment_white.svg' %}"
+              alt="Payment icon"
+              class="reservation__payment-header-icon"
+            />
+            <p class="reservation__payment-header-text">Payment options</p>
+          </div>
+          <div class="reservation__payment-options-container">
+            <button
+              type="button"
+              class="reservation__payment-options-button active"
+              onclick="showOverview(this)"
+            >
+              Debit/Credit Card
+            </button>
+            <button
+              type="button"
+              class="reservation__payment-options-button"
+              onclick="showRooms(this)"
+            >
+              Paypal
+            </button>
+            <button
+              type="button"
+              class="reservation__payment-options-button"
+              onclick="showGuestReviews(this)"
+            >
+              Bank transfer
+            </button>
+          </div>
+          <div class="reservation__payment-body-container">
+            <div class="reservation__payment-body-card-icons-container">
+              <div class="reservation__payment-body-card-icon-background">
+                <img
+                  src="{% static 'images/reservation/icons/master_card.svg' %}"
+                  alt="Master card icon"
+                  class="reservation__payment-body-card-icon"
+                />
+              </div>
+              <div class="reservation__payment-body-card-icon-background">
+                <img
+                  src="{% static 'images/reservation/icons/visa.svg' %}"
+                  alt="Master card icon"
+                  class="reservation__payment-body-card-icon"
+                />
+              </div>
+              <div class="reservation__payment-body-card-icon-background">
+                <img
+                  src="{% static 'images/reservation/icons/amx.svg' %}"
+                  alt="Master card icon"
+                  class="reservation__payment-body-card-icon"
+                />
+              </div>
+              <div class="reservation__payment-body-card-icon-background">
+                <img
+                  src="{% static 'images/reservation/icons/discover.svg' %}"
+                  alt="Master card icon"
+                  class="reservation__payment-body-card-icon"
+                />
+              </div>
+            </div>
+            <div class="reservation__payment-body-card-name-container">
+              <p
+                class="reservation__payment-body-card-name-text reservation-text"
+              >
+                Name on card
+              </p>
+              <input
+                type="text"
+                class="reservation__payment-body-card-name-input card-input"
+              />
+            </div>
+            <div class="reservation__payment-body-card-number-container">
+              <p
+                class="reservation__payment-body-card-number-text reservation-text"
+              >
+                Debit/Credit card number
+              </p>
+              <input
+                type="text"
+                class="reservation__payment-body-card-number-input card-input"
+              />
+            </div>
+            <div class="reservation__payment-body-exp-date-container">
+              <p
+                class="reservation__payment-body-exp-date-text reservation-text"
+              >
+                Expiration Date
+              </p>
+              <div class="reservation__payment-body-exp-date-inputs-container">
+                <input
+                  type="number"
+                  class="reservation__payment-body-exp-date-input"
+                  placeholder="Month"
+                  name="monthInput"
+                  id="monthInput"
+                  min="1"
+                  max="12"
+                />
+                <input
+                  type="number"
+                  class="reservation__payment-body-exp-date-input"
+                  placeholder="Year"
+                  name="yearInput"
+                  id="yearInput"
+                  min="2023"
+                  max="2033"
+                />
+              </div>
+            </div>
+            <div class="reservation__payment-body-codes-container">
+              <div class="reservation__payment-body-code-container">
+                <p class="reservation__payment-body-code-text reservation-text">
+                  Security Code
+                </p>
+                <input
+                  type="text"
+                  class="reservation__payment-body-code-input code-input"
+                />
+              </div>
+              <div class="reservation__payment-body-code-container">
+                <p class="reservation__payment-body-code-text reservation-text">
+                  Billing Zip code
+                </p>
+                <input
+                  type="text"
+                  class="reservation__payment-body-code-input code-input"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="reservation__terms-container">
+          <div class="reservation__terms-header">
+            <p class="reservation__terms-header-text">
+              Important information about your booking
+            </p>
+          </div>
+          <div class="reservation__terms-body-container">
+            <ol class="reservation__terms-body-text-list">
+              <li>
+                This rate is non-refundable. If you change or cancel your
+                booking, you will not get a refund or credit to use for a future
+                stay.
+              </li>
+              <li>Stay extensions will require a new reservation.</li>
+              <li>Front desk staff will greet guests on arrival.</li>
+              <li>
+                No refunds will be issued for late check-in or early check-out.
+              </li>
+            </ol>
+            <p class="reservation__terms-body-text-privacy">
+              By clicking the button below, I acknowledge that I have reviewed
+              the
+              <a href="#" class="reservation__terms-body-link-privacy"
+                >Privacy Statement</a
+              >
+              and have reviewd and accept the
+              <a href="#" class="reservation__terms-body-link-privacy"
+                >Rules and Restrictions</a
+              >
+              and
+              <a href="#" class="reservation__terms-body-link-privacy"
+                >Terms of Use.</a
+              >
+            </p>
+            <button class="reservation__terms-body-confirm-button">
+              Complete Booking
+            </button>
+            <div class="reservation__terms-body-secure-container">
+              <img
+                src="{% static 'images/reservation/icons/lock_color.svg' %}"
+                alt="Lock icon"
+                class="reservation__terms-body-secure-icon"
+              />
+              <p class="reservation__terms-body-secure-text">
+                We use secure transmission and encrypted storage to protect your
+                personal information
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="reservation__right-container">
+        <div class="reservation__hotel-container">
+          <img
+            src="{% static 'images/core/photos/motto.jpg' %}"
+            alt="Hotel image"
+            class="reservation__hotel-image"
+          />
+          <h2 class="reservation__hotel-title">Lakeside Motel Warefront</h2>
+          <div class="reservation__rating-container">
+            <div class="reservation__rating-stars-container">
+              {% if hotel.hotel_star_rating >= 1 %}
+              <img
+                src="{% static 'images/core/icons/star.png' %}"
+                alt="Star icon"
+                class="reservation__hotel-rating-stars-star-icon"
+              />
+              {% endif %} {% if hotel.hotel_star_rating >= 2 %}
+              <img
+                src="{% static 'images/core/icons/star.png' %}"
+                alt="Star icon"
+                class="reservation__rating-stars-star-icon"
+              />
+              {% endif %} {% if hotel.hotel_star_rating >= 3 %}
+              <img
+                src="{% static 'images/core/icons/star.png' %}"
+                alt="Star icon"
+                class="reservation__rating-stars-star-icon"
+              />
+              {% endif %} {% if hotel.hotel_star_rating >= 4 %}
+              <img
+                src="{% static 'images/core/icons/star.png' %}"
+                alt="Star icon"
+                class="reservation__rating-stars-star-icon"
+              />
+              {% endif %} {% if hotel.hotel_star_rating >= 5 %}
+              <img
+                src="{% static 'images/core/icons/star.png' %}"
+                alt="Star icon"
+                class="reservation__rating-stars-star-icon"
+              />
+              {% endif %}
+            </div>
+            <p class="reservation__rating-stars-text">
+              Guest rating: {{ hotel.user_rating }} ({{hotel.amount_of_reviews}}
+              Reviews)
+            </p>
+          </div>
+          <ul class="reservation__hotel-texts">
+            <li class="reservation__hotel-text reservation__hotel-text_refund">
+              Non refundable
+            </li>
+            <li class="reservation__hotel-text">
+              Check in: Sunday, March 18, 2022
+            </li>
+            <li class="reservation__hotel-text">
+              Check out: Tuesday, March 20, 2022
+            </li>
+            <li class="reservation__hotel-text">2 night stay</li>
+          </ul>
+        </div>
+        <div class="reservation__price-container">
+          <div class="reservation__price-header">
+            <p class="reservation__price-header-text">Price Details</p>
+          </div>
+          <div class="reservation__price-body-container">
+            <div
+              class="reservation__price-body-nights-container price-container"
+            >
+              <p class="reservation__price-body-nights-text">
+                1 room X 2 nights
+              </p>
+              <p class="reservation__price-body-nights-text">$ 120.32</p>
+            </div>
+            <div class="reservation__price-body-tax-container price-container">
+              <p class="reservation__price-body-tax-text">
+                Tax and service fees
+              </p>
+              <p class="reservation__price-body-nights-text">$ 8.32</p>
+            </div>
+            <div class="reservation__price-body-border"></div>
+            <div class="reservation__price-body-total-container">
+              <h4 class="reservation__price-total-text">Total</h4>
+              <h4 class="reservation__price-total-price-text">$130</h4>
+            </div>
+            <p class="reservation__price-body-coupon-use-text">
+              Use a coupon, credit or promotional code
+            </p>
+            <p class="reservation__price-body-coupon-code-text">Coupon code</p>
+            <div class="reservation__price-body-coupon-container">
+                <input
+                  type="text"
+                  class="reservation__price-body-coupon-input"
+                />
+                <button class="reservation__price-body-coupon-button">
+                    Apply Coupon
+                </button>
+
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-</div>
+  </div>
 </section>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
 <script>
-    var phoneInput = document.querySelector("#phone-input");
-    var iti = window.intlTelInput(phoneInput, {
-      initialCountry: "us",
-      preferredCountries: ["us", "ca", "gb", "mx"], 
-      separateDialCode: true,
-      utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"
-    });
-  </script>
+  var phoneInput = document.querySelector("#phone-input");
+  var iti = window.intlTelInput(phoneInput, {
+    initialCountry: "us",
+    preferredCountries: ["us", "ca", "gb", "mx"],
+    separateDialCode: true,
+    utilsScript:
+      "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+  });
+</script>
 
 {% endblock %}

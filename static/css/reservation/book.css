@@ -27,6 +27,8 @@ input {
 
 .reservation__menu-container {
   padding-top: 30px;
+  padding-bottom: 141px;
+  display: flex;
 }
 
 .reservation__left-container {
@@ -232,11 +234,299 @@ input {
   margin-bottom: 40px;
 }
 
-.reservation__payment-body-code-container{
-    margin-right: 20px;
+.reservation__payment-body-code-container {
+  margin-right: 20px;
 }
 
 .code-input {
   width: 240px;
   height: 44px;
+}
+
+.reservation__terms-container {
+  margin-top: 30px;
+  background: #ffffff;
+  border-radius: 6px;
+}
+
+.reservation__terms-header {
+  height: 60px;
+  background: #f2c94c;
+  border-radius: 6px 6px 0px 0px;
+}
+
+.reservation__terms-header-text {
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 24px;
+  letter-spacing: 0.01em;
+  color: #333333;
+  padding: 18px 0px 18px 24px;
+}
+
+.reservation__terms-body-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.reservation__terms-body-text-list {
+  margin: 32px 24px;
+  padding-inline-start: 20px;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 150%;
+  letter-spacing: 0.02em;
+  color: #333333;
+}
+
+.reservation__terms-body-text-privacy {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 140%;
+  letter-spacing: 0.02em;
+  color: #4f4f4f;
+}
+
+.reservation__terms-body-text-privacy {
+  margin: 0px 24px 24px 24px;
+}
+
+.reservation__terms-body-confirm-button {
+  width: 160px;
+  height: 44px;
+  background: #2f80ed;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: 0.02em;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  margin-left: 24px;
+}
+
+.reservation__terms-body-confirm-button:hover {
+  background: #2969bf;
+  border: 1px solid #2969bf;
+}
+
+.reservation__terms-body-secure-container {
+  display: flex;
+  flex-direction: row;
+  margin: 21px 0px 35px 24px;
+  align-items: center;
+}
+
+.reservation__terms-body-secure-text {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 140%;
+  letter-spacing: 0.02em;
+  color: #4f4f4f;
+  margin-left: 8px;
+}
+
+.reservation__right-container {
+  width: 400px;
+  margin-left: 30px;
+}
+
+.reservation__hotel-container {
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border-radius: 6px;
+}
+
+.reservation__hotel-image {
+  height: 180px;
+  border-radius: 6px 6px 0px 0px;
+}
+
+.reservation__hotel-title {
+  padding-top: 20px;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 21px;
+  letter-spacing: 0.01em;
+  color: #181818;
+  margin-left: 20px;
+}
+
+.reservation__rating-container {
+  margin-top: 10px;
+  max-height: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-left: 20px;
+}
+
+.reservation__rating-stars-container {
+  display: flex;
+  flex-direction: row;
+  height: 20px;
+  width: 90px;
+}
+
+.reservation__rating-stars-star-icon {
+  height: 20px;
+  width: 20px;
+}
+
+.reservation__rating-stars-star-icon-half {
+  height: 20px;
+  width: 10px;
+}
+
+.reservation__rating-stars-text {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 140%;
+  letter-spacing: 0.02em;
+  color: #4f4f4f;
+  margin-left: 12px;
+}
+
+.reservation__hotel-texts {
+  margin-left: 20px;
+  margin-top: 25px;
+  padding-inline-start: 0px;
+}
+
+.reservation__hotel-text {
+  margin-top: 8px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.01em;
+  color: #4f4f4f;
+}
+
+.reservation__hotel-text_refund {
+  color: #eb5757;
+}
+
+.reservation__price-container {
+  margin-top: 30px;
+  background: #ffffff;
+  border-radius: 6px;
+}
+
+.reservation__price-header {
+  background: #85e0ab;
+  border-radius: 6px 6px 0px 0px;
+  height: 55px;
+}
+
+.reservation__price-header-text {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  letter-spacing: 0.01em;
+  color: #181818;
+  padding: 18px 0px 18px 18px;
+}
+
+.reservation__price-body-container {
+  display: flex;
+  flex-direction: column;
+  padding-left: 18px;
+  padding-right: 18px;
+}
+
+.reservation__price-body-nights-container {
+  margin-top: 23px;
+}
+
+.price-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.01em;
+  color: #4f4f4f;
+  margin-top: 12px;
+}
+
+.reservation__price-body-tax-container {
+  margin-bottom: 20px;
+}
+
+.reservation__price-body-border {
+  border: 1px solid #e0e0e0;
+}
+
+.reservation__price-body-total-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 25px;
+}
+
+.reservation__price-total-text {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  letter-spacing: 0.01em;
+  color: #181818;
+}
+
+.reservation__price-total-price-text {
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: 0.01em;
+  color: #333333;
+}
+
+.reservation__price-body-coupon-use-text {
+  margin-top: 10px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 140%;
+  letter-spacing: 0.02em;
+  color: #2f80ed;
+}
+
+.reservation__price-body-coupon-code-text {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 140%;
+  letter-spacing: 0.02em;
+  color: #181818;
+  margin-top: 22px;
+}
+
+.reservation__price-body-coupon-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 4px;
+  margin-bottom: 24px;
+}
+
+.reservation__price-body-coupon-input {
+  width: 226px;
+}
+
+.reservation__price-body-coupon-button {
+  width: 132px;
+  height: 44px;
+  background: #333333;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: 0.02em;
+  color: #ffffff;
+  cursor: pointer;
+  border: none;
+}
+
+.reservation__price-body-coupon-button:hover {
+  background: #181818;
+  border: 1px solid #181818;
 }
