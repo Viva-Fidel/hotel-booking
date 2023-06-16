@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404, render
+from django.db.models import Q
 from django.http import JsonResponse
-from .models import Hotels
+from .models import Hotels, Booking, Room, RoomType
 
 import random
 from datetime import datetime
@@ -26,7 +27,6 @@ def hotel_detail(request, slug):
 
     hotel.hotel_popularity += 1
     hotel.save()
-
 
     for facility in facilities:
         if facility.hotel_has_free_wifi:
@@ -81,8 +81,24 @@ def hotel_detail(request, slug):
     
     address = str(hotel.hotel_street)+ ", " + str(hotel.hotel_city) + ", " + str(hotel.hotel_county) + " OR" 
     
+    available_room_types = RoomType.objects.filter(hotels=hotel)
+ 
+    available_rooms = Room.objects.filter(room_type__in=available_room_types, hotel=hotel)
+    booked_rooms = Booking.objects.filter(
+        Q(room__in=available_rooms) &
+    (
+        Q(check_in_date__range=(checkin_date, checkout_date)) |
+        Q(check_out_date__range=(checkin_date, checkout_date)) |
+        Q(check_in_date__lte=checkin_date, check_out_date__gte=checkout_date)
+    )
+    )
+
+    available_rooms = available_rooms.exclude(id__in=booked_rooms.values('room_id'))
+    available_room_types = RoomType.objects.filter(room__in=available_rooms).distinct()
+
+
     room_data = []
-    for room in hotel.hotel_rooms.all():
+    for room in available_room_types:
         total_price = float(room.price_per_night) * duration * int(guests.split("·")[1].split()[0])
         price_with_discount = total_price - (total_price * (room.price_discount / 100))
         room_data.append({
@@ -90,6 +106,7 @@ def hotel_detail(request, slug):
             'total_price': total_price,
             'price_with_discount': price_with_discount
         })
+    
 
     context = {'hotel': hotel, 
                'room_data': room_data,

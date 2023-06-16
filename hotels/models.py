@@ -206,7 +206,7 @@ class RoomType(models.Model):
     description = models.TextField(
         help_text='Description of the room type', default=None)
     price_per_night = models.DecimalField(
-        max_digits=8, decimal_places=2, help_text='Price per night of the room type', default=None)
+        max_digits=8, decimal_places=2, help_text='Price per night of the room type', default=0)
     photo_1 = models.ImageField(upload_to=hotel_room_photos_path, null=True, blank=True)
     photo_2 = models.ImageField(upload_to=hotel_room_photos_path, null=True, blank=True)
     photo_3 = models.ImageField(upload_to=hotel_room_photos_path, null=True, blank=True)
@@ -286,6 +286,8 @@ class Room(models.Model):
     available = models.BooleanField(
         default=True, help_text='Is the room currently available?')
     max_guests = models.PositiveIntegerField(help_text='Maximum number of guests', default=0)
+    price_per_night = models.DecimalField(
+        max_digits=8, decimal_places=2, help_text='Price per night of the room', default=0)
 
     class Meta:
         unique_together = ['room_type', 'room_number']
@@ -293,6 +295,7 @@ class Room(models.Model):
     def save(self, *args, **kwargs):
         if self.room_type:
             self.max_guests = self.room_type.max_guests
+            self.price_per_night = self.room_type.price_per_night
         super().save(*args, **kwargs)
 
 

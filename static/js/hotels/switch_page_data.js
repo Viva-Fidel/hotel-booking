@@ -3,7 +3,7 @@ function showOverview(button) {
     document.getElementById("hotel-data-container").style.display = "flex";
     document.getElementById("room-list-container").style.display = "flex";
     document.getElementById("room-data-container").style.display = "none";
-    document.getElementById("reviews-data-container").style.display = "none";
+    document.getElementById("reviews-container").style.display = "none";
   }
 
   function showRooms(button) {
@@ -11,7 +11,7 @@ function showOverview(button) {
     document.getElementById("hotel-data-container").style.display = "none";
     document.getElementById("room-list-container").style.display = "none";
     document.getElementById("room-data-container").style.display = "flex";
-    document.getElementById("reviews-data-container").style.display = "none";
+    document.getElementById("reviews-container").style.display = "none";
   }
 
   function showGuestReviews(button) {
@@ -19,7 +19,7 @@ function showOverview(button) {
     document.getElementById("hotel-data-container").style.display = "none";
     document.getElementById("room-list-container").style.display = "none";
     document.getElementById("room-data-container").style.display = "none";
-    document.getElementById("reviews-data-container").style.display = "flex";
+    document.getElementById("reviews-container").style.display = "flex";
   }
 
   function setActiveButton(button) {

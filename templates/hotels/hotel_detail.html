@@ -51,7 +51,7 @@
       <button type="button" class="page-menu__button active" onclick="showOverview(this)">
         Overview
       </button>
-      <button type="button" class="page-menu__button" onclick="showRooms(this)">
+      <button type="button" class="page-menu__button" onclick="showRooms(this)" id="rooms-button">
         Rooms
       </button>
       <button type="button" class="page-menu__button" onclick="showGuestReviews(this)">
@@ -381,7 +381,7 @@
               </div>
               
             </div>
-            <button class="room-list__reserve-button">
+            <button type="button" class="room-list__reserve-button" onclick="showRoomsData(this);">
               Reserve suite
             </button>
           </div>
@@ -397,6 +397,30 @@
     {% include 'partials/_footer.html' %}
   </section>
 </main>
+
+<script>
+  function showRoomsData() {
+    document.getElementById("hotel-data-container").style.display = "none";
+    document.getElementById("room-list-container").style.display = "none";
+    document.getElementById("room-data-container").style.display = "flex";
+    document.getElementById("reviews-container").style.display = "none";
+  
+    // Move user's position to the location of room-data-container
+    const roomDataContainer = document.getElementById("room-data-container");
+    roomDataContainer.scrollIntoView({ behavior: "smooth" });
+  
+    setActiveButton(document.getElementById("rooms-button"));
+  }
+  
+  function setActiveButton(activeButton) {
+    var buttons = document.getElementsByClassName("page-menu__button");
+    console.log(buttons);
+    for (var i = 0; i < buttons.length; i++) {
+      buttons[i].classList.remove("active");
+    }
+    activeButton.classList.add("active");
+  }
+  </script>
 
 <!-- Scrip to manipulate buttons and switch page data -->
 <script src="{% static 'js/hotels/switch_page_data.js' %}"></script>
